@@ -3,25 +3,18 @@
    You can adapt this file completely to your liking, but it should at least
    contain the root `toctree` directive.
 
-Welcome to UviSpace's documentation!
-====================================
+UviSpace documentation index
+============================
 
-Contents:
+..  toctree::
+    :maxdepth: 2
 
-.. toctree::
-   :maxdepth: 2
-   :caption: Table of Contents
-   
-   Introduction
-   Project packages <ProjectPackages>
+    Introduction   
+    Getting Started         <Starting>
+    Uvirobot package        <uvirobot>
+    Uvisensor package       <uvisensor>
+    Hardware design         <Hardware>
+    Arduino controller      <Arduino>
 
 
-
-
-Indices and tables
-==================
-
-* :ref:`genindex`
-* :ref:`modindex`
-* :ref:`search`
 

@@ -1,0 +1,15 @@
+
+
+Download instructions
+---------------------
+
+The project is stored and mantained at an online repository that can be accesed `here <https://github.com/jlrandulfe/UviSpace>`_. 
+The project can be directly downloaded from the repository page. However, it is recommended to `install git <https://git-scm.com/downloads>`_ and then clone the project to a local repository. This way, you can use the *git version control system* in order to collaborate to the project and easily synchronize your work with the other developers.
+
+Once you have git installed and configured, type the following instructions for cloning the UviSpace project to your PC::
+
+    cd /go/to/desired/directory     #Set the terminal working directory
+    git clone https://github.com/jlrandulfe/UviSpace.git    #Clone the project to your local machine
+    
+After that, the project will be cloned to a folder named UviSpace into the directory you have specified.
+

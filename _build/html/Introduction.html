@@ -6,15 +6,15 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>Introduction &#8212; UviSpace 0.0.0 documentation</title>
+    <title>Introduction &#8212; UviSpace 1.0.0 documentation</title>
     
-    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="_static/agogo.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    './',
-        VERSION:     '0.0.0',
+        VERSION:     '1.0.0',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -25,76 +25,183 @@
     <script type="text/javascript" src="_static/doctools.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="top" title="UviSpace 0.0.0 documentation" href="index.html" />
-    <link rel="prev" title="Welcome to UviSpace’s documentation!" href="index.html" />
-   
-  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
-  
-  
-  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
-
+    <link rel="top" title="UviSpace 1.0.0 documentation" href="index.html" />
+    <link rel="next" title="Getting Started" href="Starting.html" />
+    <link rel="prev" title="UviSpace documentation index" href="index.html" /> 
   </head>
   <body role="document">
-  
+    <div class="header-wrapper" role="banner">
+      <div class="header">
+        <div class="headertitle"><a
+          href="index.html">UviSpace 1.0.0 documentation</a></div>
+        <div class="rel" role="navigation" aria-label="related navigation">
+          <a href="index.html" title="UviSpace documentation index"
+             accesskey="P">previous</a> |
+          <a href="Starting.html" title="Getting Started"
+             accesskey="N">next</a> |
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a>
+        </div>
+       </div>
+    </div>
 
-    <div class="document">
+    <div class="content-wrapper">
+      <div class="content">
+        <div class="document">
+            
       <div class="documentwrapper">
         <div class="bodywrapper">
           <div class="body" role="main">
             
   <div class="section" id="introduction">
 <h1>Introduction<a class="headerlink" href="#introduction" title="Permalink to this headline">¶</a></h1>
-<p>This is the introduction to the UviSpace project documentation</p>
+<p>UviSpace is an open-source project developed at the <em>Electronic Technology
+Department</em> in the <strong>University of Vigo</strong>. It consists in a system for
+remotely controlling Unmanned Ground Vehicles (UGVs) moving inside a delimited
+space.</p>
+<a class="reference internal image-reference" href="_images/portada.jpg"><img alt="_images/portada.jpg" src="_images/portada.jpg" style="height: 500px;" /></a>
+<div class="section" id="general-overview">
+<h2>General  overview<a class="headerlink" href="#general-overview" title="Permalink to this headline">¶</a></h2>
+<p>The project is aimed to control an indoor intelligent space where several unmanned vehicles are simultaneously observed and controlled through a distributed vision system, a central controller and an Arduino board embedded at each vehicle. The physical system was set up in the university in order to run tests and try new algorithms and solutions.</p>
+<p>Hence, the whole system can be divided into three different elements:</p>
+<ul>
+<li><p class="first">The <em>data fussion controller</em>, which consists in a CPU that controls the whole system. The <em>uvispace</em> software project is executed there, whose main tasks are:</p>
+<blockquote>
+<div><ul class="simple">
+<li>communicate with the FPGA-based image processing nodes, using the TCP/IP protocol</li>
+<li>Merge the data obtained from the image processing nodes</li>
+<li>Get the global coordinates of the UGVs</li>
+<li>Given the destination of the UGVs, calculate the optimal path</li>
+<li>Calculate the UGVs speed, using a navigation model</li>
+<li>Communicate with the Arduino controllers, using the ZigBee protocol, and send them the speed set points.</li>
+</ul>
+</div></blockquote>
+</li>
+<li><p class="first">The 4 <em>image processing nodes</em>. Their main component is an FPGA, with a camera peripheral. Each camera frame is processed in the FPGA, and the obtained results are sent to the <em>data fussion controller</em> through an Ethernet port.</p>
+</li>
+<li><p class="first">The Arduino controllers, that control each UGV&#8217;s sensors and actuators. They receive orders from the <em>data fussion controller</em> through the data received from the serial port, connected to a XBee transceiver.</p>
+</li>
+</ul>
+<p>The main structure of the system can be observed in the diagram below.</p>
+<img alt="_images/general_diagram.png" src="_images/general_diagram.png" />
+</div>
+<div class="section" id="software-project">
+<h2>Software project<a class="headerlink" href="#software-project" title="Permalink to this headline">¶</a></h2>
+<p>The software subproject inside the UviSpace project is called uvispace as well. It is a <strong>Python2.7</strong> project, and it is structured into 2 main packages, namely <em>uvirobot</em> and <em>uvisensor</em>.</p>
+<p>The <em>uvirobot</em> package deals with the classes and functions needed to
+implement the algorithms for moving an UGV and communicating with it,
+while the <em>uvisensor</em> package is used to communicate with FPGA devices using a
+TCP/IP connection and receive scene information captured through camera
+peripherals.</p>
+<div class="section" id="uvirobot">
+<h3>uvirobot<a class="headerlink" href="#uvirobot" title="Permalink to this headline">¶</a></h3>
+<p>The <em>uvirobot</em> package consist in 2 callable scripts:</p>
+<ul class="simple">
+<li><strong>messenger.py</strong> stablishes the communication to the specified UGV, using the ZigBee protocol. Thus, prior runnning it an XBee module has to be connected to the PC, and another one to the Arduino board serial port, and both configured accordingly. Once the communication is stablished, the module <em>listens</em> to speed set points and send them to the UGV. When the execution is cancelled, a plot with the delay times is obtained and then the program ends.</li>
+<li><strong>move_robot.py</strong> <em>listens</em> to input UGV position values and destination coordinates, calculates the UGV optimal path, and finally outputs the speed set points needed to achieve the planned path.</li>
+</ul>
+<p>Moreover, there are 5 importable libraries inside the <em>uvirobot</em> package:</p>
+<ul class="simple">
+<li><strong>path_tracker.py</strong> contains a class whose methods calculate an UGV&#8217;s path points, once given a position and destination, and then stores them in an attribute.</li>
+<li><strong>plotter.py</strong> contains functions used to construct a graph with a predefined format. It is designed to map the calculated vs. real path of an UGV, and the delay times.</li>
+<li><strong>robot.py</strong> contains the <em>RobotController()</em> class, where each instantiated object represents an UGV, and stablishes the upper interface for working with its speed values.</li>
+<li><strong>serialcomm.py</strong> contains the <em>SerMesProtocol()</em> class, which is a child of the built-in python <em>pyserial</em> class. It defines a serial protocol, which will be used by the XBee modules for communicating the CPU with an UGV.</li>
+<li><strong>speedtransform.py</strong> contains the <em>Speed()</em> class, for dealing with operations related to the speed values, such as transform between different scales or ensuring that the values are between valid boundaries.</li>
+</ul>
+<p>Finally, the package contains an auxiliary module into the <em>resources</em> folder, called <em>teleoperation.py</em>. This is a callable module that allows to control the UGV with the keyboard, which is specially useful when the <em>uvispace</em> package has to be tested.</p>
+</div>
+<div class="section" id="uvisensor">
+<h3>uvisensor<a class="headerlink" href="#uvisensor" title="Permalink to this headline">¶</a></h3>
+<p>The <em>uvisensor</em> contains 1 callable module, <strong>multiplecamera.py</strong>. It is based on multithreading. The purpose of this module is to manage the information of N cameras, merge the vertices of every tracker and obtain the final number of UGVs(triangles) with their pose. There is a shared variable with all the vertices obtained from each camera.</p>
+<p>The connection via TCP/IP to the cameras, as well as the processing of the images from each camera, is achieved in parallel.</p>
+<p>Finally, another thread communicates with the user in order to get commands. At the moment, the only command is &#8216;Quit Program&#8217; (&#8216;Q&#8217;), but this functionality can be easily increased in the future.</p>
+<p>Summing up, the list of threads is:</p>
+<ul class="simple">
+<li>1 main thread that will merge the information from every camera (VideoSensor).</li>
+<li>N threads for getting data from the N cameras connected to the system.</li>
+<li>1 user oriented thread for getting commands from the user.</li>
+</ul>
+<p>The package has, as well, 4 importable modules:</p>
+<ul class="simple">
+<li><strong>client.py</strong> contains the <em>Client()</em> class, which is a child of the <em>Socket</em> class from the <em>socket.socket</em> built-in Python module. This class contains methods for communicating specifically with the design FPGA hardware. Its methods allow to open and close the connection correctly, and to write and read from valid registers with the right format.</li>
+<li><strong>geometry.py</strong> contains 2 classes. The <em>Triangle()</em> class is used for performing geometrical operations inherent to isosceles triangles, in order to get its base length, barycenter, position, angle... The <em>Segment()</em> class is used to determine a segment from its 2 points, and calculate afterwards the distance to another point.</li>
+<li><strong>imgprocessing.py</strong> contains the <em>Image()</em> class, which has image-oriented methods, based on matrix operations, for getting useful information from image data.</li>
+<li><strong>videosensor.py</strong> has the <em>VideoSensor()</em> class and several functions related to it. Each instantiated object represent an external FPGA device. Thus, this class has methods for setting up the TCP/IP connection, configuring the FPGA registers, and interact with it.</li>
+</ul>
+</div>
+</div>
+<div class="section" id="hardware-design-project">
+<h2>Hardware design project<a class="headerlink" href="#hardware-design-project" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="arduino-controllers-project">
+<h2>Arduino controllers project<a class="headerlink" href="#arduino-controllers-project" title="Permalink to this headline">¶</a></h2>
+</div>
 </div>
 
 
           </div>
         </div>
       </div>
-      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
-        <div class="sphinxsidebarwrapper"><div class="relations">
-<h3>Related Topics</h3>
-<ul>
-  <li><a href="index.html">Documentation overview</a><ul>
-      <li>Previous: <a href="index.html" title="previous chapter">Welcome to UviSpace&#8217;s documentation!</a></li>
-  </ul></li>
-</ul>
-</div>
-  <div role="note" aria-label="source link">
-    <h3>This Page</h3>
-    <ul class="this-page-menu">
-      <li><a href="_sources/Introduction.txt"
-            rel="nofollow">Show Source</a></li>
-    </ul>
-   </div>
-<div id="searchbox" style="display: none" role="search">
-  <h3>Quick search</h3>
-    <form class="search" action="search.html" method="get">
-      <div><input type="text" name="q" /></div>
-      <div><input type="submit" value="Go" /></div>
-      <input type="hidden" name="check_keywords" value="yes" />
-      <input type="hidden" name="area" value="default" />
-    </form>
-</div>
-<script type="text/javascript">$('#searchbox').show(0);</script>
         </div>
+        <div class="sidebar">
+          <h3>Table Of Contents</h3>
+          <ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Introduction</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#general-overview">General  overview</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#software-project">Software project</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#hardware-design-project">Hardware design project</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#arduino-controllers-project">Arduino controllers project</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="Starting.html">Getting Started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="uvirobot.html">Uvirobot package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="uvisensor.html">Uvisensor package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Hardware.html">Hardware design</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Arduino.html">Arduino controller</a></li>
+</ul>
+
+          <div role="search">
+            <h3 style="margin-top: 1.5em;">Search</h3>
+            <form class="search" action="search.html" method="get">
+                <input type="text" name="q" />
+                <input type="submit" value="Go" />
+                <input type="hidden" name="check_keywords" value="yes" />
+                <input type="hidden" name="area" value="default" />
+            </form>
+          </div>
+        </div>
+        <div class="clearer"></div>
       </div>
-      <div class="clearer"></div>
-    </div>
-    <div class="footer">
-      &copy;2016, Javier Lopez-Randulfe.
-      
-      |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.4.8</a>
-      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.9</a>
-      
-      |
-      <a href="_sources/Introduction.txt"
-          rel="nofollow">Page source</a>
     </div>
 
-    
+    <div class="footer-wrapper">
+      <div class="footer">
+        <div class="left">
+          <div role="navigation" aria-label="related navigaton">
+            <a href="index.html" title="UviSpace documentation index"
+              >previous</a> |
+            <a href="Starting.html" title="Getting Started"
+              >next</a> |
+            <a href="genindex.html" title="General Index"
+              >index</a>
+          </div>
+          <div role="note" aria-label="source link">
+              <br/>
+              <a href="_sources/Introduction.txt"
+                rel="nofollow">Show Source</a>
+          </div>
+        </div>
 
-    
+        <div class="right">
+          
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2016, Javier Lopez-Randulfe.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.4.8.
+    </div>
+        </div>
+        <div class="clearer"></div>
+      </div>
+    </div>
+
   </body>
 </html>

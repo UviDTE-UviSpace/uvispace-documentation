@@ -1,54 +1,9 @@
 
 
-
-Introduction
-============
-
-
-UviSpace is an open-source project developed at the *Electronic Technology 
-Department* in the **University of Vigo**. It consists in a system for 
-remotely controlling Unmanned Ground Vehicles (UGVs) moving inside a delimited 
-space.
-
-..  image:: /images/portada.jpg
-    :height: 500px
-    
-General  overview
------------------
-
-The project is aimed to control an indoor intelligent space where several unmanned vehicles are simultaneously observed and controlled through a distributed vision system, a central controller and an Arduino board embedded at each vehicle. The physical system was set up in the university in order to run tests and try new algorithms and solutions.
-
-Hence, the whole system can be divided into three different elements: 
-
-- The *data fussion controller*, which consists in a CPU that controls the whole system. The *uvispace* software project is executed there, whose main tasks are:
-
-    - communicate with the FPGA-based image processing nodes, using the TCP/IP protocol
-    - Merge the data obtained from the image processing nodes 
-    - Get the global coordinates of the UGVs
-    - Given the destination of the UGVs, calculate the optimal path
-    - Calculate the UGVs speed, using a navigation model
-    - Communicate with the Arduino controllers, using the ZigBee protocol, and send them the speed set points.
-
-- The 4 *image processing nodes*. Their main component is an FPGA, with a camera peripheral. Each camera frame is processed in the FPGA, and the obtained results are sent to the *data fussion controller* through an Ethernet port.
-
-- The Arduino controllers, that control each UGV's sensors and actuators. They receive orders from the *data fussion controller* through the data received from the serial port, connected to a XBee transceiver.
-
-The main structure of the system can be observed in the diagram below.  
-
-..  image:: /images/general_diagram.png
-    
-
-
 Software project
-----------------
+================
 
 The software subproject inside the UviSpace project is called uvispace as well. It is a **Python2.7** project, and it is structured into 2 main packages, namely *uvirobot* and *uvisensor*. 
-
-The *uvirobot* package deals with the classes and functions needed to 
-implement the algorithms for moving an UGV and communicating with it,
-while the *uvisensor* package is used to communicate with FPGA devices using a 
-TCP/IP connection and receive scene information captured through camera 
-peripherals.
 
 uvirobot
 ^^^^^^^^
@@ -90,12 +45,8 @@ The package has, as well, 4 importable modules:
 * **imgprocessing.py** contains the *Image()* class, which has image-oriented methods, based on matrix operations, for getting useful information from image data.
 * **videosensor.py** has the *VideoSensor()* class and several functions related to it. Each instantiated object represent an external FPGA device. Thus, this class has methods for setting up the TCP/IP connection, configuring the FPGA registers, and interact with it.
 
-Hardware design project
------------------------
+.. autoclass:: uvirobot.robot.RobotController
 
-
-Arduino controllers project
----------------------------
 
 
 
