@@ -4,8 +4,7 @@ Getting Started
 ===============
 
 This section covers the first steps for downloading the project and setting 
-up a PC in order to be able to collaborate developing and making tests of 
-the project.
+up a PC in order to be able to collaborate developing and testing the project.
 
 
 System requirements

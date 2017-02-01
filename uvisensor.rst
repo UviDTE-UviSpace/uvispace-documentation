@@ -10,6 +10,14 @@ multiplecamera.py
 
 ------------------------------------------------------
 
+..  image:: /images/Multiplecamera_Flowcharts2.png
+    :height: 700px
+
+|
+
+..  image:: /images/Multiplecamera_Flowcharts1.png
+    :height: 700px
+
 |
 
 .. autoclass:: uvisensor.multiplecamera.CameraThread
@@ -17,8 +25,6 @@ multiplecamera.py
 .. autoclass:: uvisensor.multiplecamera.DataFusionThread
 
 .. autoclass:: uvisensor.multiplecamera.UserThread
-
-
 
 client.py
 ---------

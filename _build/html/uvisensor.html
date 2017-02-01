@@ -64,19 +64,25 @@
 execution time, as it contains several instructions which require 
 waiting for external resources before continuing execution e.g. waiting 
 for the TCP/IP client to deliver FPGA registers information. Namely, 6 
-different threads are started and stored in a list called <em>threads</em>:</p>
+different threads are managed and indexed in a list called <em>threads</em>:</p>
 <ul class="simple">
-<li>4 threads contain the 4 FGPAs initialization processes and endless 
-loops are continually requesting the UGVs&#8217; positions to the FPGA.</li>
-<li>Another thread interacts with the user through terminal. It reads
-input commands, namely for finishing the program.</li>
-<li>A final thread is in charge of merging the information obtained from
-each FPGA.</li>
+<li>4 threads that run the 4 FGPAs initialization routines. Afterwards,
+endless loops continually request the UGVs&#8217; positions to each FPGA.</li>
+<li>Another thread that interacts with the user through keyboard. It reads
+input commands and performs corresponding actions.</li>
+<li>A final thread is in charge of merging the information obtained at
+each FPGA thread and obtain global UGVs&#8217; positions.</li>
 </ul>
 <p>NOTE: The proper way to end the program is to press &#8216;Q&#8217;, as the terminal
-prompt indicates during execution. Using the Keyboard Interrupt will 
-probably corrupt the TCP/IP socket and the FPGAs will have to be reset.</p>
+prompt indicates during execution. If the Keyboard Interrupt is used 
+instead, it will probably corrupt the TCP/IP socket and the FPGAs will 
+have to be reset.</p>
 <hr class="docutils" />
+<a class="reference internal image-reference" href="_images/Multiplecamera_Flowcharts2.png"><img alt="_images/Multiplecamera_Flowcharts2.png" src="_images/Multiplecamera_Flowcharts2.png" style="height: 700px;" /></a>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<a class="reference internal image-reference" href="_images/Multiplecamera_Flowcharts1.png"><img alt="_images/Multiplecamera_Flowcharts1.png" src="_images/Multiplecamera_Flowcharts1.png" style="height: 700px;" /></a>
 <div class="line-block">
 <div class="line"><br /></div>
 </div>
@@ -84,12 +90,12 @@ probably corrupt the TCP/IP socket and the FPGAs will have to be reset.</p>
 <dt id="uvisensor.multiplecamera.CameraThread">
 <em class="property">class </em><code class="descclassname">uvisensor.multiplecamera.</code><code class="descname">CameraThread</code><span class="sig-paren">(</span><em>triangles</em>, <em>ntriangles</em>, <em>begin_event</em>, <em>end_event</em>, <em>condition</em>, <em>inborders</em>, <em>reset_flag</em>, <em>name=None</em>, <em>conf_file=''</em><span class="sig-paren">)</span><a class="headerlink" href="#uvisensor.multiplecamera.CameraThread" title="Permalink to this definition">¶</a></dt>
 <dd><p>Child class of threading.Thread for capturing frames from a camera.</p>
-<p>Override the <em>run</em> method, where it is specified the behavior 
-when the <em>start</em> method is called. At first, initialize the FPGA 
-configuration. After that, enter an endless loop until <em>end_event</em> 
-flag is raised. At each iteration, if possible, read the FPGA 
-register containing triangles location. Process the data and write 
-output in a global variable.</p>
+<p>The <em>run</em> method, where is specified the behavior when the <em>start</em> 
+method is called, is overrided. At first, it loads the FPGA 
+configuration. Then it enters an endless loop until <em>end_event</em> 
+flag is raised. At each iteration, when possible, reads the FPGA 
+register containing triangles location, processes the data and 
+writes it to the global shared variable <em>triangles</em>.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -100,21 +106,20 @@ of geometry.Triangle(). It is a global variable for sharing the
 information of different triangles detected in the camera space. 
 Each triangle has a UNIQUE key identifier. It is used for 
 writing and sending to other threads the triangle elements.</li>
-<li><strong>ntriangles</strong> &#8211; Dictionary of the shame type and shape as 
-triangles. However, this is a read only variable for getting 
-triangles detected by other cameras.</li>
+<li><strong>ntriangles</strong> &#8211; READ ONLY dictionary of the same type and shape 
+as <em>triangles</em>. It contains the triangles detected by other cameras 
+that are inside the borders region of the current camera&#8217;s space.</li>
 <li><strong>begin_event</strong> &#8211; threading.Event() object that is set to True 
-when the current thread begins the main loop.</li>
+when the FPGA is configured and the thread begins the main loop.</li>
 <li><strong>end_event</strong> &#8211; threading.Event() object that is set to True 
-when the whole system shall stop the main loop.</li>
+when the execution has to end.</li>
 <li><strong>condition</strong> &#8211; threading.Condition() object for synchronizing 
-R/W operations with shared variables i.e. triangles, inborders.</li>
-<li><strong>inborders</strong> &#8211; READ ONLY dictionary where each element 
-indicates if the corresponding triangle is located in the 
-borders region of local camera space. The UNIQUE keys 
-have a univocal correspondence with the key identifiers of 
-triangles dictionary.</li>
-<li><strong>name</strong> &#8211; String containing the name of the current thread.</li>
+R/W operations on shared variables i.e. triangles, inborders.</li>
+<li><strong>inborders</strong> &#8211; READ ONLY dictionary whose elements indicate if 
+the corresponding triangle is located within the borders region 
+of current camera&#8217;s space. Its keys have an univocal correspondence 
+with the key identifiers of the <em>triangles</em> dictionary.</li>
+<li><strong>name</strong> &#8211; String that provides the name of the thread.</li>
 <li><strong>conf_file</strong> &#8211; String containing the relative path to the 
 configuration file of the camera.</li>
 </ul>
@@ -201,7 +206,7 @@ the UserThread detects an &#8216;end&#8217; order from the user.</li>
 </div>
 <div class="section" id="module-uvisensor.client">
 <span id="client-py"></span><h2>client.py<a class="headerlink" href="#module-uvisensor.client" title="Permalink to this headline">¶</a></h2>
-<p>This module contains the class Client, which inherits from socket.socket</p>
+<p>This module contains the Client class, which inherits from socket.socket</p>
 <ul class="simple">
 <li>socket.socket class source code can be found in the folowing link:
 <a class="reference external" href="https://hg.python.org/cpython/file/2.7/Lib/socket.py">https://hg.python.org/cpython/file/2.7/Lib/socket.py</a></li>
