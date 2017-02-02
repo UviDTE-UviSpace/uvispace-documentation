@@ -78,57 +78,6 @@ prompt indicates during execution. If the Keyboard Interrupt is used
 instead, it will probably corrupt the TCP/IP socket and the FPGAs will 
 have to be reset.</p>
 <hr class="docutils" />
-<a class="reference internal image-reference" href="_images/Multiplecamera_Flowcharts2.png"><img alt="_images/Multiplecamera_Flowcharts2.png" src="_images/Multiplecamera_Flowcharts2.png" style="height: 700px;" /></a>
-<div class="line-block">
-<div class="line"><br /></div>
-</div>
-<a class="reference internal image-reference" href="_images/Multiplecamera_Flowcharts1.png"><img alt="_images/Multiplecamera_Flowcharts1.png" src="_images/Multiplecamera_Flowcharts1.png" style="height: 700px;" /></a>
-<div class="line-block">
-<div class="line"><br /></div>
-</div>
-<dl class="class">
-<dt id="uvisensor.multiplecamera.CameraThread">
-<em class="property">class </em><code class="descclassname">uvisensor.multiplecamera.</code><code class="descname">CameraThread</code><span class="sig-paren">(</span><em>triangles</em>, <em>ntriangles</em>, <em>begin_event</em>, <em>end_event</em>, <em>condition</em>, <em>inborders</em>, <em>reset_flag</em>, <em>name=None</em>, <em>conf_file=''</em><span class="sig-paren">)</span><a class="headerlink" href="#uvisensor.multiplecamera.CameraThread" title="Permalink to this definition">¶</a></dt>
-<dd><p>Child class of threading.Thread for capturing frames from a camera.</p>
-<p>The <em>run</em> method, where is specified the behavior when the <em>start</em> 
-method is called, is overrided. At first, it loads the FPGA 
-configuration. Then it enters an endless loop until <em>end_event</em> 
-flag is raised. At each iteration, when possible, reads the FPGA 
-register containing triangles location, processes the data and 
-writes it to the global shared variable <em>triangles</em>.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>triangles</strong> &#8211; Dictionary where each element is an instance 
-of geometry.Triangle(). It is a global variable for sharing the 
-information of different triangles detected in the camera space. 
-Each triangle has a UNIQUE key identifier. It is used for 
-writing and sending to other threads the triangle elements.</li>
-<li><strong>ntriangles</strong> &#8211; READ ONLY dictionary of the same type and shape 
-as <em>triangles</em>. It contains the triangles detected by other cameras 
-that are inside the borders region of the current camera&#8217;s space.</li>
-<li><strong>begin_event</strong> &#8211; threading.Event() object that is set to True 
-when the FPGA is configured and the thread begins the main loop.</li>
-<li><strong>end_event</strong> &#8211; threading.Event() object that is set to True 
-when the execution has to end.</li>
-<li><strong>condition</strong> &#8211; threading.Condition() object for synchronizing 
-R/W operations on shared variables i.e. triangles, inborders.</li>
-<li><strong>inborders</strong> &#8211; READ ONLY dictionary whose elements indicate if 
-the corresponding triangle is located within the borders region 
-of current camera&#8217;s space. Its keys have an univocal correspondence 
-with the key identifiers of the <em>triangles</em> dictionary.</li>
-<li><strong>name</strong> &#8211; String that provides the name of the thread.</li>
-<li><strong>conf_file</strong> &#8211; String containing the relative path to the 
-configuration file of the camera.</li>
-</ul>
-</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
 <dl class="class">
 <dt id="uvisensor.multiplecamera.DataFusionThread">
 <em class="property">class </em><code class="descclassname">uvisensor.multiplecamera.</code><code class="descname">DataFusionThread</code><span class="sig-paren">(</span><em>triangles</em>, <em>ntriangles</em>, <em>conditions</em>, <em>inborders</em>, <em>quadrant_limits</em>, <em>begin_events</em>, <em>end_event</em>, <em>reset_flags</em>, <em>publisher</em>, <em>name='Fusion Thread'</em><span class="sig-paren">)</span><a class="headerlink" href="#uvisensor.multiplecamera.DataFusionThread" title="Permalink to this definition">¶</a></dt>
@@ -179,6 +128,56 @@ flags set to True when a ROI tracker in specified FPGA to be reset.</li>
 </table>
 </dd></dl>
 
+<a class="reference internal image-reference" href="_images/Multiplecamera_Flowcharts2.png"><img alt="_images/Multiplecamera_Flowcharts2.png" src="_images/Multiplecamera_Flowcharts2.png" style="height: 700px;" /></a>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<dl class="class">
+<dt id="uvisensor.multiplecamera.CameraThread">
+<em class="property">class </em><code class="descclassname">uvisensor.multiplecamera.</code><code class="descname">CameraThread</code><span class="sig-paren">(</span><em>triangles</em>, <em>ntriangles</em>, <em>begin_event</em>, <em>end_event</em>, <em>condition</em>, <em>inborders</em>, <em>reset_flag</em>, <em>name=None</em>, <em>conf_file=''</em><span class="sig-paren">)</span><a class="headerlink" href="#uvisensor.multiplecamera.CameraThread" title="Permalink to this definition">¶</a></dt>
+<dd><p>Child class of threading.Thread for capturing frames from a camera.</p>
+<p>The <em>run</em> method, where is specified the behavior when the <em>start</em> 
+method is called, is overrided. At first, it loads the FPGA 
+configuration. Then it enters an endless loop until <em>end_event</em> 
+flag is raised. At each iteration, when possible, reads the FPGA 
+register containing triangles location, processes the data and 
+writes it to the global shared variable <em>triangles</em>.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>triangles</strong> &#8211; Dictionary where each element is an instance 
+of geometry.Triangle(). It is a global variable for sharing the 
+information of different triangles detected in the camera space. 
+Each triangle has a UNIQUE key identifier. It is used for 
+writing and sending to other threads the triangle elements.</li>
+<li><strong>ntriangles</strong> &#8211; READ ONLY dictionary of the same type and shape 
+as <em>triangles</em>. It contains the triangles detected by other cameras 
+that are inside the borders region of the current camera&#8217;s space.</li>
+<li><strong>begin_event</strong> &#8211; threading.Event() object that is set to True 
+when the FPGA is configured and the thread begins the main loop.</li>
+<li><strong>end_event</strong> &#8211; threading.Event() object that is set to True 
+when the execution has to end.</li>
+<li><strong>condition</strong> &#8211; threading.Condition() object for synchronizing 
+R/W operations on shared variables i.e. triangles, inborders.</li>
+<li><strong>inborders</strong> &#8211; READ ONLY dictionary whose elements indicate if 
+the corresponding triangle is located within the borders region 
+of current camera&#8217;s space. Its keys have an univocal correspondence 
+with the key identifiers of the <em>triangles</em> dictionary.</li>
+<li><strong>name</strong> &#8211; String that provides the name of the thread.</li>
+<li><strong>conf_file</strong> &#8211; String containing the relative path to the 
+configuration file of the camera.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
 <dl class="class">
 <dt id="uvisensor.multiplecamera.UserThread">
 <em class="property">class </em><code class="descclassname">uvisensor.multiplecamera.</code><code class="descname">UserThread</code><span class="sig-paren">(</span><em>begin_events</em>, <em>end_event</em>, <em>name='User Thread'</em><span class="sig-paren">)</span><a class="headerlink" href="#uvisensor.multiplecamera.UserThread" title="Permalink to this definition">¶</a></dt>
@@ -203,6 +202,7 @@ the UserThread detects an &#8216;end&#8217; order from the user.</li>
 </table>
 </dd></dl>
 
+<a class="reference internal image-reference" href="_images/Multiplecamera_Flowcharts1.png"><img alt="_images/Multiplecamera_Flowcharts1.png" src="_images/Multiplecamera_Flowcharts1.png" style="height: 700px;" /></a>
 </div>
 <div class="section" id="module-uvisensor.client">
 <span id="client-py"></span><h2>client.py<a class="headerlink" href="#module-uvisensor.client" title="Permalink to this headline">¶</a></h2>
@@ -210,64 +210,71 @@ the UserThread detects an &#8216;end&#8217; order from the user.</li>
 <ul class="simple">
 <li>socket.socket class source code can be found in the folowing link:
 <a class="reference external" href="https://hg.python.org/cpython/file/2.7/Lib/socket.py">https://hg.python.org/cpython/file/2.7/Lib/socket.py</a></li>
-<li>This class is a child of the _socket.socket class. 
+<li>Previous class is a child of the _socket.socket class. 
 Its source code can be found in the following link:
 <a class="reference external" href="https://github.com/biosbits/bits/blob/master/python/_socket.py">https://github.com/biosbits/bits/blob/master/python/_socket.py</a></li>
 </ul>
 <hr class="docutils" />
-<div class="line-block">
-<div class="line"><br /></div>
-</div>
 <dl class="class">
 <dt id="uvisensor.client.Client">
 <em class="property">class </em><code class="descclassname">uvisensor.client.</code><code class="descname">Client</code><span class="sig-paren">(</span><em>buffer_size=2048</em>, <em>timeout=2.0</em><span class="sig-paren">)</span><a class="headerlink" href="#uvisensor.client.Client" title="Permalink to this definition">¶</a></dt>
 <dd><p>Child class of socket.socket which includes register operations.</p>
-<p>It is intended to work with registers of a device, namely of an 
-FPGA. The register identifiers must correspond with the ones of the
-designed HDL circuit.</p>
+<p>It is intended to work with registers of an external FPGA. The 
+register identifiers must correspond with the ones of the
+HDL circuit implemented in the FPGA.</p>
 <p>Used methods from parent class:</p>
 <ul class="simple">
-<li>connect((host, port)) : connects to a remote address</li>
-<li>close()</li>
-<li>send(data)</li>
-<li>recv(buflen) : read the specified number of bytes</li>
-<li>settimeout(timeout)</li>
+<li>connect((host, port)): connects to specified remote address</li>
+<li>close(): close the socket openned with the client</li>
+<li>send(data): send data to the client</li>
+<li>recv(buflen): read the specified number of bytes</li>
+<li>settimeout(timeout): time to wait for the client to respond</li>
 </ul>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>buffer_size</strong> &#8211; int containing the size, in bytes, of the buffer
-for the incomming data.</li>
-<li><strong>timeout</strong> &#8211; int or float containing the value, in seconds, of 
-the time that will be waited for reading incoming data. This will 
-set the object to timeout mode (By default, it is set to blocking 
-mode)</li>
+<li><strong>buffer_size</strong> (<em>int</em>) &#8211; number of bytes of the incomming data.</li>
+<li><strong>timeout</strong> (<em>int or float</em>) &#8211; value, in seconds, of the time that will be waited 
+for reading incoming data. This will set the object to timeout mode
+(By default, it is set to blocking mode).</li>
 </ul>
 </td>
 </tr>
 </tbody>
 </table>
+<p>The class has 2 dictionaries, _REGISTERS and _COMMANDS, that contain
+all the valid commands that can be sent to the FPGA and the declared
+registers inside it. When interacting with the FPGA, can only be 
+accessed the commands and registers in these dictionaries.</p>
+<p><strong>Registers</strong></p>
+<ul class="simple">
+<li><em>RED/GREEN/BLUE_THRESHOLD</em>: The pixel intensity thresholds for 
+each of the 3 colors are stored in these registers, in the form of
+(low_threshold, high_threshold).</li>
+<li><em>IMAGE_SHAPE</em>:</li>
+<li>...</li>
+</ul>
 <dl class="method">
 <dt id="uvisensor.client.Client.close_connection">
 <code class="descname">close_connection</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#uvisensor.client.Client.close_connection" title="Permalink to this definition">¶</a></dt>
-<dd><p>Send close command to device and close connection.</p>
-<p>Write &#8216;Q&#8217; to FPGA register and call Socket.close() method.</p>
+<dd><p>Send &#8216;CLOSE_CONNECTION&#8217; command to FPGA and close TCP/IP socket.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="uvisensor.client.Client.open_connection">
 <code class="descname">open_connection</code><span class="sig-paren">(</span><em>ip</em>, <em>port</em><span class="sig-paren">)</span><a class="headerlink" href="#uvisensor.client.Client.open_connection" title="Permalink to this definition">¶</a></dt>
-<dd><p>Create the socket connection.</p>
-<p>After connecting, the input buffer is read for emptying it.</p>
+<dd><p>Create a TCP/IP socket connection.</p>
+<p>After connecting, the input buffer is read in order to remove 
+its contents, as a &#8216;Welcome message&#8217; is automatically generated.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>ip</strong> &#8211; String with the IP adress of the device.</li>
-<li><strong>port</strong> &#8211; int indicating the socket port.</li>
+<li><strong>ip</strong> (<em>str</em>) &#8211; IP adress of the device.</li>
+<li><strong>port</strong> (<em>str</em>) &#8211; socket port.</li>
 </ul>
 </td>
 </tr>
@@ -278,12 +285,15 @@ mode)</li>
 <dl class="method">
 <dt id="uvisensor.client.Client.read_data">
 <code class="descname">read_data</code><span class="sig-paren">(</span><em>size</em><span class="sig-paren">)</span><a class="headerlink" href="#uvisensor.client.Client.read_data" title="Permalink to this definition">¶</a></dt>
-<dd><p>Read N packages and return a cocatenation of all of them.</p>
+<dd><p>Perform the input buffer read operation several times.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>size</strong> &#8211; int indicating number of bytes to be read.</td>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>size</strong> (<em>int</em>) &#8211; indicates number of bytes to be read.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">A data cocatenation of all packages read from the 
+input buffer.</td>
 </tr>
 </tbody>
 </table>
@@ -292,34 +302,566 @@ mode)</li>
 <dl class="method">
 <dt id="uvisensor.client.Client.read_register">
 <code class="descname">read_register</code><span class="sig-paren">(</span><em>regkey</em><span class="sig-paren">)</span><a class="headerlink" href="#uvisensor.client.Client.read_register" title="Permalink to this definition">¶</a></dt>
-<dd><p>Read the value of a register.</p>
+<dd><p>Read the value of a register and return it formatted.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>regkey</strong> (<em>str</em>) &#8211; register identifier</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">the containt of the register</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">int or list</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 <dl class="method">
 <dt id="uvisensor.client.Client.write_command">
 <code class="descname">write_command</code><span class="sig-paren">(</span><em>command</em>, <em>clean_buffer=False</em><span class="sig-paren">)</span><a class="headerlink" href="#uvisensor.client.Client.write_command" title="Permalink to this definition">¶</a></dt>
 <dd><p>Send a command to the TCP/IP client.</p>
-<p>Set the clean_buffer arg to True for doing a clean-up reading 
-after writing.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>command</strong> (<em>str</em>) &#8211; FPGA command to be executed.</li>
+<li><strong>clean_buffer</strong> (<em>bool</em>) &#8211; if True, a clean-up reading of the 
+input buffer is done after writing.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">message returned from the FPGA after writing the 
+command. If <em>clean_buffer</em> is False or there was no message, 
+&#8216;EMPTY_BUFFER&#8217; is returned.</p>
+</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 <dl class="method">
 <dt id="uvisensor.client.Client.write_register">
 <code class="descname">write_register</code><span class="sig-paren">(</span><em>regkey</em>, <em>value</em><span class="sig-paren">)</span><a class="headerlink" href="#uvisensor.client.Client.write_register" title="Permalink to this definition">¶</a></dt>
-<dd><p>Write a value into a register and clean up input buffer.</p>
+<dd><p>Write a value into a register and clean the input buffer.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>regkey</strong> (<em>str</em>) &#8211; register identifier that will be written.</li>
+<li><strong>value</strong> &#8211; data that will be written to the register. It will
+be converted to a string before sending.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">message given back by the FPGA after writing the 
+register</p>
+</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 </dd></dl>
 
 </div>
-<div class="section" id="geometry-py">
-<h2>geometry.py<a class="headerlink" href="#geometry-py" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="module-uvisensor.geometry">
+<span id="geometry-py"></span><h2>geometry.py<a class="headerlink" href="#module-uvisensor.geometry" title="Permalink to this headline">¶</a></h2>
+<p>This module contain classes and methods with geometrical operations.</p>
+<p>The operations are done in the 2-D space
+It works with 2-D shapes represented by arrays. Thus, the calculations
+are based on matricial operations and linear algebra.</p>
+<hr class="docutils" />
+<dl class="class">
+<dt id="uvisensor.geometry.Triangle">
+<em class="property">class </em><code class="descclassname">uvisensor.geometry.</code><code class="descname">Triangle</code><span class="sig-paren">(</span><em>vertices</em>, <em>isglobal=False</em>, <em>cartesian=False</em><span class="sig-paren">)</span><a class="headerlink" href="#uvisensor.geometry.Triangle" title="Permalink to this definition">¶</a></dt>
+<dd><p>Class for dealing with geometric operations refered to triangles.</p>
+<p>An instance of the classrepresents an isosceles triangle in a 
+2-D space, with the 2 equal sides being bigger than the base one.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>vertices</strong> (<em>np.array</em>) &#8211; 3x2 array containing the vertices
+coordinates of the triangle object.</li>
+<li><strong>isglobal</strong> (<em>bool</em>) &#8211; Flag that indicates if the coordinate system 
+refers to the 4-quadrant system (global) or to a local quadrant 
+system.</li>
+<li><strong>cartesian</strong> (<em>bool</em>) &#8211; This flag indicates if the coordinates are 
+referred to a cartesian system [x,y] instead of the images typical 
+standard [row. column] = [y,x]</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<dl class="method">
+<dt id="uvisensor.geometry.Triangle.get_pose">
+<code class="descname">get_pose</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#uvisensor.geometry.Triangle.get_pose" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return triangle&#8217;s angle and base midpoint, given its vertices.</p>
+<p>The coordinates of 3 vertices defining the triangle are used,
+packed in a single 3x2 array. This method asumes that the
+triangle is isosceles and the 2 equal sides are bigger than 
+the different one, called base.</p>
+<p>The following attributes are updated:</p>
+<ul class="simple">
+<li>self.sides : array containing the lengths of the 3 sides.</li>
+<li>self.base_index : array index of the minor side. This is also
+the index of the vertex between the 2 mayor sides, as vertices
+indexes are the indexes of their opposite sides.</li>
+</ul>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">[X,Y] coordinate of 
+the midpoint of the triangle&#8217;s base side and orientation angle 
+of the triangle. It is the resulting angle between the 
+horizontal axis and the segment that goes from the triangle&#8217;s 
+midpoint to the frontal vertex. It is expressed in radians, in 
+the range [-pi, pi].</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">[float32, float32, float32]</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="uvisensor.geometry.Triangle.get_window">
+<code class="descname">get_window</code><span class="sig-paren">(</span><em>min_value</em>, <em>max_value</em>, <em>k=1.25</em><span class="sig-paren">)</span><a class="headerlink" href="#uvisensor.geometry.Triangle.get_window" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the coordinates of a rectangle window around the triangle.</p>
+<p>At first, the barycenter of the triangle is calculated. Then, 
+the window is calculated as a square, being its sides&#8217; length  
+<em>k</em> times the triangle&#8217;s longest side length and being its 
+center the triangle&#8217;s barycenter. The output is stored in the 
+<em>self.window</em> variable</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>min_value</strong> (<em>int or [int,int] np.array</em>) &#8211; value or values of the minimum allowed 
+coordinates.</li>
+<li><strong>max_value</strong> (<em>int or [int,int] np.array</em>) &#8211; value or values of the maximum allowed 
+coordinates.</li>
+<li><strong>k</strong> (<em>int or float</em>) &#8211; relative size between the window and the triangle 
+base. It should be bigger than 1. As bigger as it gets, the 
+bigger the window will be.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">array representing a square parallel to the horizontal 
+coordinates axe. The first row contains the X and Y minimum
+values of the square, and the second row contains its X and Y 
+maximum values.</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">2x2 np.array</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="uvisensor.geometry.Triangle.global2local">
+<code class="descname">global2local</code><span class="sig-paren">(</span><em>offsets</em>, <em>K=None</em>, <em>cartesian2image=True</em><span class="sig-paren">)</span><a class="headerlink" href="#uvisensor.geometry.Triangle.global2local" title="Permalink to this definition">¶</a></dt>
+<dd><p>Convert Triangle coordinates to the local coordinates system.</p>
+<p>Only absolute coordinates shall be transformed. Lengths and 
+angles are invariant to the coordinate origin.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>int] offsets</strong> (<em>list[int,</em>) &#8211; column and row offsets between 
+the local and the global systems.</li>
+<li><strong>K</strong> (<em>possitive int or float</em>) &#8211; Scale ratio to be applied to the points coordinates.</li>
+<li><strong>cartesian2image</strong> (<em>bool</em>) &#8211; If True, a conversion from 
+cartesian coordinates system to image system is performed. 
+Thus, the  output will be of the form of [row,column] instead 
+of [x,y].</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Raises:</th><td class="field-body"><p class="first last"><strong>ValueError</strong> &#8211; if the scale ratio is negative.</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="uvisensor.geometry.Triangle.homography">
+<code class="descname">homography</code><span class="sig-paren">(</span><em>H</em><span class="sig-paren">)</span><a class="headerlink" href="#uvisensor.geometry.Triangle.homography" title="Permalink to this definition">¶</a></dt>
+<dd><p>Perform an homography operation to the Triangle vertices.</p>
+<p>The homography is a geometrical tranformation that obtains the 
+projection of certain points from a plain to another. 
+<em>self.vertices</em> variable is updated</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>H</strong> (<em>3x3 np.array</em>) &#8211; Homography matrix.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">the new vertices coordinates values.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="uvisensor.geometry.Triangle.in_borders">
+<code class="descname">in_borders</code><span class="sig-paren">(</span><em>limits</em>, <em>tolerance=150</em><span class="sig-paren">)</span><a class="headerlink" href="#uvisensor.geometry.Triangle.in_borders" title="Permalink to this definition">¶</a></dt>
+<dd><p>Evaluate if vertices are near a 4-sides polygon perimeter.</p>
+<p>In the real world scenario, this method determines if the UGV, 
+represented by the <em>Triangle</em>, is in the borders region of a 
+given 2-D space, defined by an irregular 4-sides polygon.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>limits</strong> (<em>iterable of length 4</em>) &#8211; Array containing the coordinates of the 4 points
+defining the borders of the polygon.</li>
+<li><strong>tolerance</strong> (<em>int or float</em>) &#8211; Maximum allowed distance (mm) to the limits 
+to be considered within the borders region.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">flag set to True if the triangle is evaluated to be 
+inside the given polygon</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">bool</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="uvisensor.geometry.Triangle.inverse_homography">
+<code class="descname">inverse_homography</code><span class="sig-paren">(</span><em>H</em><span class="sig-paren">)</span><a class="headerlink" href="#uvisensor.geometry.Triangle.inverse_homography" title="Permalink to this definition">¶</a></dt>
+<dd><p>Perform an inverse homography operation to the vertices.</p>
+<p>Get Xu from the equation (w.X) = H.Y</p>
+<p>First of all, get (1/w.Y) using least squares method. Then, 
+extracts 1/w from the column matrix, with the hypothesis that 
+(Y11) = 1.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>H</strong> (<em>3x3 np.array</em>) &#8211; Homography matrix.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">the new vertices coordinates values.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="uvisensor.geometry.Triangle.local2global">
+<code class="descname">local2global</code><span class="sig-paren">(</span><em>offsets</em>, <em>K=None</em>, <em>image2cartesian=True</em><span class="sig-paren">)</span><a class="headerlink" href="#uvisensor.geometry.Triangle.local2global" title="Permalink to this definition">¶</a></dt>
+<dd><p>Convert Triangle coordinates to the global coordinates system.</p>
+<p>The function performs 2 transformations:</p>
+<ul class="simple">
+<li>Obtains the 4-quadrant coordinates. The input is a coordinate 
+for a 1-quadrant system, and the output corresponds to the 
+4-quadrant system.</li>
+<li>Move y-axis origin. Initially, for a given image the origin
+is placed at its top. However, for the used system the origin 
+is placed at the middle of the 4 quadrants.</li>
+</ul>
+<p>If indicated, the coordinates system will be transformed to the
+cartesian one. This is recommended, as the image system does not
+make sense for a space with origin in the middle.</p>
+<p>Only absolute coordinates shall be transformed. Lengths and 
+angles are invariant to the coordinates origin.</p>
+<p>Finally, a scale ratio <em>K</em> will be applied to the coordinates. 
+The coordinates will be directly multiplied by the ratio.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>int] offsets</strong> (<em>list[int,</em>) &#8211; column and row offsets between 
+the local and the global systems.</li>
+<li><strong>K</strong> (<em>possitive int or float</em>) &#8211; Scale ratio to be applied to the points coordinates.</li>
+<li><strong>image2cartesian</strong> (<em>bool</em>) &#8211; If True, a conversion from image 
+coordinate system to cartesian system is performed. Thus, the 
+output will be of the form of [x,y] instead of [row,column].</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Raises:</th><td class="field-body"><p class="first last"><strong>ValueError</strong> &#8211; if the scale ratio is negative.</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<dl class="class">
+<dt id="uvisensor.geometry.Segment">
+<em class="property">class </em><code class="descclassname">uvisensor.geometry.</code><code class="descname">Segment</code><span class="sig-paren">(</span><em>pointA</em>, <em>pointB</em><span class="sig-paren">)</span><a class="headerlink" href="#uvisensor.geometry.Segment" title="Permalink to this definition">¶</a></dt>
+<dd><p>This class contains methods for dealing with 2D segments operations.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>pointA</strong> (<em>len-2 tuple or list</em>) &#8211; X and Y coordinates of the initial points.</li>
+<li><strong>pointB</strong> (<em>len-2 tuple or list</em>) &#8211; X and Y coordinates of the  end points.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<dl class="method">
+<dt id="uvisensor.geometry.Segment.distance2point">
+<code class="descname">distance2point</code><span class="sig-paren">(</span><em>point</em><span class="sig-paren">)</span><a class="headerlink" href="#uvisensor.geometry.Segment.distance2point" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return the distance of a point to the nearest segment&#8217;s point.</p>
+<p>The calculus is based on the dot (scalar) product. The
+perpendicular projection of a first vector on a second one is
+the dot product the 2 vectors divided by the modulus of the 
+second:</p>
+<p><cite>A.B = |A||B|cos(alpha)</cite>
+<cite>being |A|cos(alpha) the projection of A on B</cite></p>
+<p>If the projection is less than 0, it implies that the point is
+left to the first point (as cos(alphha) is negative), being this
+first point the nearest one to the target point.</p>
+<p>Moreover, if the projection is greter than the modulus of the
+segment, it implies that the target point is is right to the end
+point, being this the nearest one.</p>
+<p>Finally, the the distance to the segment is obtained and 
+returned using the Pitagoras&#8217; theorem.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">The distance of the point to the segment</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
 </div>
 <div class="section" id="imgprocessing-py">
 <h2>imgprocessing.py<a class="headerlink" href="#imgprocessing-py" title="Permalink to this headline">¶</a></h2>
 </div>
-<div class="section" id="videosensor-py">
-<h2>videosensor.py<a class="headerlink" href="#videosensor-py" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="module-uvisensor.videosensor">
+<span id="videosensor-py"></span><h2>videosensor.py<a class="headerlink" href="#module-uvisensor.videosensor" title="Permalink to this headline">¶</a></h2>
+<p>This module contains the VideoSensor class and related functions.</p>
+<p>The functions are calls to the VideoSensor class methods in order to
+capture images and then work with them using the imgprrocessing.Image
+class and its methods.</p>
+<hr class="docutils" />
+<dl class="class">
+<dt id="uvisensor.videosensor.VideoSensor">
+<em class="property">class </em><code class="descclassname">uvisensor.videosensor.</code><code class="descname">VideoSensor</code><span class="sig-paren">(</span><em>filename=''</em>, <em>scale=2.0</em><span class="sig-paren">)</span><a class="headerlink" href="#uvisensor.videosensor.VideoSensor" title="Permalink to this definition">¶</a></dt>
+<dd><p>This class contains methods for dealing with FPGA-camera system.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>filename</strong> (<em>str</em>) &#8211; Path to the configuration file of the camera. 
+The path shall be passed relatively to the script directory.</li>
+<li><strong>scale</strong> (<em>float</em>) &#8211; scale ratio of the camera. relationship between the 
+full resolution of the FPGA and the actual resolution that is being
+usedd. By, default, the FPGA has a 2:1 scale i.e. only half of the 
+pixels are being used.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<dl class="method">
+<dt id="uvisensor.videosensor.VideoSensor.capture_frame">
+<code class="descname">capture_frame</code><span class="sig-paren">(</span><em>gray=True</em>, <em>tries=20</em>, <em>output_file=''</em><span class="sig-paren">)</span><a class="headerlink" href="#uvisensor.videosensor.VideoSensor.capture_frame" title="Permalink to this definition">¶</a></dt>
+<dd><p>This method requests a frame to the FPGA.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>get_gray</strong> (<em>bool</em>) &#8211; if true, a gray-scale image will be 
+requested. If false, the requested image will be RGB.</li>
+<li><strong>tries</strong> (<em>int</em>) &#8211; number of times that the system will try to 
+obtain the requested image. After the last try, the system will
+exit.</li>
+<li><strong>output_file</strong> (<em>str</em>) &#8211; URL name of the output file were the 
+image will be stored. If left blank, the image won&#8217;t be saved.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">image contained in an array with dimensions specified 
+in the configuration file. If gray color is True, the dim value 
+will be 1, and 3 for False (representing color images). dim
+equals to the number of components per pixel.</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">MxNxdim numpy.array</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="uvisensor.videosensor.VideoSensor.configure_tracker">
+<code class="descname">configure_tracker</code><span class="sig-paren">(</span><em>tracker_id</em>, <em>min_x</em>, <em>min_y</em>, <em>width</em>, <em>height</em><span class="sig-paren">)</span><a class="headerlink" href="#uvisensor.videosensor.VideoSensor.configure_tracker" title="Permalink to this definition">¶</a></dt>
+<dd><p>Send to FPGA rectangle parameters for defining a tracker.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>tracker_id</strong> (<em>int</em>) &#8211; identifier of the detected object.</li>
+<li><strong>min_x</strong> (<em>int</em>) &#8211; value of the X cartesian coordinate of the 
+tracker window.</li>
+<li><strong>min_y</strong> (<em>int</em>) &#8211; value of the Y cartesian coordinate of the 
+tracker window.</li>
+<li><strong>width</strong> (<em>int</em>) &#8211; value of the width (X axis) of the tracker 
+window</li>
+<li><strong>height</strong> (<em>int</em>) &#8211; value of the height (Y axis) of the tracker 
+window.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<p>NOTE: It is mandatory that the coordinates and dimensions passed
+to the FPGA are integers. Other types like float are not valid
+and the FPGA will not recognize them.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="uvisensor.videosensor.VideoSensor.connect_client">
+<code class="descname">connect_client</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#uvisensor.videosensor.VideoSensor.connect_client" title="Permalink to this definition">¶</a></dt>
+<dd><p>Read TCP/IP parameters in config file and connect to the device.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="uvisensor.videosensor.VideoSensor.disconnect_client">
+<code class="descname">disconnect_client</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#uvisensor.videosensor.VideoSensor.disconnect_client" title="Permalink to this definition">¶</a></dt>
+<dd><p>Close TCP/IP connection with the device.</p>
+<p>If disconnect_client() function is not called, the socket won&#8217;t 
+be able to be reopened.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="uvisensor.videosensor.VideoSensor.get_homography_array">
+<code class="descname">get_homography_array</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#uvisensor.videosensor.VideoSensor.get_homography_array" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get an homography array from the configuration file.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="uvisensor.videosensor.VideoSensor.get_limits_array">
+<code class="descname">get_limits_array</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#uvisensor.videosensor.VideoSensor.get_limits_array" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the limits array from the configuration file.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="uvisensor.videosensor.VideoSensor.get_offsets">
+<code class="descname">get_offsets</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#uvisensor.videosensor.VideoSensor.get_offsets" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the offset of the sensor respect to the iSpace center.</p>
+<p>The row offset of the camera images corresponds to the images
+height and the column offset corresponds to the images width.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">row and column offsets i.e. [row_offset, col_offset]</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">list[float, float]</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="uvisensor.videosensor.VideoSensor.get_register">
+<code class="descname">get_register</code><span class="sig-paren">(</span><em>register</em><span class="sig-paren">)</span><a class="headerlink" href="#uvisensor.videosensor.VideoSensor.get_register" title="Permalink to this definition">¶</a></dt>
+<dd><p>Read the content of the specified register.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>register</strong> (<em>str</em>) &#8211; key identifier of a valid register name of 
+the FPGA. The full list of valid keys and their associated name
+can be found on the documentation of the <em>client.Client</em> class.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">the data stored in the indicated register.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="uvisensor.videosensor.VideoSensor.load_configuration">
+<code class="descname">load_configuration</code><span class="sig-paren">(</span><em>write2fpga=True</em><span class="sig-paren">)</span><a class="headerlink" href="#uvisensor.videosensor.VideoSensor.load_configuration" title="Permalink to this definition">¶</a></dt>
+<dd><p>Load the config file and send the configuration to the FPGA.</p>
+<ul class="simple">
+<li>Read camera and sensor parameters in self.filename. They are 
+then stored in the self._params variable.</li>
+<li>If write2fpga flag is True, write paramters in the FPGA 
+registers by calling set_resgister() method. Finally, send 
+&#8216;CONFIGURE_CAMERA&#8217; command to FPGA.</li>
+</ul>
+</dd></dl>
+
+<dl class="method">
+<dt id="uvisensor.videosensor.VideoSensor.read_conffile">
+<code class="descname">read_conffile</code><span class="sig-paren">(</span><em>filename</em><span class="sig-paren">)</span><a class="headerlink" href="#uvisensor.videosensor.VideoSensor.read_conffile" title="Permalink to this definition">¶</a></dt>
+<dd><p>Look for a configuration file on the given path and read it.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="uvisensor.videosensor.VideoSensor.set_register">
+<code class="descname">set_register</code><span class="sig-paren">(</span><em>register</em>, <em>value</em><span class="sig-paren">)</span><a class="headerlink" href="#uvisensor.videosensor.VideoSensor.set_register" title="Permalink to this definition">¶</a></dt>
+<dd><p>Write a value into an FPGA register.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>register</strong> (<em>str</em>) &#8211; key identifier of valid register name of 
+the FPGA. The full list of valid keys and their associated name
+can be found on the documentation of the <em>client.Client</em> class.</li>
+<li><strong>value</strong> (<em>int or tuple/list</em>) &#8211; the value that will be written to the register. It
+is mandatory to send it as string type. Thus, the value has to
+be converted. For tupples or lists, brackets or parenthesis are
+not allowed, so they have to be eliminated.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">message obtained back from the FPGA after writing into 
+the register.</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Examples:</th><td class="field-body"><p class="first last">sent_value = &#8216;6&#8217; &#8212;&gt; OK
+sent_value = &#8216;(3.45, 2.21)&#8217; &#8212;&gt; No OK
+sent_value = &#8216;3.45, 2.21&#8217; &#8212;&gt; OK</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
 </div>
 </div>
 
@@ -337,9 +879,9 @@ after writing.</p>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Uvisensor package</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#module-uvisensor.multiplecamera">multiplecamera.py</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#module-uvisensor.client">client.py</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#geometry-py">geometry.py</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-uvisensor.geometry">geometry.py</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#imgprocessing-py">imgprocessing.py</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#videosensor-py">videosensor.py</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-uvisensor.videosensor">videosensor.py</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="Hardware.html">Hardware design</a></li>

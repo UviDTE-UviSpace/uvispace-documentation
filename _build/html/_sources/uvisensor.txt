@@ -10,21 +10,24 @@ multiplecamera.py
 
 ------------------------------------------------------
 
+.. autoclass:: uvisensor.multiplecamera.DataFusionThread
+
 ..  image:: /images/Multiplecamera_Flowcharts2.png
-    :height: 700px
-
-|
-
-..  image:: /images/Multiplecamera_Flowcharts1.png
     :height: 700px
 
 |
 
 .. autoclass:: uvisensor.multiplecamera.CameraThread
 
-.. autoclass:: uvisensor.multiplecamera.DataFusionThread
+|
 
 .. autoclass:: uvisensor.multiplecamera.UserThread
+
+..  image:: /images/Multiplecamera_Flowcharts1.png
+    :height: 700px
+
+
+
 
 client.py
 ---------
@@ -32,8 +35,6 @@ client.py
 .. automodule:: uvisensor.client
 
 ------------------------------------------------------
-
-|
 
 .. autoclass:: uvisensor.client.Client
    :members:
@@ -43,7 +44,17 @@ client.py
 geometry.py
 -----------
 
+.. automodule:: uvisensor.geometry
 
+------------------------------------------------------
+
+.. autoclass:: uvisensor.geometry.Triangle
+   :members:
+
+|
+
+.. autoclass:: uvisensor.geometry.Segment
+   :members:
 
 
 imgprocessing.py
@@ -54,3 +65,10 @@ imgprocessing.py
 
 videosensor.py
 ---------------
+
+.. automodule:: uvisensor.videosensor
+
+------------------------------------------------------
+
+.. autoclass:: uvisensor.videosensor.VideoSensor
+   :members:
