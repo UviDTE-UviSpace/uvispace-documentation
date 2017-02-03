@@ -7,7 +7,7 @@ UviSpace documentation index
 ============================
 
 ..  toctree::
-    :maxdepth: 2
+    :maxdepth: 3
 
     Introduction   
     Getting Started         <Starting>
@@ -15,6 +15,3 @@ UviSpace documentation index
     Uvisensor package       <uvisensor>
     Hardware design         <Hardware>
     Arduino controller      <Arduino>
-
-
-

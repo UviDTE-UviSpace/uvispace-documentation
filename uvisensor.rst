@@ -60,7 +60,14 @@ geometry.py
 imgprocessing.py
 ----------------
 
+.. automodule:: uvisensor.imgprocessing
 
+------------------------------------------------------
+
+.. autoclass:: uvisensor.imgprocessing.Image
+   :members:
+
+|
 
 
 videosensor.py

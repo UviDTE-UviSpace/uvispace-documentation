@@ -385,8 +385,8 @@ are based on matricial operations and linear algebra.</p>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>vertices</strong> (<em>np.array</em>) &#8211; 3x2 array containing the vertices
-coordinates of the triangle object.</li>
+<li><strong>vertices</strong> (<em>np.array(shape=3x2)</em>) &#8211; vertices coordinates of the 
+triangle object.</li>
 <li><strong>isglobal</strong> (<em>bool</em>) &#8211; Flag that indicates if the coordinate system 
 refers to the 4-quadrant system (global) or to a local quadrant 
 system.</li>
@@ -424,7 +424,7 @@ horizontal axis and the segment that goes from the triangle&#8217;s
 midpoint to the frontal vertex. It is expressed in radians, in 
 the range [-pi, pi].</td>
 </tr>
-<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">[float32, float32, float32]</td>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">float32, float32, float32</td>
 </tr>
 </tbody>
 </table>
@@ -444,9 +444,9 @@ center the triangle&#8217;s barycenter. The output is stored in the
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>min_value</strong> (<em>int or [int,int] np.array</em>) &#8211; value or values of the minimum allowed 
+<li><strong>min_value</strong> (<em>int or np.array[int,int]</em>) &#8211; value or values of the minimum allowed 
 coordinates.</li>
-<li><strong>max_value</strong> (<em>int or [int,int] np.array</em>) &#8211; value or values of the maximum allowed 
+<li><strong>max_value</strong> (<em>int or np.array[int,int]</em>) &#8211; value or values of the maximum allowed 
 coordinates.</li>
 <li><strong>k</strong> (<em>int or float</em>) &#8211; relative size between the window and the triangle 
 base. It should be bigger than 1. As bigger as it gets, the 
@@ -506,7 +506,7 @@ projection of certain points from a plain to another.
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>H</strong> (<em>3x3 np.array</em>) &#8211; Homography matrix.</td>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>H</strong> (<em>np.array(shape=3x3)</em>) &#8211; Homography matrix.</td>
 </tr>
 <tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">the new vertices coordinates values.</td>
 </tr>
@@ -548,15 +548,16 @@ inside the given polygon</p>
 <dt id="uvisensor.geometry.Triangle.inverse_homography">
 <code class="descname">inverse_homography</code><span class="sig-paren">(</span><em>H</em><span class="sig-paren">)</span><a class="headerlink" href="#uvisensor.geometry.Triangle.inverse_homography" title="Permalink to this definition">¶</a></dt>
 <dd><p>Perform an inverse homography operation to the vertices.</p>
-<p>Get Xu from the equation (w.X) = H.Y</p>
-<p>First of all, get (1/w.Y) using least squares method. Then, 
-extracts 1/w from the column matrix, with the hypothesis that 
-(Y11) = 1.</p>
+<p>Get <img class="math" src="_images/math/26ee6f63c0e5af336989b80f129933ab3bc4de75.png" alt="X_u"/> from the equation 
+<img class="math" src="_images/math/2fa30d511e9a1b48ea3ab4b56663646e9b7b7cc1.png" alt="(w \cdot X) = H \cdot Y"/>.</p>
+<p>First of all, get <img class="math" src="_images/math/7c1ea5a279c33e7e74078f94a1327c2410b21260.png" alt="\frac{1}{w \cdot Y}"/> using least 
+squares method. Then, extracts <img class="math" src="_images/math/14cd7565d9c2c8c1254033b781694c9455dbae8f.png" alt="\frac{1}{w}"/> from the 
+column matrix, with the hypothesis that <img class="math" src="_images/math/28be1382876026be9a30e4d5c78e0e28deb78540.png" alt="Y_{11} = 1"/>.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>H</strong> (<em>3x3 np.array</em>) &#8211; Homography matrix.</td>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>H</strong> (<em>np.array(shape=3x3)</em>) &#8211; Homography matrix.</td>
 </tr>
 <tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">the new vertices coordinates values.</td>
 </tr>
@@ -634,8 +635,9 @@ output will be of the form of [x,y] instead of [row,column].</li>
 perpendicular projection of a first vector on a second one is
 the dot product the 2 vectors divided by the modulus of the 
 second:</p>
-<p><cite>A.B = |A||B|cos(alpha)</cite>
-<cite>being |A|cos(alpha) the projection of A on B</cite></p>
+<div class="math">
+<p><img src="_images/math/39e6226a0f461bbb1f9dfec9d3890a5cc152eccd.png" alt="A.B = |A| \cdot |B| \cdot cos(alpha)"/></p>
+</div><p>being <img class="math" src="_images/math/afe213e3dd609e6eeb0eef23f18365eb84945784.png" alt="|A| \cdot cos(alpha)"/> the projection of A on B</p>
 <p>If the projection is less than 0, it implies that the point is
 left to the first point (as cos(alphha) is negative), being this
 first point the nearest one to the target point.</p>
@@ -657,8 +659,163 @@ returned using the Pitagoras&#8217; theorem.</p>
 </dd></dl>
 
 </div>
-<div class="section" id="imgprocessing-py">
-<h2>imgprocessing.py<a class="headerlink" href="#imgprocessing-py" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="module-uvisensor.imgprocessing">
+<span id="imgprocessing-py"></span><h2>imgprocessing.py<a class="headerlink" href="#module-uvisensor.imgprocessing" title="Permalink to this headline">¶</a></h2>
+<p>This module contains the Image class, for image processing operations.</p>
+<p>The operations implemented in the class methods are focused to the 
+images obtained from the external FPGAs in the UviSpace project. Thus, 
+once obtained a grey scale image, this module provide functions for 
+getting the shapes (triangles) in the image, and then their vertices. 
+Prior to segmentate the image, a binarization has to be applied, as it 
+eases the segmentation process.</p>
+<div class="section" id="important-note">
+<h3>Important note<a class="headerlink" href="#important-note" title="Permalink to this headline">¶</a></h3>
+<p>A point array is written by convention in the form 
+<em>[row, column]</em>. In a cartesian system, the points are expressed
+as <em>(x,y)</em>. Finally, in an image representation (viewer), the typical is 
+to display points coordinates as  <em>(x&#8217;, y&#8217;)</em>. They equivalences are the 
+following:</p>
+<div class="math">
+<p><img src="_images/math/8fb20b9e8d9d60ca8dd88d63ccf77edb5e3fce39.png" alt="x = x' = column
+
+y = -y' = -row"/></p>
+</div><p>Thus, special care has to be taken when dealing with operations in 
+different scopes e.g. trigonometric operations will be handled with the 
+cartesian values, while image operations are normally performed with the
+array convention. Finally, when sending the array values to a viewer or 
+to an external device, the image representation mentioned above is 
+the typical used system.</p>
+</div>
+<hr class="docutils" />
+<dl class="class">
+<dt id="uvisensor.imgprocessing.Image">
+<em class="property">class </em><code class="descclassname">uvisensor.imgprocessing.</code><code class="descname">Image</code><span class="sig-paren">(</span><em>image</em>, <em>contours=[]</em><span class="sig-paren">)</span><a class="headerlink" href="#uvisensor.imgprocessing.Image" title="Permalink to this definition">¶</a></dt>
+<dd><p>Class with image processing methods oriented to UGV detection.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>image</strong> (<em>np.array</em>) &#8211; original grey scale image.</li>
+<li><strong>contours</strong> (<em>list</em>) &#8211; each element is an Mx2 array containing M 
+points defining a closed contour.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<dl class="method">
+<dt id="uvisensor.imgprocessing.Image.binarize">
+<code class="descname">binarize</code><span class="sig-paren">(</span><em>thresholds</em><span class="sig-paren">)</span><a class="headerlink" href="#uvisensor.imgprocessing.Image.binarize" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get a binarized image from a grey image given the thresholds.</p>
+<p>The input image can only have one dimension. This method is 
+intended to work with 3-component threshold values stored in a
+single 30-bit register:</p>
+<blockquote>
+<div><ul class="simple">
+<li><em>register[0 to 10]</em> : red component thresholds</li>
+<li><em>register[10 to 20]</em> : green component thresholds</li>
+<li><em>register[10 to 30]</em> : blue component thresholds</li>
+</ul>
+</div></blockquote>
+<p>The raw binary image contains a lot of noise. As it is very low
+around the triangles, masks around them are used to get rid of 
+the noise in the rest of the image.</p>
+<dl class="docutils">
+<dt>:param [int or float, int or float] thresholds</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">minimum and </span><dd>maximum values betweeen whom the image intensity values will be
+accepted as 1 (rescaled to 255). Values greater than the 
+maximum and smaller than the minimum will be truncated to 0.</dd>
+</dl>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name" colspan="2">Return bin_image:</th></tr>
+<tr class="field-odd field"><td>&nbsp;</td><td class="field-body">Image of the same size as the input image 
+with only 255 or 0 values (Equivalent to 1 and 0), according 
+to the input threshold values.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">binary numpy.array(shape=MxN)</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="uvisensor.imgprocessing.Image.correct_distortion">
+<code class="descname">correct_distortion</code><span class="sig-paren">(</span><em>kx=0.035</em>, <em>ky=0.035</em>, <em>only_contours=True</em><span class="sig-paren">)</span><a class="headerlink" href="#uvisensor.imgprocessing.Image.correct_distortion" title="Permalink to this definition">¶</a></dt>
+<dd><p>Correct barrel distortion on contours or on the whole image.</p>
+<p>The distortion is corrected using a 2nd polynomial equation for
+every pixel with coordinates <img class="math" src="_images/math/2c7785a1ffadb1b0be1eae964383535da281b72f.png" alt="(X_d, Y_d)"/>. The resulting 
+corrected coordinates <img class="math" src="_images/math/91ac474b980e977d04fb8c0756c7e646e716c714.png" alt="(X_u, Y_u)"/> are obtained with the 
+following equations:</p>
+<div class="math">
+<p><img src="_images/math/4994570b3040808b7bf890686e1d4ebdc5e321c0.png" alt="X_u &amp;=(X_d - C_x) * (1 + k_x * r^2) + C_x \
+
+Y_u &amp;= (Y_d - C_y) * (1 + k_y * r^2) + C_y \
+
+r  &amp;= [(X_d - C_x)^2 + (Y_d - C_y)^2] / [(C_x^2 + C_y^2) * 2]"/></p>
+</div><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>kx</strong> (<em>float</em>) &#8211; X-Axe Distortion coefficient of the lens.</li>
+<li><strong>ky</strong> (<em>float</em>) &#8211; Y-Axe Distortion coefficient of the lens.</li>
+<li><strong>only_contours</strong> (<em>bool</em>) &#8211; Specify if the correction is to be 
+applied to the whole image or only to the contours.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="uvisensor.imgprocessing.Image.get_shapes">
+<code class="descname">get_shapes</code><span class="sig-paren">(</span><em>tolerance=8</em>, <em>get_contours=True</em><span class="sig-paren">)</span><a class="headerlink" href="#uvisensor.imgprocessing.Image.get_shapes" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the shapes&#8217; vertices in the binarized image.</p>
+<p>Update the <em>self.triangles</em> attribute.</p>
+<p>The shape is obtained using the <em>Marching Cubes Algorithm</em>.
+Once obtained, the vertices are calculated using the 
+<em>Ramer-Douglas-Peucker Algorithm</em>. Both are implemented on the 
+<em>skimage</em> library, and there is more information on its docs.</p>
+<p>if the kwarg <em>get_contours</em> if False, it is assumed that the 
+contours are already known (stored in variable <em>self.contours</em>). 
+If this is the case, the marching cubes algorithm is omitted.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>tolerance</strong> (<em>float</em>) &#8211; minimum distance between an observed 
+pixel and the previous vertices pixels required to add the 
+first one to the vertices list.</li>
+<li><strong>get_contours</strong> (<em>bool</em>) &#8211; specify if the <em>Marching Cubes 
+Algorithm</em> is applied to the binarized image. Specifically set 
+to False when the binarization algorithm is implemented in the 
+external device (i.e. the FPGA).</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">vertices of the N shapes detected on the
+image. each element contains an Mx2 <em>np.rray</em> with the 
+coordinates of the M vertices of the shape.</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">list</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
 </div>
 <div class="section" id="module-uvisensor.videosensor">
 <span id="videosensor-py"></span><h2>videosensor.py<a class="headerlink" href="#module-uvisensor.videosensor" title="Permalink to this headline">¶</a></h2>
@@ -851,9 +1008,11 @@ not allowed, so they have to be eliminated.</li>
 the register.</p>
 </td>
 </tr>
-<tr class="field-odd field"><th class="field-name">Examples:</th><td class="field-body"><p class="first last">sent_value = &#8216;6&#8217; &#8212;&gt; OK
-sent_value = &#8216;(3.45, 2.21)&#8217; &#8212;&gt; No OK
-sent_value = &#8216;3.45, 2.21&#8217; &#8212;&gt; OK</p>
+<tr class="field-odd field"><th class="field-name">Examples:</th><td class="field-body"><ul class="first last simple">
+<li>sent_value = &#8216;6&#8217; &#8212;&gt; OK</li>
+<li>sent_value = &#8216;(3.45, 2.21)&#8217; &#8212;&gt; No OK</li>
+<li>sent_value = &#8216;3.45, 2.21&#8217; &#8212;&gt; OK</li>
+</ul>
 </td>
 </tr>
 </tbody>
@@ -880,7 +1039,7 @@ sent_value = &#8216;3.45, 2.21&#8217; &#8212;&gt; OK</p>
 <li class="toctree-l2"><a class="reference internal" href="#module-uvisensor.multiplecamera">multiplecamera.py</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#module-uvisensor.client">client.py</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#module-uvisensor.geometry">geometry.py</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#imgprocessing-py">imgprocessing.py</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-uvisensor.imgprocessing">imgprocessing.py</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#module-uvisensor.videosensor">videosensor.py</a></li>
 </ul>
 </li>
