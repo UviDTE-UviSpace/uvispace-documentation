@@ -90,6 +90,9 @@ The package has, as well, 4 importable modules:
 * **imgprocessing.py** contains the *Image()* class, which has image-oriented methods, based on matrix operations, for getting useful information from image data.
 * **videosensor.py** has the *VideoSensor()* class and several functions related to it. Each instantiated object represent an external FPGA device. Thus, this class has methods for setting up the TCP/IP connection, configuring the FPGA registers, and interact with it.
 
+..  image:: /images/software_diagram.png
+    :width: 750px
+
 Hardware design project
 -----------------------
 

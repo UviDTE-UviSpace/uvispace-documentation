@@ -82,14 +82,15 @@ have to be reset.</p>
 <dt id="uvisensor.multiplecamera.DataFusionThread">
 <em class="property">class </em><code class="descclassname">uvisensor.multiplecamera.</code><code class="descname">DataFusionThread</code><span class="sig-paren">(</span><em>triangles</em>, <em>ntriangles</em>, <em>conditions</em>, <em>inborders</em>, <em>quadrant_limits</em>, <em>begin_events</em>, <em>end_event</em>, <em>reset_flags</em>, <em>publisher</em>, <em>name='Fusion Thread'</em><span class="sig-paren">)</span><a class="headerlink" href="#uvisensor.multiplecamera.DataFusionThread" title="Permalink to this definition">¶</a></dt>
 <dd><p>Child class of threading.Thread for merging and processing data.</p>
-<p>Override the <em>run</em> method, where it is specified the behavior 
-when the <em>start</em> method is called. At first, wait until all cameras 
-are initialized. After that, enter an endless loop until <em>end_event</em> 
-flag is raised. At each iteration:</p>
+<p>The <em>run</em> method, where is specified the behavior when the <em>start</em> 
+method is called, is overrided. At first, it waits until all cameras 
+are initialized. Then it enters an endless loop until the 
+<em>end_event</em> flag is raised. At each iteration:</p>
 <ul class="simple">
-<li>Check the triangles stored at each CameraThread.</li>
-<li>When a triangle is detected, determine if it is in the borders 
-region of another camera. If True, prepare a new ROI tracker.</li>
+<li>Check the triangles found by each <em>CameraThread</em>.</li>
+<li>When a camera detects a triangle, it determines if the triangle is
+in the borders region of another camera. If that is True, orders 
+the creating of a new ROI tracker in the second camera.</li>
 <li>Evaluate if an UGV exits a camera, deleting the ROI tracker if 
 it is True.</li>
 <li>Merge the information obtained in all the cameras and write it in 
@@ -101,22 +102,22 @@ a ROS topic</li>
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
 <li><strong>triangles</strong> &#8211; READ ONLY List containing N dictionaries, where
-N is the number of Camera threads. Each dictionary entry are the
-coordinates of an UGV inside the Nth camera.</li>
-<li><strong>ntriangles</strong> &#8211; WRITE N-len list of the shame type and shape as
-triangles, for exchanging triangles information between 
-CameraThreads.</li>
-<li><strong>conditions</strong> &#8211; List containing N threading.Condition objects. 
-They are used for synchronizing the CameraThreads and the
-DataFusionThread when doing R/W operations on shared variables.</li>
+N is the number of Camera threads. Each dictionary element is the
+set of coordinates of an UGV inside the Nth camera.</li>
+<li><strong>ntriangles</strong> &#8211; WRITE N-len list of the same type and shape as
+<em>triangles</em>, for exchanging triangles information between 
+<em>CameraThreads</em>.</li>
+<li><strong>conditions</strong> &#8211; List containing N <em>threading.Condition</em> objects. 
+They are used for synchronizing the <em>CameraThreads</em> and the
+<em>DataFusionThread</em> when doing R/W operations on shared variables.</li>
 <li><strong>inborders</strong> &#8211; List containing N dictionaries. Each dictionary
-entry is a flag set to True when the UGV is in the Nth camera 
+element is a flag set to True when the UGV is within the Nth camera
 borders region.</li>
 <li><strong>quadrant_limits</strong> &#8211; List containing N 4x2 arrays. Each array 
 contains the 4 points defining the working space of the Nth camera.</li>
-<li><strong>end_event</strong> &#8211; threading.Event object that is set to True when 
-the UserThread detects an &#8216;end&#8217; order from the user.</li>
-<li><strong>publisher</strong> &#8211; rospy.Publisher object for sending pose values to 
+<li><strong>end_event</strong> &#8211; <em>threading.Event</em> object that is set to True when 
+the <em>UserThread</em> detects an &#8216;end&#8217; order from the user.</li>
+<li><strong>publisher</strong> &#8211; <em>rospy.Publisher</em> object for sending pose values to 
 a ROS topic, that can be read by other ROS nodes.</li>
 <li><strong>reset_flags</strong> &#8211; List containing N dictionaries whose entries are
 flags set to True when a ROI tracker in specified FPGA to be reset.</li>
@@ -148,23 +149,26 @@ writes it to the global shared variable <em>triangles</em>.</p>
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
 <li><strong>triangles</strong> &#8211; Dictionary where each element is an instance 
-of geometry.Triangle(). It is a global variable for sharing the 
+of <em>geometry.Triangle</em>. It is a global variable for sharing the 
 information of different triangles detected in the camera space. 
 Each triangle has a UNIQUE key identifier. It is used for 
 writing and sending to other threads the triangle elements.</li>
 <li><strong>ntriangles</strong> &#8211; READ ONLY dictionary of the same type and shape 
 as <em>triangles</em>. It contains the triangles detected by other cameras 
 that are inside the borders region of the current camera&#8217;s space.</li>
-<li><strong>begin_event</strong> &#8211; threading.Event() object that is set to True 
+<li><strong>begin_event</strong> &#8211; <em>threading.Event</em> object that is set to True 
 when the FPGA is configured and the thread begins the main loop.</li>
-<li><strong>end_event</strong> &#8211; threading.Event() object that is set to True 
+<li><strong>end_event</strong> &#8211; <em>threading.Event</em> object that is set to True 
 when the execution has to end.</li>
-<li><strong>condition</strong> &#8211; threading.Condition() object for synchronizing 
-R/W operations on shared variables i.e. triangles, inborders.</li>
+<li><strong>condition</strong> &#8211; <em>threading.Condition</em> object for synchronizing 
+R/W operations on shared variables i.e. <em>triangles, inborders</em>.</li>
 <li><strong>inborders</strong> &#8211; READ ONLY dictionary whose elements indicate if 
 the corresponding triangle is located within the borders region 
 of current camera&#8217;s space. Its keys have an univocal correspondence 
 with the key identifiers of the <em>triangles</em> dictionary.</li>
+<li><strong>reset_flag</strong> &#8211; READ ONLY dictionary of boolean elements. They 
+are set to True when its corresponding triangle exits the current 
+camera&#8217;s space.</li>
 <li><strong>name</strong> &#8211; String that provides the name of the thread.</li>
 <li><strong>conf_file</strong> &#8211; String containing the relative path to the 
 configuration file of the camera.</li>
@@ -182,19 +186,19 @@ configuration file of the camera.</li>
 <dt id="uvisensor.multiplecamera.UserThread">
 <em class="property">class </em><code class="descclassname">uvisensor.multiplecamera.</code><code class="descname">UserThread</code><span class="sig-paren">(</span><em>begin_events</em>, <em>end_event</em>, <em>name='User Thread'</em><span class="sig-paren">)</span><a class="headerlink" href="#uvisensor.multiplecamera.UserThread" title="Permalink to this definition">¶</a></dt>
 <dd><p>Child class of threading.Thread for interacting with user.</p>
-<p>Override the <em>run</em> method, where it is specified the behavior 
-when the <em>start</em> method is called. Ask the user for commands through
+<p>The <em>run</em> method, where is specified the behavior when the <em>start</em> 
+method is called, is overrided. Ask the user for commands through
 keyboard.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>begin_events</strong> &#8211; List with N Event objects, where N is the 
-number of Camera threads. Until the set up of every camera is 
-finished, the user can not interact with this thread.</li>
-<li><strong>end_event</strong> &#8211; threading.Event object that is set to True when 
-the UserThread detects an &#8216;end&#8217; order from the user.</li>
+<li><strong>begin_events</strong> &#8211; List with N <em>threading.Event</em> objects, where N 
+is the number of Camera threads. Until the set up of every camera 
+is finished, the user can not interact with this thread.</li>
+<li><strong>end_event</strong> &#8211; <em>threading.Event</em> object that is set to True when 
+the <em>UserThread</em> detects an &#8216;end&#8217; order from the user.</li>
 </ul>
 </td>
 </tr>
@@ -1039,7 +1043,10 @@ the register.</p>
 <li class="toctree-l2"><a class="reference internal" href="#module-uvisensor.multiplecamera">multiplecamera.py</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#module-uvisensor.client">client.py</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#module-uvisensor.geometry">geometry.py</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#module-uvisensor.imgprocessing">imgprocessing.py</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-uvisensor.imgprocessing">imgprocessing.py</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#important-note">Important note</a></li>
+</ul>
+</li>
 <li class="toctree-l2"><a class="reference internal" href="#module-uvisensor.videosensor">videosensor.py</a></li>
 </ul>
 </li>
