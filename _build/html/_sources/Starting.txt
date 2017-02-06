@@ -32,3 +32,15 @@ Once you have git installed and configured, type the following instructions for 
     
 After that, the project will be cloned to a folder named UviSpace into the directory you have specified.
 
+Learning
+--------
+
+git
+===
+
+The project uses *git* for doing a versioning control of the project. There 
+is a practical guide in [1]_
+
+.. rubric:: **Bibliography**
+
+.. [1]  Pro Git book, 2nd edition (2014). `<https://git-scm.com/book/en/v2>`_
