@@ -56,7 +56,7 @@ uvirobot
 The *uvirobot* package consist in 2 callable scripts:
 
 - **messenger.py** stablishes the communication to the specified UGV, using the ZigBee protocol. Thus, prior runnning it an XBee module has to be connected to the PC, and another one to the Arduino board serial port, and both configured accordingly. Once the communication is stablished, the module *listens* to speed set points and send them to the UGV. When the execution is cancelled, a plot with the delay times is obtained and then the program ends.
-- **move_robot.py** *listens* to input UGV position values and destination coordinates, calculates the UGV optimal path, and finally outputs the speed set points needed to achieve the planned path.
+- **controller.py** *listens* to input UGV position values and destination coordinates, calculates the UGV optimal path, and finally outputs the speed set points needed to achieve the planned path.
     
 Moreover, there are 5 importable libraries inside the *uvirobot* package:
 
