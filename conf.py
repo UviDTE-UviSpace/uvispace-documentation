@@ -31,7 +31,7 @@ sys.path.insert(0, os.path.abspath('../uvispace/.'))
 # ones.
 extensions = [
     'sphinx.ext.autodoc',
-    'sphinx.ext.imgmath'
+    'sphinx.ext.pngmath'
 ]
 
 # Add any paths that contain templates here, relative to this directory.
