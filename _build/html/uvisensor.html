@@ -552,11 +552,11 @@ inside the given polygon</p>
 <dt id="uvisensor.geometry.Triangle.inverse_homography">
 <code class="descname">inverse_homography</code><span class="sig-paren">(</span><em>H</em><span class="sig-paren">)</span><a class="headerlink" href="#uvisensor.geometry.Triangle.inverse_homography" title="Permalink to this definition">¶</a></dt>
 <dd><p>Perform an inverse homography operation to the vertices.</p>
-<p>Get <img class="math" src="_images/math/26ee6f63c0e5af336989b80f129933ab3bc4de75.png" alt="X_u"/> from the equation 
-<img class="math" src="_images/math/2fa30d511e9a1b48ea3ab4b56663646e9b7b7cc1.png" alt="(w \cdot X) = H \cdot Y"/>.</p>
-<p>First of all, get <img class="math" src="_images/math/7c1ea5a279c33e7e74078f94a1327c2410b21260.png" alt="\frac{1}{w \cdot Y}"/> using least 
-squares method. Then, extracts <img class="math" src="_images/math/14cd7565d9c2c8c1254033b781694c9455dbae8f.png" alt="\frac{1}{w}"/> from the 
-column matrix, with the hypothesis that <img class="math" src="_images/math/28be1382876026be9a30e4d5c78e0e28deb78540.png" alt="Y_{11} = 1"/>.</p>
+<p>Get <img class="math" src="_images/math/8e66b55ee1ce4ce6f31675d0ecfb5fe277c5a788.png" alt="X_u"/> from the equation 
+<img class="math" src="_images/math/3923ef09c6a25fdb4cbba381f15a26c07f93dbeb.png" alt="(w \cdot X) = H \cdot Y"/>.</p>
+<p>First of all, get <img class="math" src="_images/math/991d7aa2f9becc65a7e5f9b836e625122413a753.png" alt="\frac{1}{w \cdot Y}"/> using least 
+squares method. Then, extracts <img class="math" src="_images/math/9d125c8e142b3121b0aa5c6783e5588badbe4fa5.png" alt="\frac{1}{w}"/> from the 
+column matrix, with the hypothesis that <img class="math" src="_images/math/062e383bf177b36125bb991168049894965232c2.png" alt="Y_{11} = 1"/>.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -640,8 +640,8 @@ perpendicular projection of a first vector on a second one is
 the dot product the 2 vectors divided by the modulus of the 
 second:</p>
 <div class="math">
-<p><img src="_images/math/39e6226a0f461bbb1f9dfec9d3890a5cc152eccd.png" alt="A.B = |A| \cdot |B| \cdot cos(alpha)"/></p>
-</div><p>being <img class="math" src="_images/math/afe213e3dd609e6eeb0eef23f18365eb84945784.png" alt="|A| \cdot cos(alpha)"/> the projection of A on B</p>
+<p><img src="_images/math/602b90211a9344dcfe4ffc6aa339f248b8ebc13b.png" alt="A.B = |A| \cdot |B| \cdot cos(alpha)"/></p>
+</div><p>being <img class="math" src="_images/math/6236fc655abba9681336e87676851acf537813d1.png" alt="|A| \cdot cos(alpha)"/> the projection of A on B</p>
 <p>If the projection is less than 0, it implies that the point is
 left to the first point (as cos(alphha) is negative), being this
 first point the nearest one to the target point.</p>
@@ -680,7 +680,7 @@ as <em>(x,y)</em>. Finally, in an image representation (viewer), the typical is
 to display points coordinates as  <em>(x&#8217;, y&#8217;)</em>. They equivalences are the 
 following:</p>
 <div class="math">
-<p><img src="_images/math/8fb20b9e8d9d60ca8dd88d63ccf77edb5e3fce39.png" alt="x = x' = column
+<p><img src="_images/math/08a9576483e48ed458ef700e48eeaa0ebb333705.png" alt="x = x' = column
 
 y = -y' = -row"/></p>
 </div><p>Thus, special care has to be taken when dealing with operations in 
@@ -751,11 +751,11 @@ to the input threshold values.</td>
 <code class="descname">correct_distortion</code><span class="sig-paren">(</span><em>kx=0.035</em>, <em>ky=0.035</em>, <em>only_contours=True</em><span class="sig-paren">)</span><a class="headerlink" href="#uvisensor.imgprocessing.Image.correct_distortion" title="Permalink to this definition">¶</a></dt>
 <dd><p>Correct barrel distortion on contours or on the whole image.</p>
 <p>The distortion is corrected using a 2nd polynomial equation for
-every pixel with coordinates <img class="math" src="_images/math/2c7785a1ffadb1b0be1eae964383535da281b72f.png" alt="(X_d, Y_d)"/>. The resulting 
-corrected coordinates <img class="math" src="_images/math/91ac474b980e977d04fb8c0756c7e646e716c714.png" alt="(X_u, Y_u)"/> are obtained with the 
+every pixel with coordinates <img class="math" src="_images/math/3b4d2a3b4bc1b3b5949f341ec60356038e45bc4b.png" alt="(X_d, Y_d)"/>. The resulting 
+corrected coordinates <img class="math" src="_images/math/8559ae27eec53525cef8dd8e5664d4e3280c35b2.png" alt="(X_u, Y_u)"/> are obtained with the 
 following equations:</p>
 <div class="math">
-<p><img src="_images/math/4994570b3040808b7bf890686e1d4ebdc5e321c0.png" alt="X_u &amp;=(X_d - C_x) * (1 + k_x * r^2) + C_x \
+<p><img src="_images/math/efffe5e3975bf8f263a94d891f436ad28bfade59.png" alt="X_u &amp;=(X_d - C_x) * (1 + k_x * r^2) + C_x \
 
 Y_u &amp;= (Y_d - C_y) * (1 + k_y * r^2) + C_y \
 
