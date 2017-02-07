@@ -1,16 +1,9 @@
 
 
-Introduction
-============
 
-
-UviSpace is an open-source project developed at the *Electronic Technology 
-Department* in the **University of Vigo**. It consists in a system for 
-remotely controlling Unmanned Ground Vehicles (UGVs) moving inside a delimited 
-space.
 
 ..  image:: /_static/portada.jpg
-    :width: 1000px
+    :width: 1100px
     :align: center
     
 General  overview
@@ -101,6 +94,8 @@ Hardware design project
 Arduino controllers project
 ---------------------------
 
+About us
+--------
 
-
+The project was developed by a team of researchers at the *Electronic Technology Department* in the **University of Vigo**
 

@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>Introduction &#8212; UviSpace 1.0.0 documentation</title>
+    <title>General overview &#8212; UviSpace 1.0.0 documentation</title>
     
     <link rel="stylesheet" href="_static/haiku.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
@@ -27,17 +27,17 @@
     <link rel="search" title="Search" href="search.html" />
     <link rel="top" title="UviSpace 1.0.0 documentation" href="index.html" />
     <link rel="next" title="Getting Started" href="Starting.html" />
-    <link rel="prev" title="UviSpace documentation index" href="index.html" /> 
+    <link rel="prev" title="UviSpace" href="index.html" /> 
   </head>
   <body role="document">
       <div class="header" role="banner"><h1 class="heading"><a href="index.html">
           <span>UviSpace 1.0.0 documentation</span></a></h1>
-        <h2 class="heading"><span>Introduction</span></h2>
+        <h2 class="heading"><span>General overview</span></h2>
       </div>
       <div class="topnav" role="navigation" aria-label="top navigation">
       
         <p>
-        «&#160;&#160;<a href="index.html">UviSpace documentation index</a>
+        «&#160;&#160;<a href="index.html">UviSpace</a>
         &#160;&#160;::&#160;&#160;
         <a class="uplink" href="index.html">Contents</a>
         &#160;&#160;::&#160;&#160;
@@ -48,15 +48,9 @@
       <div class="content">
         
         
-  <div class="section" id="introduction">
-<h1>Introduction<a class="headerlink" href="#introduction" title="Permalink to this headline">¶</a></h1>
-<p>UviSpace is an open-source project developed at the <em>Electronic Technology
-Department</em> in the <strong>University of Vigo</strong>. It consists in a system for
-remotely controlling Unmanned Ground Vehicles (UGVs) moving inside a delimited
-space.</p>
-<a class="reference internal image-reference" href="_images/portada.jpg"><img alt="_images/portada.jpg" class="align-center" src="_images/portada.jpg" style="width: 1000px;" /></a>
+  <a class="reference internal image-reference" href="_images/portada.jpg"><img alt="_images/portada.jpg" class="align-center" src="_images/portada.jpg" style="width: 1100px;" /></a>
 <div class="section" id="general-overview">
-<h2>General  overview<a class="headerlink" href="#general-overview" title="Permalink to this headline">¶</a></h2>
+<h1>General  overview<a class="headerlink" href="#general-overview" title="Permalink to this headline">¶</a></h1>
 <p>The project is aimed to control an indoor intelligent space where several unmanned vehicles are simultaneously observed and controlled through a distributed vision system, a central controller and an Arduino board embedded at each vehicle. The physical system was set up in the university in order to run tests and try new algorithms and solutions.</p>
 <p>Hence, the whole system can be divided into three different elements:</p>
 <ul>
@@ -81,7 +75,7 @@ space.</p>
 <img alt="_images/general_diagram.png" class="align-center" src="_images/general_diagram.png" />
 </div>
 <div class="section" id="software-project">
-<h2>Software project<a class="headerlink" href="#software-project" title="Permalink to this headline">¶</a></h2>
+<h1>Software project<a class="headerlink" href="#software-project" title="Permalink to this headline">¶</a></h1>
 <p>The software subproject inside the UviSpace project is called uvispace as well. It is a <strong>Python2.7</strong> project, and it is structured into 2 main packages, namely <em>uvirobot</em> and <em>uvisensor</em>.</p>
 <p>The <em>uvirobot</em> package deals with the classes and functions needed to
 implement the algorithms for moving an UGV and communicating with it,
@@ -89,7 +83,7 @@ while the <em>uvisensor</em> package is used to communicate with FPGA devices us
 TCP/IP connection and receive scene information captured through camera
 peripherals.</p>
 <div class="section" id="uvirobot">
-<h3>uvirobot<a class="headerlink" href="#uvirobot" title="Permalink to this headline">¶</a></h3>
+<h2>uvirobot<a class="headerlink" href="#uvirobot" title="Permalink to this headline">¶</a></h2>
 <p>The <em>uvirobot</em> package consist in 2 callable scripts:</p>
 <ul class="simple">
 <li><strong>messenger.py</strong> stablishes the communication to the specified UGV, using the ZigBee protocol. Thus, prior runnning it an XBee module has to be connected to the PC, and another one to the Arduino board serial port, and both configured accordingly. Once the communication is stablished, the module <em>listens</em> to speed set points and send them to the UGV. When the execution is cancelled, a plot with the delay times is obtained and then the program ends.</li>
@@ -106,7 +100,7 @@ peripherals.</p>
 <p>Finally, the package contains an auxiliary module into the <em>resources</em> folder, called <em>teleoperation.py</em>. This is a callable module that allows to control the UGV with the keyboard, which is specially useful when the <em>uvispace</em> package has to be tested.</p>
 </div>
 <div class="section" id="uvisensor">
-<h3>uvisensor<a class="headerlink" href="#uvisensor" title="Permalink to this headline">¶</a></h3>
+<h2>uvisensor<a class="headerlink" href="#uvisensor" title="Permalink to this headline">¶</a></h2>
 <p>The <em>uvisensor</em> contains 1 callable module, <strong>multiplecamera.py</strong>. It is based on multithreading. The purpose of this module is to manage the information of N cameras, merge the vertices of every tracker and obtain the final number of UGVs(triangles) with their pose. There is a shared variable with all the vertices obtained from each camera.</p>
 <p>The connection via TCP/IP to the cameras, as well as the processing of the images from each camera, is achieved in parallel.</p>
 <p>Finally, another thread communicates with the user in order to get commands. At the moment, the only command is &#8216;Quit Program&#8217; (&#8216;Q&#8217;), but this functionality can be easily increased in the future.</p>
@@ -127,11 +121,14 @@ peripherals.</p>
 </div>
 </div>
 <div class="section" id="hardware-design-project">
-<h2>Hardware design project<a class="headerlink" href="#hardware-design-project" title="Permalink to this headline">¶</a></h2>
+<h1>Hardware design project<a class="headerlink" href="#hardware-design-project" title="Permalink to this headline">¶</a></h1>
 </div>
 <div class="section" id="arduino-controllers-project">
-<h2>Arduino controllers project<a class="headerlink" href="#arduino-controllers-project" title="Permalink to this headline">¶</a></h2>
+<h1>Arduino controllers project<a class="headerlink" href="#arduino-controllers-project" title="Permalink to this headline">¶</a></h1>
 </div>
+<div class="section" id="about-us">
+<h1>About us<a class="headerlink" href="#about-us" title="Permalink to this headline">¶</a></h1>
+<p>The project was developed by a team of researchers at the <em>Electronic Technology Department</em> in the <strong>University of Vigo</strong></p>
 </div>
 
 
@@ -139,7 +136,7 @@ peripherals.</p>
       <div class="bottomnav" role="navigation" aria-label="bottom navigation">
       
         <p>
-        «&#160;&#160;<a href="index.html">UviSpace documentation index</a>
+        «&#160;&#160;<a href="index.html">UviSpace</a>
         &#160;&#160;::&#160;&#160;
         <a class="uplink" href="index.html">Contents</a>
         &#160;&#160;::&#160;&#160;

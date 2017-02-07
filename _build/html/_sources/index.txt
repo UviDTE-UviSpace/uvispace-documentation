@@ -3,8 +3,20 @@
    You can adapt this file completely to your liking, but it should at least
    contain the root `toctree` directive.
 
-UviSpace documentation index
-============================
+..  image:: /_static/portada2.jpg
+    :width: 1100px
+    :align: center
+
+UviSpace
+========
+
+UviSpace is an open-source project developed at the *Electronic Technology 
+Department* in the **University of Vigo**. It consists in a system for 
+remotely controlling Unmanned Ground Vehicles (UGVs) moving inside a delimited 
+space and observed by a network of FPGA-based camera devices.
+
+Documentation
+=============
 
 ..  toctree::
     :maxdepth: 2
