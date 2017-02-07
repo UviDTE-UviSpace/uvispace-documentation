@@ -10,7 +10,7 @@ Department* in the **University of Vigo**. It consists in a system for
 remotely controlling Unmanned Ground Vehicles (UGVs) moving inside a delimited 
 space.
 
-..  image:: /images/portada.jpg
+..  image:: /_static/portada.jpg
     :height: 500px
     
 General  overview
@@ -35,7 +35,7 @@ Hence, the whole system can be divided into three different elements:
 
 The main structure of the system can be observed in the diagram below.  
 
-..  image:: /images/general_diagram.png
+..  image:: /_static/general_diagram.png
     
 
 
@@ -90,7 +90,7 @@ The package has, as well, 4 importable modules:
 * **imgprocessing.py** contains the *Image()* class, which has image-oriented methods, based on matrix operations, for getting useful information from image data.
 * **videosensor.py** has the *VideoSensor()* class and several functions related to it. Each instantiated object represent an external FPGA device. Thus, this class has methods for setting up the TCP/IP connection, configuring the FPGA registers, and interact with it.
 
-..  image:: /images/software_diagram.png
+..  image:: /_static/software_diagram.png
     :width: 750px
 
 Hardware design project
