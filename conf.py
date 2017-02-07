@@ -26,8 +26,8 @@ class Mock(MagicMock):
     def __getattr__(cls, name):
             return MagicMock()
 
-MOCK_MODULES = ['cv2', 'rospy', 'geometry_msgs.msg', 'geometry_msgs',
-                'skimage.measure', 'skimage.morphology']
+MOCK_MODULES = ['cv2', 'rospy', 'geometry_msgs', 'geometry_msgs.msg', 'skimage' 
+                'skimage.measure', 'skimage.morphology', 'path_tracker']
 sys.modules.update((mod_name, Mock()) for mod_name in MOCK_MODULES)
 
 # -- General configuration ------------------------------------------------
