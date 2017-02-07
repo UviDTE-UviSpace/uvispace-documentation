@@ -8,7 +8,7 @@
     
     <title>Getting Started &#8212; UviSpace 1.0.0 documentation</title>
     
-    <link rel="stylesheet" href="_static/agogo.css" type="text/css" />
+    <link rel="stylesheet" href="_static/haiku.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     
     <script type="text/javascript">
@@ -30,31 +30,24 @@
     <link rel="prev" title="Introduction" href="Introduction.html" /> 
   </head>
   <body role="document">
-    <div class="header-wrapper" role="banner">
-      <div class="header">
-        <div class="headertitle"><a
-          href="index.html">UviSpace 1.0.0 documentation</a></div>
-        <div class="rel" role="navigation" aria-label="related navigation">
-          <a href="Introduction.html" title="Introduction"
-             accesskey="P">previous</a> |
-          <a href="uvirobot.html" title="The uvirobot package"
-             accesskey="N">next</a> |
-          <a href="py-modindex.html" title="Python Module Index"
-             >modules</a> |
-          <a href="genindex.html" title="General Index"
-             accesskey="I">index</a>
-        </div>
-       </div>
-    </div>
+      <div class="header" role="banner"><h1 class="heading"><a href="index.html">
+          <span>UviSpace 1.0.0 documentation</span></a></h1>
+        <h2 class="heading"><span>Getting Started</span></h2>
+      </div>
+      <div class="topnav" role="navigation" aria-label="top navigation">
+      
+        <p>
+        «&#160;&#160;<a href="Introduction.html">Introduction</a>
+        &#160;&#160;::&#160;&#160;
+        <a class="uplink" href="index.html">Contents</a>
+        &#160;&#160;::&#160;&#160;
+        <a href="uvirobot.html">The uvirobot package</a>&#160;&#160;»
+        </p>
 
-    <div class="content-wrapper">
+      </div>
       <div class="content">
-        <div class="document">
-            
-      <div class="documentwrapper">
-        <div class="bodywrapper">
-          <div class="body" role="main">
-            
+        
+        
   <div class="section" id="getting-started">
 <h1>Getting Started<a class="headerlink" href="#getting-started" title="Permalink to this headline">¶</a></h1>
 <p>This section covers the first steps for downloading the project and setting
@@ -69,15 +62,18 @@ up a PC in order to be able to collaborate developing and testing the project.</
 correctly the project:</p>
 <ul class="simple">
 <li><strong>ROS</strong>: It is a set of libraries and tools used for developing robot oriented software in <em>Python</em> and <em>C/C++</em>. Each ROS version is associated to a concrete Ubuntu distribution, and it is highly recommended to respect this correspondence. Thus, for <em>Ubuntu 14.05</em>, the corresponding ROS version is ROS Indigo. Information and installation instructions can be obtained at <a class="reference external" href="http://wiki.ros.org/indigo">http://wiki.ros.org/indigo</a>.</li>
+<li><strong>OpenCV</strong>: open-source library compatible with <em>Python</em> and <em>C++</em>. It offers lots of image processing functions with plenty of documentation. In the current version, it was used the version <em>OpenCV2</em>, though there is a more recent one (<em>OpenCV3</em>). <a class="reference external" href="http://opencv.org/">http://opencv.org/</a></li>
+<li><strong>scikit-image</strong>: is an open-source <em>SciPy</em> third party library for dealing with image processing operations. In this project,  it is used for image segmentation and shapes classification. It can be obtained more information at <a class="reference external" href="http://scikit-image.org/">http://scikit-image.org/</a>.</li>
+<li><strong>Sphinx</strong>: This library is an excellent tool for creating intelligent Python documentation. Indeed this documentation was generated using it. It can access the <em>docstrings</em> inside the project and allow to automatically update the documentation when they are changed. It allows to create HMTL or PDF documents from plain text (<em>ReStructured text</em>) using a variety of templates or customize a new one. There is a <em>Getting Started</em> tutorial at the <a class="reference external" href="http://www.sphinx-doc.org/en/1.5.1/index.html">official webpage</a>. Moreover, it has been used <em>ReadTheDocs</em> for hosting the documentation. It offers tools for compiling the code and generating the HTML files in their own server. <a class="reference external" href="https://readthedocs.org/">https://readthedocs.org/</a>.</li>
 </ul>
 </div>
 <div class="section" id="download-the-source">
 <h2>Download the source<a class="headerlink" href="#download-the-source" title="Permalink to this headline">¶</a></h2>
-<p>The project is stored and mantained at an online repository that can be accesed <a class="reference external" href="https://github.com/jlrandulfe/UviSpace">here</a>.
+<p>The project is stored and maintained at an online repository that can be accessed <a class="reference external" href="https://github.com/jlrandulfe/UviSpace">here</a>.
 The project can be directly downloaded from the repository page. However, it is recommended to <a class="reference external" href="https://git-scm.com/downloads">install git</a> and then clone the project to a local repository. This way, you can use the <em>git version control system</em> in order to collaborate to the project and easily synchronize your work with the other developers.</p>
 <p>Once you have git installed and configured, type the following instructions for cloning the UviSpace project to your PC:</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">cd</span> <span class="o">/</span><span class="n">go</span><span class="o">/</span><span class="n">to</span><span class="o">/</span><span class="n">desired</span><span class="o">/</span><span class="n">directory</span>                             <span class="c1">#Set the terminal working directory</span>
-<span class="n">git</span> <span class="n">clone</span> <span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">github</span><span class="o">.</span><span class="n">com</span><span class="o">/</span><span class="n">jlrandulfe</span><span class="o">/</span><span class="n">UviSpace</span><span class="o">.</span><span class="n">git</span>    <span class="c1">#Clone the project to your local machine</span>
+<div class="highlight-default"><div class="highlight"><pre><span></span>$ cd /go/to/desired/directory                             #Set the terminal working directory
+$ git clone https://github.com/jlrandulfe/UviSpace.git    #Clone the project to your local machine
 </pre></div>
 </div>
 <p>After that, the project will be cloned to a folder named UviSpace into the directory you have specified.</p>
@@ -89,118 +85,79 @@ The project can be directly downloaded from the repository page. However, it is 
 <p>Python is the programming language used for the most of the Software project. It has a vast community, and there are lots of places to learn about it. Prior to developing code for the <em>UviSpace</em> project, it is highly recommended to learn basic programming ideas relating to Python. Here, we refer to some books covering this knowledge:</p>
 <blockquote>
 <div><ul class="simple">
-<li><a class="footnote-reference" href="#id5" id="id1">[1]</a> is a book oriented to the learning of the Python language through a large amount of proposed exercises. Moreover, there is free version that can be obtained online. A link is provided in the <em>Bibliography</em> section.</li>
+<li><a class="footnote-reference" href="#id6" id="id1">[1]</a> is a book oriented to the learning of the Python language through a large amount of proposed exercises. Moreover, there is free version that can be obtained online. A link is provided in the <em>Bibliography</em> section.</li>
 </ul>
 </div></blockquote>
-<p>Moreover, a reader-friendly Python program is much more valuable than a mess of <em>spaghetti code</em>, and we encourage the readers and future developers of the <em>UviSpace</em> project to learn good ways of writing Python code:</p>
+<p>Moreover, a reader-friendly Python program is much more valuable than a mess of <em>spaghetti code</em>, and we encourage the readers and future developers of the <em>UviSpace</em> project to learn good ways of writing Python code, if they haven&#8217;t yet:</p>
 <ul class="simple">
-<li><a class="footnote-reference" href="#id6" id="id2">[2]</a> is a Python Enhancement Proposal(PEP), namely a style guide proposed by the creators and the community of Python. It is not too long, and the benefits are really high, thus it is a highly recommended reading.</li>
-<li><a class="footnote-reference" href="#id7" id="id3">[3]</a> is a book aimed to Python programmers with a prior knowledge, and is not recommended to use it as a first approach to the Python programming. Anyway, it proposes a bunch of coding techniques that improve the code readability with little effort</li>
+<li><a class="footnote-reference" href="#id7" id="id2">[2]</a> is a Python Enhancement Proposal(PEP), namely a style guide proposed by the creators and the community of Python. It is not too long, and the benefits are really high, thus it is a highly recommended reading. There are more PEPs published in the same webpage, and it worths to take a look at some of them.</li>
+<li><a class="footnote-reference" href="#id8" id="id3">[3]</a> is a book aimed to Python programmers with a prior knowledge, and is not recommended to use it as a first approach to the Python programming. Anyway, it proposes several coding techniques that improve the code readability with little effort</li>
 </ul>
 </div>
 <div class="section" id="git">
 <h3>git<a class="headerlink" href="#git" title="Permalink to this headline">¶</a></h3>
-<p>The project uses <em>git</em> for doing a versioning control of the project. There
-is a practical guide in <a class="footnote-reference" href="#id8" id="id4">[4]</a></p>
+<p>The project uses <em>git</em> for doing the versioning control of the project. There
+is a practical guide in <a class="footnote-reference" href="#id9" id="id4">[4]</a></p>
 <p>It is recommended to read at least the first 2 chapters for learning the basic working of <em>Git</em>.</p>
+<p>Regarding the versions naming convention, it has been followed the <em>Semantic Versioning 2.0.0</em> In <a class="footnote-reference" href="#id10" id="id5">[5]</a> there is a detailed explanation about the rules for assigning a tag to a new version.</p>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
 <p class="rubric"><strong>Bibliography</strong></p>
-<table class="docutils footnote" frame="void" id="id5" rules="none">
+<table class="docutils footnote" frame="void" id="id6" rules="none">
 <colgroup><col class="label" /><col /></colgroup>
 <tbody valign="top">
 <tr><td class="label"><a class="fn-backref" href="#id1">[1]</a></td><td>Learn Python the Hard Way, 3rd edition (2014) <a class="reference external" href="https://learnpythonthehardway.org/book/">https://learnpythonthehardway.org/book/</a></td></tr>
 </tbody>
 </table>
-<table class="docutils footnote" frame="void" id="id6" rules="none">
+<table class="docutils footnote" frame="void" id="id7" rules="none">
 <colgroup><col class="label" /><col /></colgroup>
 <tbody valign="top">
 <tr><td class="label"><a class="fn-backref" href="#id2">[2]</a></td><td>PEP 8 &#8211; Style Guide for Python Code <a class="reference external" href="https://www.python.org/dev/peps/pep-0008/">https://www.python.org/dev/peps/pep-0008/</a></td></tr>
 </tbody>
 </table>
-<table class="docutils footnote" frame="void" id="id7" rules="none">
+<table class="docutils footnote" frame="void" id="id8" rules="none">
 <colgroup><col class="label" /><col /></colgroup>
 <tbody valign="top">
 <tr><td class="label"><a class="fn-backref" href="#id3">[3]</a></td><td>Writing Idiomatic Python <a class="reference external" href="https://jeffknupp.com/writing-idiomatic-python-ebook">https://jeffknupp.com/writing-idiomatic-python-ebook</a></td></tr>
 </tbody>
 </table>
-<table class="docutils footnote" frame="void" id="id8" rules="none">
+<table class="docutils footnote" frame="void" id="id9" rules="none">
 <colgroup><col class="label" /><col /></colgroup>
 <tbody valign="top">
 <tr><td class="label"><a class="fn-backref" href="#id4">[4]</a></td><td>Pro Git book, 2nd edition (2014). <a class="reference external" href="https://git-scm.com/book/en/v2">https://git-scm.com/book/en/v2</a></td></tr>
 </tbody>
 </table>
+<table class="docutils footnote" frame="void" id="id10" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label"><a class="fn-backref" href="#id5">[5]</a></td><td>Semantic Versioning 2.0.0 <a class="reference external" href="http://semver.org/">http://semver.org/</a></td></tr>
+</tbody>
+</table>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
 </div>
 </div>
 </div>
 
 
-          </div>
-        </div>
       </div>
-        </div>
-        <div class="sidebar">
-          <h3>Table Of Contents</h3>
-          <ul class="current">
-<li class="toctree-l1"><a class="reference internal" href="Introduction.html">Introduction</a></li>
-<li class="toctree-l1 current"><a class="current reference internal" href="#">Getting Started</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#system-requirements">System requirements</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#download-the-source">Download the source</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#learning">Learning</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#python">Python</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#git">git</a></li>
-</ul>
-</li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="uvirobot.html">Uvirobot package</a></li>
-<li class="toctree-l1"><a class="reference internal" href="uvisensor.html">Uvisensor package</a></li>
-<li class="toctree-l1"><a class="reference internal" href="Hardware.html">Hardware design</a></li>
-<li class="toctree-l1"><a class="reference internal" href="Arduino.html">Arduino controller</a></li>
-</ul>
+      <div class="bottomnav" role="navigation" aria-label="bottom navigation">
+      
+        <p>
+        «&#160;&#160;<a href="Introduction.html">Introduction</a>
+        &#160;&#160;::&#160;&#160;
+        <a class="uplink" href="index.html">Contents</a>
+        &#160;&#160;::&#160;&#160;
+        <a href="uvirobot.html">The uvirobot package</a>&#160;&#160;»
+        </p>
 
-          <div role="search">
-            <h3 style="margin-top: 1.5em;">Search</h3>
-            <form class="search" action="search.html" method="get">
-                <input type="text" name="q" />
-                <input type="submit" value="Go" />
-                <input type="hidden" name="check_keywords" value="yes" />
-                <input type="hidden" name="area" value="default" />
-            </form>
-          </div>
-        </div>
-        <div class="clearer"></div>
       </div>
-    </div>
 
-    <div class="footer-wrapper">
-      <div class="footer">
-        <div class="left">
-          <div role="navigation" aria-label="related navigaton">
-            <a href="Introduction.html" title="Introduction"
-              >previous</a> |
-            <a href="uvirobot.html" title="The uvirobot package"
-              >next</a> |
-            <a href="py-modindex.html" title="Python Module Index"
-              >modules</a> |
-            <a href="genindex.html" title="General Index"
-              >index</a>
-          </div>
-          <div role="note" aria-label="source link">
-              <br/>
-              <a href="_sources/Starting.txt"
-                rel="nofollow">Show Source</a>
-          </div>
-        </div>
-
-        <div class="right">
-          
     <div class="footer" role="contentinfo">
-        &#169; Copyright 2016, Javier Lopez-Randulfe.
+        &#169; Copyright 2016, Javier López-Randulfe.
       Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.4.8.
     </div>
-        </div>
-        <div class="clearer"></div>
-      </div>
-    </div>
-
   </body>
 </html>

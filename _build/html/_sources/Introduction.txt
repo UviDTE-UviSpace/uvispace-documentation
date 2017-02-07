@@ -1,6 +1,5 @@
 
 
-
 Introduction
 ============
 
@@ -11,7 +10,8 @@ remotely controlling Unmanned Ground Vehicles (UGVs) moving inside a delimited
 space.
 
 ..  image:: /_static/portada.jpg
-    :height: 500px
+    :width: 1000px
+    :align: center
     
 General  overview
 -----------------
@@ -36,7 +36,7 @@ Hence, the whole system can be divided into three different elements:
 The main structure of the system can be observed in the diagram below.  
 
 ..  image:: /_static/general_diagram.png
-    
+    :align: center
 
 
 Software project
@@ -92,6 +92,7 @@ The package has, as well, 4 importable modules:
 
 ..  image:: /_static/software_diagram.png
     :width: 750px
+    :align: center
 
 Hardware design project
 -----------------------
