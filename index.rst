@@ -7,7 +7,7 @@ UviSpace documentation index
 ============================
 
 ..  toctree::
-    :maxdepth: 3
+    :maxdepth: 2
 
     Introduction   
     Getting Started         <Starting>
