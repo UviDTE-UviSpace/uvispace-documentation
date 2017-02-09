@@ -14,6 +14,7 @@ multiplecamera.py
 
 ..  image:: /_static/Multiplecamera_Flowcharts2.png
     :height: 700px
+    :align: center
 
 |
 
@@ -25,6 +26,7 @@ multiplecamera.py
 
 ..  image:: /_static/Multiplecamera_Flowcharts1.png
     :height: 700px
+    :align: center
 
 
 
