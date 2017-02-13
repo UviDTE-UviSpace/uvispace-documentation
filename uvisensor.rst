@@ -3,6 +3,11 @@
 The uvisensor package
 =====================
 
+..  toctree::
+    :maxdepth: 2
+
+    Uvisensor package       <uvisensor>
+
 multiplecamera.py
 -----------------
 

@@ -8,6 +8,10 @@
 Introduction
 ============
 
+..  toctree::
+    :maxdepth: 2
+
+    Introduction 
    
 General  overview
 -----------------
@@ -16,7 +20,7 @@ The project is aimed to control an indoor intelligent space where several unmann
 
 Hence, the whole system can be divided into three different elements: 
 
-- The *data fussion controller*, which consists in a CPU that controls the whole system. The *uvispace* software project is executed there, whose main tasks are:
+- The *data fussion controller*, which consists in a CPU e.g. a PC or a embedded SoC (ZedBoard) that controls the whole system. The *uvispace* software project is executed there, whose main tasks are:
 
     - communicate with the FPGA-based image processing nodes, using the TCP/IP protocol
     - Merge the data obtained from the image processing nodes 
@@ -97,8 +101,28 @@ Hardware design project
 Arduino controllers project
 ---------------------------
 
+The actuators and sensors of the UGVs are managed by an Arduino board on each of them. Due to the need to control 2 DC-motors, it is an essential requirement of the boards to have a DC motor driver, or include instead an external one. The developed Arduino project was implemented on the laboratory using a board accomplishing the first option, namely the `Arduino Romeo <https://www.dfrobot.com/index.php?route=product/product&product_id=656#.V5iRYe2Y5hE>`_ board.
+
+The work load on the boards is intended to be minimum, and thus obtain the data from the *Data Fusion Controller* as processed as possible. The software  on them is built from an *Arduino* project, and is divided into 3 different parts:
+
+* **BoardParams.h** is a header containing the PIN mapping of the board and constants relating to the implemented serial protocol (Commands, functions and master/slave identifiers).
+* **UGV.ino** contains the *setup* function and the main loop of the program, which is an infinite loop that continually checks incoming messages from the master. The work pipeline when a message is received is the following:
+
+    * Check that the *STX* initial byte is correct (`byte[0]`).
+    * Read the following auxiliary bytes (`byte[1..5]`) and store in the corresponding variables (*id_slave, id_master, fun_code* and *length*).
+    * Read the number of bytes indicated in *length* variable, and store on *data* variable.
+    * Check that the *ETX* end byte is correct (`byte[length+6]`).
+    * Call *process_message* function.
+
+* **Functions.ino** contains auxiliary functions that are run in different is situations and always after a message is received and read by the main loop. The aforementioned functions are the following:
+    
+    * *process_message* is the function called after a message is read, and deals with the data received. depending on the value stored in *fun_code*, different routines are run. In any case, at the end of the function, an *ACK_MSG* message is sent back to the master (unless an invalid *fun_code* is received).
+    * *move_robot* gets the speed set point for each wheel motor of the UGV and applies it to the corresponding output PINs. Prior to write on them, the values are clipped if they are out of valid limits. It is also checked if they belong to a *direct* or *reverse* direction, and writes accordingly to the direction PINs
+    * *publish_data* is called at the end of the *process_message* function, and deals with the construction of a valid answer message, according to the serial protocol. Afterwards, it is *'printed'* to the serial port, in order to be sent back the answer message to the master.
+
+
 About us
 --------
 
-The project was developed by a team of researchers at the *Electronic Technology Department* in the **University of Vigo**
+The project was developed by a team of researchers at the *Electronic Technology Department* in the `University of Vigo <http://uvigo.gal/uvigo_en/index.html>`_.
 

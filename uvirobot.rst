@@ -3,6 +3,11 @@
 The uvirobot package
 ====================
 
+..  toctree::
+    :maxdepth: 2
+
+    Uvirobot package        <uvirobot>
+
 messenger.py
 ------------
 

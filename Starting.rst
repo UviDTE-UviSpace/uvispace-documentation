@@ -6,6 +6,10 @@ Getting Started
 This section covers the first steps for downloading the project and setting 
 up a PC in order to be able to collaborate developing and testing the project.
 
+..  toctree::
+    :maxdepth: 2
+
+    Getting Started         <Starting>
 
 System requirements
 -------------------
@@ -22,6 +26,8 @@ correctly the project:
 - **OpenCV**: open-source library compatible with *Python* and *C++*. It offers lots of image processing functions with plenty of documentation. In the current version, it was used the version *OpenCV2*, though there is a more recent one (*OpenCV3*). `<http://opencv.org/>`_
 - **scikit-image**: is an open-source *SciPy* third party library for dealing with image processing operations. In this project,  it is used for image segmentation and shapes classification. It can be obtained more information at `<http://scikit-image.org/>`_.
 - **Sphinx**: This library is an excellent tool for creating intelligent Python documentation. Indeed this documentation was generated using it. It can access the *docstrings* inside the project and allow to automatically update the documentation when they are changed. It allows to create HMTL or PDF documents from plain text (*ReStructured text*) using a variety of templates or customize a new one. There is a *Getting Started* tutorial at the `official webpage <http://www.sphinx-doc.org/en/1.5.1/index.html>`_. Moreover, it has been used *ReadTheDocs* for hosting the documentation. It offers tools for compiling the code and generating the HTML files in their own server. `<https://readthedocs.org/>`_.
+
+.. _download-source:
 
 Download the source
 -------------------
