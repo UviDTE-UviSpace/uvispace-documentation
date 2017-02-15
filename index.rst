@@ -24,7 +24,7 @@ Source Code
     :align: left
     :alt: link to the GitHub repository
 
-The project's source code is publicly held in *GitHub*. Anybody is welcome to clone it and work with it. If you wish to collaborate, just contact us.
+The project's source code is publicly held on `GitHub <https://github.com/jlrandulfe/UviSpace>`_. Anybody is welcome to clone it and work with it. If you wish to collaborate, just contact us.
 
 For more information about getting the source code, go to our
 :ref:`download-source` section.
