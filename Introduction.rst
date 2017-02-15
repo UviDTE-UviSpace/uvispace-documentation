@@ -20,7 +20,7 @@ The project is aimed to control an indoor intelligent space where several unmann
 
 Hence, the whole system can be divided into three different elements: 
 
-- The *data fussion controller*, which consists in a CPU e.g. a PC or a embedded SoC (ZedBoard) that controls the whole system. The *uvispace* software project is executed there, whose main tasks are:
+- The *data fusion controller*, which consists in a CPU e.g. a PC or a embedded SoC (ZedBoard) that controls the whole system. The *uvispace* software project is executed there, whose main tasks are:
 
     - communicate with the FPGA-based image processing nodes, using the TCP/IP protocol
     - Merge the data obtained from the image processing nodes 
@@ -29,15 +29,19 @@ Hence, the whole system can be divided into three different elements:
     - Calculate the UGVs speed, using a navigation model
     - Communicate with the Arduino controllers, using the ZigBee protocol, and send them the speed set points.
 
-- The 4 *image processing nodes*. Their main component is an FPGA, with a camera peripheral. Each camera frame is processed in the FPGA, and the obtained results are sent to the *data fussion controller* through an Ethernet port.
+- The 4 *image processing nodes*. Their main component is an FPGA, with a camera peripheral. Each camera frame is processed in the FPGA, and the obtained results are sent to the *data fusion controller* through an Ethernet port.
 
-- The Arduino controllers, that control each UGV's sensors and actuators. They receive orders from the *data fussion controller* through the data received from the serial port, connected to a XBee transceiver.
+- The *Arduino controllers*, that control each UGV's sensors and actuators. They receive orders from the *data fusion controller* through the data received from the serial port, connected to a XBee transceiver.
 
-The main structure of the system can be observed in the diagram below.  
+The main structure of the system can be observed in the diagram below, where the communications between the three different elements aforementioned are represented. The system communications master is the *data fusion controller*, which controls the *Arduino controllers* using an IEEE 802.15.4-based protocol, namely a variation of the ZigBee specification. It controls as well the *image processing nodes* using the internet protocol through the Ethernet network.
 
 ..  image:: /_static/general_diagram.png
     :align: center
 
+Regarding the control workflow, the system can be considered a closed loop, where the position of the UGV read by the cameras is fed back to the main controller that, along with the goal position, are used to determine the  speed output sent to the UGV. The corresponding diagram can be seen below.
+
+..  image:: /_static/workflow_control_diagram.png
+    :align: center
 
 Software project
 ----------------
