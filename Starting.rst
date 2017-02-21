@@ -50,23 +50,23 @@ Python
 
 Python is the programming language used for the most of the Software project. It has a vast community, and there are lots of places to learn about it. Prior to developing code for the *UviSpace* project, it is highly recommended to learn basic programming ideas relating to Python. Here, we refer to some books covering this knowledge:
 
-* [1]_ is a book oriented to the learning of the Python language through a large amount of proposed exercises. Moreover, there is free version that can be obtained online. A link is provided in the *Bibliography* section.
-* [2]_ is another book to Python programming beginners. As the previous one, it is free to read online and download. Just follow the link provided in the *Bibliography*.
+* *Learn Python the Hard Way* [1]_ is a book oriented to the learning of the Python language through a large amount of proposed exercises. Moreover, there is free version that can be obtained online. A link is provided in the *Bibliography* section.
+* *Think Python* [2]_ is another book for Python programming beginners. As the previous one, it is free to read online and download. Just follow the link provided in the *Bibliography*.
 
 Moreover, a reader-friendly Python program is much more valuable than a mess of *spaghetti code*, and we encourage the readers and future developers of the *UviSpace* project to learn good ways of writing Python code, if they haven't yet:
 
-* [3]_ is a Python Enhancement Proposal(PEP), namely a style guide proposed by the creators and the community of Python. It is not too long, and the benefits are really high, thus it is a highly recommended reading. There are more PEPs published in the same webpage, and it worths to take a look at some of them.
-* [4]_ is a book aimed to Python programmers with a prior knowledge, and is not recommended to use it as a first approach to the Python programming. Anyway, it proposes several coding techniques that improve the code readability with little effort
+* *The PEP 8* [3]_ is a Python Enhancement Proposal(PEP), namely a style guide proposed by the Python creator and its community. It is not too long, and the benefits are really high, thus it is a highly recommended reading. There are more PEPs published in the same webpage, and it worths to take a look at some of them.
+* *Writing Idiomatic Python* [4]_ is a book aimed to Python programmers with a prior knowledge, and is not recommended to use it as a first approach to the Python programming. Anyway, it proposes several coding techniques that improve the code readability with little effort
 
 git
 ^^^
 
 The project uses *git* for doing the versioning control of the project. There 
-is a practical guide in [5]_
+is a practical guide book in their webpage [5]_
 
 It is recommended to read at least the first 2 chapters for learning the basic working of *Git*. 
 
-Regarding the versions naming convention, it has been followed the *Semantic Versioning 2.0.0* In [6]_ there is a detailed explanation about the rules for assigning a tag to a new version.
+Regarding the versions naming convention, it has been followed the *Semantic Versioning 2.0.0* [6]_. In its web there is a detailed explanation about the rules for assigning a tag to a new version.
 
 |
 
@@ -78,5 +78,6 @@ Regarding the versions naming convention, it has been followed the *Semantic Ver
 .. [4] Writing Idiomatic Python `<https://jeffknupp.com/writing-idiomatic-python-ebook>`_
 .. [5] Pro Git book, 2nd edition (2014). `<https://git-scm.com/book/en/v2>`_
 .. [6] Semantic Versioning 2.0.0 `<http://semver.org/>`_
+.. [7] Mobile Robots: Navigation, Control and Remote Sensing (2011) `<http://onlinelibrary.wiley.com/book/10.1002/9781118026403>`_
 
 |
