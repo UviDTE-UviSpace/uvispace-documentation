@@ -101,6 +101,43 @@ The package has, as well, 4 importable modules:
 Hardware design project
 -----------------------
 
+As stated before, the hardware system was designed for being implemented on an FPGA-based board and its main purpose is to provide a hardware interface for reading the raw data from the cameras and processing it, sending afterwards information regarding the captured scene to the *Data Fussion Controller*.
+
+This design can be found on the *FPGA* subfolder, and it namely consists on 2 different projects: *DE2_115_sopcbuilder_12* and *DE2_115-flash_sopcbuilder_11_original*. The first one is for debugging, and can only be loaded from the PC on the SRAM memory in the board, being lost after shutdown; whereas the second one can only be loaded and stored on the flash memory inside the board, and it will not be lost after shutdown. 
+
+Physical layout
+^^^^^^^^^^^^^^^
+
+The main component of the vision system is a **Terasic DE2-115** board, which contains an *Altera Cyclone IV FPGA*. With 115k logic elements, this is a fairly big FPGA, suitable for complex digital projects. Connected to the main board, through the 40-pin GPIO , there is a *Terasic D5M* 5 Megapixel camera.
+
+In this project the 40-pin straight female header in the camera is changed by a 90 degree 40-pin header so the camera points down. 4 of these cameras are located in the ceiling of the laboratory like the following figure shows. The cameras are located so the field of view of the cameras touch with each other without overlapping. This is done this way to maximize the area the cameras can see. Problems to locate the car in the borders of the cameras should be solved by software.
+
+..  image:: /_static/terasic_DE2-115.png
+    :width: 500px
+    :align: center
+
+FPGA hardware
+^^^^^^^^^^^^^
+
+The FPGA project was developed using *Quartus II* and *SOPC-Builder v12.1*. 
+*Quartus II* is a design software for the hardware for Altera FPGAs. *SOPC-Builder* is a tool inside *Quartus II* for easily developing systems on chip (SoCs) i.e. digital systems with all or almost all elements (processor, memory and peripherals) in a single chip. Newer versions  of *Quartus II* (after v13) use an evolved variant of this tool, called *Qsys*, and both *SOPC-Builder* and *Qsys* are tipically used to develop systems based on the soft-processor *Nios II*. They use Avalon standard buses to ease the development of SoCs.
+
+The biggest part of the system implemented in this project is a *NiosII* processor system defined in *SOPC-Builder*. The rest of the system is defined directly in Quartus II.
+
+FPGA software
+^^^^^^^^^^^^^
+
+The software project that runs in the Nios II processor is basically composed by two subprojects:
+
+- **SocketServer**, which is an application project containing the application-specific code.
+
+- **Socket_Server_bsp**, which contains all the code that defines the interface with the hardware, creating an abstraction layer which eases the understanding, development and migration of code by a user. Important files and folders in the BSP are:
+
+    - *Drivers*, which is a folder with the drivers of the components added in SOPC Builder. For custom components the drivers have to be manually added to drivers folder or added as a library component to altera installation folder so this process is automatically performed.
+    - *HAL (Hardware Abstraction Layer)*, which gives support to the standard C library to Nios II processor.
+    - *UCOSII*, which are the files of the *uC-OS II* Real Time Operating System (RTOS). In this case this RTOS is used to schedule several tasks in the processor.
+    - *System.h*, which contains macros for addressing the *Nios II* system components. Using these macros is safer than using directly the addresses from *SOPC-Builder*, because future changes in the hardware address map can be accordingly fixed for the software by regenerating the BSP.
+
 
 Arduino controllers project
 ---------------------------
