@@ -62,7 +62,7 @@ master_doc = 'index'
 
 # General information about the project.
 project = u'UviSpace'
-copyright = u'2016, Javier López-Randulfe'
+copyright = u'2016, Dept. of Electronic Technology -- University of Vigo'
 author = u'Javier López-Randulfe'
 
 # The version info for the project you're documenting, acts as replacement for

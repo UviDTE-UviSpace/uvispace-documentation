@@ -81,16 +81,16 @@ The following steps show how to set up the FPGA project:
 
 - **Instantiate the Nios II System and other components in Quartus II**. The *Nios II* system, represented now by *DE2_115_SOPC.v* is a component and can be used in *Quartus II* designs using *DE2_115_SOPC* as component name. To use the *Nios II* system and connect it to other components, the file  *DE2_115_WEB_SERVER.v* is created. It defines the main entity for the FPGA hardware project. The name of this entity should be the same name as the project name because Quartus II starts the compilation looking for the entity with the same name as the project. Inside the script, the *Nios II* System (DE2_115_SOPC) is instantiated along with the other components in the *Quartus II* part of the system (orange part of the diagram), i.e. *Camera controller, Sensor controller,  SDRAM Controller, VGA Controller* and *Display Controller*. The source files for these components are in subfolders *camera, display* and *sensor* inside the project folder. In *DE2_115_WEB_SERVER.v* the components are connected to the FPGA pins using names (LEDR, CLOCK_50, etc.). The relation between these names and the actual pins on the chip is in the *DE2_115_WEB_SERVER.qsf*. This file can be generated for any DE2-115 board using the System Builder program in the DE2-115 CD-ROM documentation. 
 
-- ** Add compilation files to Quartus II**. All HDL files used in the project should be added to the files tab in Quartus II (left upper part of the program), so the compiler can find them. The following files should be added: 
+- **Add compilation files to Quartus II**. All HDL files used in the project should be added to the files tab in Quartus II (left upper part of the program), so the compiler can find them. The following files should be added: 
 
     - *DE2_115_WEB_SERVER.v:* It is the main file containing the highest level entity.
     - *DE2_115_SOPC.v:* This file contains the definition of the *Nios II* system.
     - *DE2_115_SOPC.quip:* This file imports the rest of the files which describe the components used in *SOPC-Builder* that form the *Nios II* System. *.quip* files are used for importing a group of HDL files together. 
     - The rest of *.quip* files for the *Quartus II* part of the system (orange part in the diagram), namely *display/vga.quip, display/display.quip, camera/camera.quip, etc.*
 
-- **Add libraries**. the source files of *eth_ocm* component are added as a library. Then, add it in *Quartus II->Assignments->Settings->Libraries*.
+- **Add libraries**. the source files of *eth_ocm* component are added as a library. Hence, add it in *Quartus II->Assignments->Settings->Libraries*.
 
-- **Compile the project**. Press *compile design* or *Processing-> Start Compilation*. Firstly, *Analysis&Synthesis* converts HDL design to the FPGA hardware. The, the *Fitter* does the *Place & Route* of the circuit (locates the circuit in the specific device assigned to the project and interconnects all the elements). Finally, the *Assembler* generates the *.sof* file used to program the FPGA, and the program should look similar to the figure below.
+- **Compile the project**. Select *compile design* or *Processing-> Start Compilation*. Firstly, *Analysis&Synthesis* converts HDL design to the FPGA hardware. Then, the *Fitter* does the *Place & Route* of the circuit (locates the circuit in the specific device assigned to the project and interconnects all the elements). Finally, the *Assembler* generates the *.sof* file used to program the FPGA. After that, the program should look similar to the figure below.
 
 ..  image:: /_static/QuartusCompilation.png
     :width: 750px
@@ -101,13 +101,13 @@ FPGA Software
 
 As stated in the Introduction, the software project is formed by 2 subprojects: *SocketServer*, that is the application project developed for implementing the desired functionality; and *Socket_Server_bsp*, which defines the hardware architecture of the system that is being used.
 
-Import a software project
-^^^^^^^^^^^^^^^^^^^^^^^^^
+Importing the software project
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Usually, when one starts a new project both projects are generated at the same time using *File->New Nios II Application and BSP From Template*. In this case, the projects are already created so they have to be imported into the workspace. To do this go to *File->Import->General->Existing Projects* then go to *workspace->Select root directory [project folder]/software* and click *copy projects into workspace*. Another recommended way is to choose *[project folder]/software* as workspace and do not copy the projects into workspace.
+Usually, when one starts a new project, both subprojects are generated at the same time using *File->New Nios II Application and BSP From Template*. However, in this case the subprojects are already created so they have to be imported into the workspace. To do this go to *File->Import->General->Existing Projects* then go to *workspace->Select root directory [project folder]/software* and click *copy projects into workspace*. Another recommended way is to choose *[project folder]/software* as the project workspace, being not neccessary to copy the subprojects into the workspace if doing so.
 
-Change sopc_info file location in the BSP
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Changing sopc_info file location in the BSP
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 The BSP uses global location to find the *.sopc_info* file. When changing the location of the folder, the path of the *.sopc_info* file has to be changed before generating the BSP again. It can be done in the *settings.bsp* file inside the BSP project under the *<SopcDesignFile>* entry.
 
@@ -117,7 +117,7 @@ Software project compilation
 The steps required to compile the system are the following:
 
 - **Generate BSP:** Right click at *Socket_Server_bsp->Nios II->Genrate BSP*.
-- **Compile BSP:** Right clickat  *Socket_Server_bsp->Build*.
+- **Compile BSP:** Right click at  *Socket_Server_bsp->Build*.
 - **Compile application:** Right click at *SocketServer-> Build*. The makefile combines the BSP and application compilations to generate a single output *.elf* file located inside the application folder. In this case it is called *SocketServer.elf*. This file is the program for the *Nios II* processor.
 
 In the figure below, it can be observed how will look the EDS after opening the application and BSP projects.
