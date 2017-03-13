@@ -119,24 +119,20 @@ In this project the 40-pin straight female header in the camera is changed by a 
 FPGA hardware
 ^^^^^^^^^^^^^
 
-The FPGA project was developed using *Quartus II* and *SOPC-Builder v12.1*. 
-*Quartus II* is a design software for the hardware for Altera FPGAs. *SOPC-Builder* is a tool inside *Quartus II* for easily developing systems on chip (SoCs) i.e. digital systems with all or almost all elements (processor, memory and peripherals) in a single chip. Newer versions  of *Quartus II* (after v13) use an evolved variant of this tool, called *Qsys*, and both *SOPC-Builder* and *Qsys* are tipically used to develop systems based on the soft-processor *Nios II*. They use Avalon standard buses to ease the development of SoCs.
+
 
 The biggest part of the system implemented in this project is a *NiosII* processor system defined in *SOPC-Builder*. The rest of the system is defined directly in Quartus II.
 
-FPGA software
-^^^^^^^^^^^^^
+FPGA software project
+^^^^^^^^^^^^^^^^^^^^^
 
 The software project that runs in the Nios II processor is basically composed by two subprojects:
 
 - **SocketServer**, which is an application project containing the application-specific code.
 
-- **Socket_Server_bsp**, which contains all the code that defines the interface with the hardware, creating an abstraction layer which eases the understanding, development and migration of code by a user. Important files and folders in the BSP are:
+- **Socket_Server_bsp**, which contains all the code that defines the interface with the hardware, creating an abstraction layer which eases the understanding, development and migration of code by a user. 
 
-    - *Drivers*, which is a folder with the drivers of the components added in SOPC Builder. For custom components the drivers have to be manually added to drivers folder or added as a library component to altera installation folder so this process is automatically performed.
-    - *HAL (Hardware Abstraction Layer)*, which gives support to the standard C library to Nios II processor.
-    - *UCOSII*, which are the files of the *uC-OS II* Real Time Operating System (RTOS). In this case this RTOS is used to schedule several tasks in the processor.
-    - *System.h*, which contains macros for addressing the *Nios II* system components. Using these macros is safer than using directly the addresses from *SOPC-Builder*, because future changes in the hardware address map can be accordingly fixed for the software by regenerating the BSP.
+
 
 
 Arduino controllers project

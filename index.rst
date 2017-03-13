@@ -42,3 +42,4 @@ Documentation
     Uvisensor package       <uvisensor>
     Hardware design         <Hardware>
     Arduino controller      <Arduino>
+    Tutorials               <Tutorials>
