@@ -59,14 +59,14 @@ uvirobot
 
 The *uvirobot* package consist in 2 callable scripts:
 
-- **messenger.py** stablishes the communication to the specified UGV, using the ZigBee protocol. Thus, prior runnning it an XBee module has to be connected to the PC, and another one to the Arduino board serial port, and both configured accordingly. Once the communication is stablished, the module *listens* to speed set points and send them to the UGV. When the execution is cancelled, a plot with the delay times is obtained and then the program ends.
+- **messenger.py** establishes the communication to the specified UGV, using the ZigBee protocol. Thus, prior running it an XBee module has to be connected to the PC, and another one to the Arduino board serial port, and both configured accordingly. Once the communication is established, the module *listens* to speed set points and send them to the UGV. When the execution is cancelled, a plot with the delay times is obtained and then the program ends.
 - **controller.py** *listens* to input UGV position values and destination coordinates, calculates the UGV optimal path, and finally outputs the speed set points needed to achieve the planned path.
     
 Moreover, there are 5 importable libraries inside the *uvirobot* package:
 
 - **path_tracker.py** contains a class whose methods calculate an UGV's path points, once given a position and destination, and then stores them in an attribute.
 - **plotter.py** contains functions used to construct a graph with a predefined format. It is designed to map the calculated vs. real path of an UGV, and the delay times.
-- **robot.py** contains the *RobotController()* class, where each instantiated object represents an UGV, and stablishes the upper interface for working with its speed values.
+- **robot.py** contains the *RobotController()* class, where each instantiated object represents an UGV, and establishes the upper interface for working with its speed values.
 - **serialcomm.py** contains the *SerMesProtocol()* class, which is a child of the built-in python *pyserial* class. It defines a serial protocol, which will be used by the XBee modules for communicating the CPU with an UGV.
 - **speedtransform.py** contains the *Speed()* class, for dealing with operations related to the speed values, such as transform between different scales or ensuring that the values are between valid boundaries.
     
@@ -90,7 +90,7 @@ Summing up, the list of threads is:
 The package has, as well, 4 importable modules:
 
 * **client.py** contains the *Client()* class, which is a child of the *Socket* class from the *socket.socket* built-in Python module. This class contains methods for communicating specifically with the design FPGA hardware. Its methods allow to open and close the connection correctly, and to write and read from valid registers with the right format.
-* **geometry.py** contains 2 classes. The *Triangle()* class is used for performing geometrical operations inherent to isosceles triangles, in order to get its base length, barycenter, position, angle... The *Segment()* class is used to determine a segment from its 2 points, and calculate afterwards the distance to another point.
+* **geometry.py** contains 2 classes. The *Triangle()* class is used for performing geometrical operations inherent to isosceles triangles, in order to get its base length, barycentre, position, angle... The *Segment()* class is used to determine a segment from its 2 points, and calculate afterwards the distance to another point.
 * **imgprocessing.py** contains the *Image()* class, which has image-oriented methods, based on matrix operations, for getting useful information from image data.
 * **videosensor.py** has the *VideoSensor()* class and several functions related to it. Each instantiated object represent an external FPGA device. Thus, this class has methods for setting up the TCP/IP connection, configuring the FPGA registers, and interact with it.
 
@@ -101,7 +101,7 @@ The package has, as well, 4 importable modules:
 Hardware design project
 -----------------------
 
-As stated before, the hardware system was designed for being implemented on an FPGA-based board and its main purpose is to provide a hardware interface for reading the raw data from the cameras and processing it, sending afterwards information regarding the captured scene to the *Data Fussion Controller*.
+As stated before, the hardware system was designed for being implemented on an FPGA-based board and its main purpose is to provide a hardware interface for reading the raw data from the cameras and processing it, sending afterwards information regarding the captured scene to the *Data Fusion Controller*.
 
 This design can be found on the *FPGA* subfolder, and it namely consists on 2 different projects: *DE2_115_sopcbuilder_12* and *DE2_115-flash_sopcbuilder_11_original*. The first one is for debugging, and can only be loaded from the PC on the SRAM memory in the board, being lost after shutdown; whereas the second one can only be loaded and stored on the flash memory inside the board, and it will not be lost after shutdown. 
 

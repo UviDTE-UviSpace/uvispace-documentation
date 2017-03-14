@@ -43,3 +43,4 @@ Documentation
     Hardware design         <Hardware>
     Arduino controller      <Arduino>
     Tutorials               <Tutorials>
+    Release Notes           <Release_Notes>

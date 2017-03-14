@@ -21,7 +21,7 @@ SOPC-Builder system
 
 - **Nios II processor:** soft-processor controlling all the hardware components. It deals with the initialization of all components and the communication through Ethernet. Communications permit remote control of the system via commands. The instruction bus and data bus of the processor are connected to both SDRAM and Flash memory, so both this memories can be used as data and program memory.
 
-- **SRAM Controller:** It controls the 2MB volatile SRAM available in the board. When debugging using the *ios II EDS* it is used as program and data memory for the *Nios II* processor. When the development is finished and the program for the processor is loaded into the non-volatile flash memory, the SRAM memory is only the data memory for the system.
+- **SRAM Controller:** It controls the 2MB volatile SRAM available in the board. When debugging using the *Nios II EDS* it is used as program and data memory for the *Nios II* processor. When the development is finished and the program for the processor is loaded into the non-volatile flash memory, the SRAM memory is only the data memory for the system.
 
 - **Flash Controller:** It controls the 8MB Flash non-volatile memory available in the board. When debugging using the *Nios II EDS* it can be used to store the MAC address of the board or any other configuration/calibration data. When the program is finished and the board does not need the computer anymore the Flash memory is used as program memory to store the program for the *Nios II* processor.
 
@@ -50,9 +50,9 @@ SOPC-Builder system
 Quartus II part
 ^^^^^^^^^^^^^^^
 
-- **Camera Controller:** It is in charge of the camera configuration, RAW data capture from the camera and data conversion from RAW to RGB and grayscale. There are 4 buses of 10 bits each: one for each RGB channel and one more for gray scale channel. 
+- **Camera Controller:** It is in charge of the camera configuration, RAW data capture from the camera and data conversion from RAW to RGB and greyscale. There are 4 buses of 10 bits each: one for each RGB channel and one more for grey scale channel. 
 
-- **Sensor Controller:** it implements the image processing for the detection of robots marked by red triangles, using therefore only the red channel from the Camera Controller. The output of the algorithm are the x and y coordinates of the 4 points defining the square that encloses each triangle. *X* and *Y* are 12 bit buses and are sent to the trackers. Another output is the RGB and gray images that are stored to SDRAM memory through the SDRAM controller.
+- **Sensor Controller:** it implements the image processing for the detection of robots marked by red triangles, using therefore only the red channel from the Camera Controller. The output of the algorithm are the x and y coordinates of the 4 points defining the square that encloses each triangle. *X* and *Y* are 12 bit buses and are sent to the trackers. Another output is the RGB and grey images that are stored to SDRAM memory through the SDRAM controller.
 
 - **SDRAM Controller:** it controls the 128MB SDRAM memory in the board.
 
@@ -76,21 +76,55 @@ As stated in the Introduction, the software project is formed by 2 subprojects: 
 SocketServer
 ^^^^^^^^^^^^
 
-This is the main application of the software, where the core functionalities are implemented. It works over a hardware layout defined by the other subproject, *Socket_Server_bsp*. The following are the main scripts inside this projects:
+This is the main application of the software, where the core functionalities are implemented. It works over a hardware layout defined by the other subproject, *Socket_Server_bsp*. The following are the main modules inside this projects:
 
-- **network_utilities**, which contains functions for handling the TCP/IP protocol:
+- **trackers:** This script provides functions related to the usage of the trackers in the FPGA. These functions allow to read and update their state. The functions defined in this module are the following:
+    - *trackers_init*
+    - *trackers_number:* Returns the number of trackers. By default, 6
+    - *trackers_free:* Sets the *active* and *id* flags of all trackers to 0.
+    - *activate_tracker:* Sets the *active* and *id* flags of desired tracker to 1.
+    - *disable_tracker:* Sets the *active* flag of desired tracker to 0.
+    - *free_tracker:* Sets the *active* and *id* flags of desired tracker to 0.
+    - *set_search_window_of_tracker:* sets the window of desired tracker, provided the x, y of the bottom left corner and its width and height parameters.
+    - *get_search_window_of_tracker*
+    - *get_current_corners_of_tracker*
+    - *get_current_windows_of_activated_trackers*
+    - *get_current_corners_of_activated_trackers*
+
+- **camera:** This module contains functions for setting up the camera working parameters and getting their actual values, which are stored in FPGA registers. Once the parameters have assigned the desired values, the *camera_configure* function has to be called for sending them to the FPGA registers. In the associated header file (camera.h) it is defined a struct called camera-struct, containing the parameters defining the camera operation. The aforementioned camera parameters are the following:
+    - image_size
+    - image_exposure
+    - start_image
+    - sensor_size
+    - sensor_mode
+    - sensor_output
+    - vga_output
+
+- **network_utilities:** Contains functions for handling the TCP/IP protocol:
     - *get_mac_addr:* If FIXED_MAC is True, gets the default MAC address. If not, asks the user to input a new one.
-    - *get_ip_addr:* This routine is called by InterNiche to obtain an IP address for the specified network adapter. It checks if DHCP has to be used, setting the IP address to the default one instead.
-    - *get_serial_number:* Asks the user the 9-digit device serial number, merges them all in a single variable and returns it.
-    - *generate_and_store_mac_addr*
-    - *generate_mac_addr*
-    - *get_board_mac_addr*
-    - *FindLastFlashSectorOffset*    
+    - *get_ip_addr:* This routine is called by InterNiche to obtain an IP address for the specified network adapter. It checks whether DHCP has to be used or not, setting the IP address to the default one if DHCP is not used.
+    - *get_serial_number:* Asks the user the 9-digit device serial number, merges them all in a single variable and returns this variable.
+    - *generate_and_store_mac_addr:* This function is called if any MAC address is not stored in the flash memory. If so,a new one is generated, based on the Altera vendor ID and the product serial number. Besides, the static IP, subnet, gateway and "Use DHCP" sections are reprogrammed. All this content is stored in the last sector of the flash memory.
+    - *generate_mac_addr:* Similar to the previous function, it generates a MAC address based on the device serial number. However, it does not store it in the flash memory
+    - *get_board_mac_addr:* Gets the MAC address stored in the *mac_addr* variable. Moreover, it checks if there is a MAC address stored in the flash memory, prints it and stores a new one if needed.
+    - *FindLastFlashSectorOffset:* This function gets the value at the corresponding offset from the last sector in the flash memory and returns it in *pLastFlashSectorOffset*.    
 
-- *trackers*
-- *camera*
-- *simple_socket_server*
-- *MAC_IP_config.h*
+- **simple_socket_server:** This module contains functions for handling TCP/IP connections with a client. Thus, the program is designed to be constantly attending incoming petitions from the Ethernet port:
+    - *sss_reset_connection:* function that sets the connection object members to an initial state.
+    - *sss_send_menu:* Sends to the client a menu containing a summary of the commands.
+    - *sss_exec_command:* Parses a received command from the client, and executes a different routine depending on the message received.
+    - *sss_handle_accept:* This routine is called when ever our listening socket has an incoming connection request.
+    - *sss_handle_receive:* Loop that will be executed since the connection begins until it is closed, and that continually checks if there are packages in the incoming buffer to be read.
+    - *SSSSimpleSocketServerTask:* Thread task with an endless loop, that will continually check if there are requests for beginning a new connection.
+
+
+- **main:** Main routine of the software project. It simultaneously runs several threads for dealing with different tasks:
+    - *write_in_lcd:*  Writes input message in the LCD screen
+    - *task1:* Shows the IP and execution time. Refreshes every second.
+    - *SSSInitialTask:* Instantiates the NiosII resources, including a task for the TCP/IP stack (NicheStack).
+    - *main:* Clears the OS timer, creates SSSInitialTask and starts the RTOS.
+
+- **MAC_IP_config.h:** The default MAC and IP address of the board are specified in this header file.
 
 
 Socket_Server_bsp
@@ -98,7 +132,7 @@ Socket_Server_bsp
 
 This project provides a system abstraction, as it maps the hardware developed in the FPGA system to a common namespace, in order to make higher level code compatible for different boards or layouts. The most important files and folders in the BSP are:
 
-- *Drivers*, which is a folder with the drivers of the components added in SOPC Builder. For custom components the drivers have to be manually added to drivers folder or added as a library component to altera installation folder so this process is automatically performed.
+- *Drivers*, which is a folder with the drivers of the components added in SOPC Builder. For custom components the drivers have to be manually added to drivers folder or added as a library component to Altera installation folder so this process is automatically performed.
 - *HAL (Hardware Abstraction Layer)*, which gives support to the standard C library to Nios II processor.
 - *UCOSII*, which are the files of the *uC-OS II* Real Time Operating System (RTOS). In this case this RTOS is used to schedule several tasks in the processor.
 - *System.h*, which contains macros for addressing the *Nios II* system components. Using these macros is safer than using directly the addresses from *SOPC-Builder*, because future changes in the hardware address map can be accordingly fixed for the software by regenerating the BSP.
