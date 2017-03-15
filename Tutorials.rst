@@ -7,12 +7,10 @@ Tutorials and manuals
     :maxdepth: 2
 
     Tutorials
-   
-FPGA
-----
 
-Quartus and SOPC-Builder
-^^^^^^^^^^^^^^^^^^^^^^^^
+
+Altera Quartus and SOPC-Builder
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 The FPGA project was developed using *Quartus II* and *SOPC-Builder v12.1*. 
 *Quartus II* is a design software for the hardware for Altera FPGAs. *SOPC-Builder* is a tool inside *Quartus II* for easily developing systems on chip (SoCs) i.e. digital systems with all or almost all elements (processor, memory and peripherals) in a single chip. Newer versions  of *Quartus II* (after v13) use an evolved variant of this tool, called *Qsys*, and both *SOPC-Builder* and *Qsys* are tipically used to develop systems based on the soft-processor *Nios II*. They use **Avalon** standard buses to ease the development of SoCs:

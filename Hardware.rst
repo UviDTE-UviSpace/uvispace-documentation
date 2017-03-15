@@ -41,7 +41,7 @@ SOPC-Builder system
 
 - **Timer:** It is the timer used by the *Real Time Operating System* (RTOS) running in the *Nios II* for scheduling its tasks. After the JTAG UART this timer should have (and has) the highest priority interrupt (number 1).
 
-- **Tracker0 to Tracker 5** 
+- **Tracker0 to Tracker 5:** The trackers are the components that manage the ROIs that will follow (track) the detected vehicles in the captured images. They change dynamically at every iteration, checking the movement of the triangle and following it. They have to be activated by receiving a command from the Nios II application.
 
 - **LED PIO:** GPIO peripheral to control from *Nios II* the green LEDs 0 to 7 in the board.
 
@@ -66,6 +66,15 @@ Besides the previous components, there are also present in the hardware design s
 - RED LED 12
 - RED LED 11
 
+
+Jumpers configuration
+^^^^^^^^^^^^^^^^^^^^^
+
+The physical layer of the port used for the TCP/IP communication has to be configured in MMI Mode. This means that, as the used port is ETHERNET0, the jumper JP1  pins 2 and 3 must be shorted. Otherwise, if pins 1 and 2 are sorted the physical layer will be configured in RGMII Mode, and it will not be compatible with the implemented FPGA and software projects. More information can be obtained in the board reference manual [1]_.
+
+As the ETHERNET1 port will not be used, the jumper defining its physical layer (JP2) is not relevant for this project. JP3 sets the HSMC I/O on and off, and is irrelevant for this project too, as it is used when more than one FPGA is desired to be connected and form a closed JTAG loop chain. By default it is set to off (pins 1 and 2 shorted).
+
+Regarding the other jumpers, they should be kept with the default settings, namely the JP6 to 3.3V position and the JP7 in the 2.5V position (Defining the I/O pins voltage)
 
 
 FPGA Software
@@ -147,3 +156,8 @@ The used MAC and IP settings by the program are contained in the *MAC_IP_config.
 - **Using DHCP:** If USEDHCP macro is defined in the file, the board will ask for an IP address via DHCP using the MAC specified inside the file. If DHCP fails (after 2 minutes) the board sets the IP address written in the file.
 - **Fixed IP:** If USEDHCP macro is NOT defined in the file (i.e. the line commented), the MAC and IP used will be the ones specified in the file, and DHCP is not used.
 
+|
+
+.. rubric:: **Bibliography**
+
+.. [1] DE2-115 User Manual, 3rd edition (2014) `<http://www.terasic.com.tw/cgi-bin/page/archive_download.pl?Language=English&No=502&FID=cd9c7c1feaa2467c58c9aa4cc02131af>`_
