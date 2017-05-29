@@ -9,19 +9,83 @@ Tutorials and manuals
     Tutorials
 
 
+Python virtual environments
+^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+In order to ease the management of the project dependencies, it is recommended to make use of Python virtual
+environments. Virtual environments are used to provide isolation between projects, keeping all the required
+libraries in a directory available only to the virtual environment, and thus avoid polluting the global
+sites-packages directory.
+
+There is an utility called virtualenvwrapper that simplifies the management of virtual environments, and we
+will use this utility to obtain a clean vritual environment for our project.
+
+To install this utility, run the following command (sudo may be necessary):
+
+.. code-block:: bash
+
+    $ pip install virtualenvwrapper
+
+Once the installation has finished, open up the .bashrc file, and add the following lines:
+
+.. code-block:: bash
+
+    export WORKON_HOME=$HOME/.virtualenvs      # Virtual environments folder
+    source /usr/local/bin/virtualenvwrapper.sh # Enable virtualenvwrapper commands
+
+To create a new virtualenvironment, run the following command:
+
+.. code-block:: bash
+
+    $ mkvirtualenv uvispace # Syntax: mkvirtualenv (name for the virtual environment)
+    (uvispace) $            # Prompt gets updated to reflect the virtual environment is active
+
+In case the virtual environment is already created, it is only necessary to activate it. In order to use it,
+use the following command:
+
+.. code-block:: bash
+
+    $ workon uvispace # Syntax: workon (name for the virtual environment)
+    (uvispace) $      # Prompt gets updated to reflect the virtual environment is active
+
+If we want to stop using a virtual environment, run the following command:
+
+.. code-block:: bash
+
+    (uvispace) $ deactivate
+    $                        # Prompt gets updated to reflect the virtual environment is no longer active
+
+By default, mkvirtualenv uses the system default python interpreter. If a specific version of python is
+required, it can be specified with the -p parameter:
+
+.. code-block:: bash
+
+    $ mkvirtualenv -p python2 (name)    # Python2 virtual environment
+    $ mkvirtualenv -p python3.4 (name)  # Python3.4 virtual environment
+
+Other useful commands are the following:
+
+.. code-block:: bash
+
+    $ lsvirtualenv        # List all available virtual environments
+    $ rmvirtualenv (name) # Deletes a virtual environment
+
+A more extensive reference on the virtualenvwrapper utility can be found on its
+`documentation <https://virtualenvwrapper.readthedocs.io>`_.
+
 Altera Quartus and SOPC-Builder
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-The FPGA project was developed using *Quartus II* and *SOPC-Builder v12.1*. 
+The FPGA project was developed using *Quartus II* and *SOPC-Builder v12.1*.
 *Quartus II* is a design software for the hardware for Altera FPGAs. *SOPC-Builder* is a tool inside *Quartus II* for easily developing systems on chip (SoCs) i.e. digital systems with all or almost all elements (processor, memory and peripherals) in a single chip. Newer versions  of *Quartus II* (after v13) use an evolved variant of this tool, called *Qsys*, and both *SOPC-Builder* and *Qsys* are tipically used to develop systems based on the soft-processor *Nios II*. They use **Avalon** standard buses to ease the development of SoCs:
 
-- **Avalon Memory-Mapped (MM):** It contains the signals needed to develop a master-slave bus e.g. Adress Bus, Data Bus, READ, WRITE, etc. There are two tipes of *Avalon MM* interfaces, namely *Avalon MM slave* and *Avalon MM Master*. The communication is always initiated by the masters ordering/writing to or asking/reading from the slave.  
-- **Avalon Streaming (ST):** It is a point to point connection for fast data transmission. There are two types, depending if they are the source or the sink of data.  
-- **Avalon Interrupt:** It is a point to point connection between two systems, one generating an interrupt and another attending it. 
-- **Clock:** It is a point to point connection between a clock signal source and a clock signal sink. 
+- **Avalon Memory-Mapped (MM):** It contains the signals needed to develop a master-slave bus e.g. Adress Bus, Data Bus, READ, WRITE, etc. There are two tipes of *Avalon MM* interfaces, namely *Avalon MM slave* and *Avalon MM Master*. The communication is always initiated by the masters ordering/writing to or asking/reading from the slave.
+- **Avalon Streaming (ST):** It is a point to point connection for fast data transmission. There are two types, depending if they are the source or the sink of data.
+- **Avalon Interrupt:** It is a point to point connection between two systems, one generating an interrupt and another attending it.
+- **Clock:** It is a point to point connection between a clock signal source and a clock signal sink.
 - **Reset:** It is a point to point connection between a reset source and its sink.
 - **Avalon Tri-state Conduit (TC):** For tri-state controllers. It allows the connection of different components with third state features, using small number of signals, saving pins and space in the board.
-- **Conduit:** It is a point to point connection between two conduit signals. It is used when none of the previous interfaces can be used. It is tipically used to export signals outside of *Qsys* and represent the particular interface of some chip. It is also used to connect two componnets with custom user-defined interface between them.  
+- **Conduit:** It is a point to point connection between two conduit signals. It is used when none of the previous interfaces can be used. It is tipically used to export signals outside of *Qsys* and represent the particular interface of some chip. It is also used to connect two componnets with custom user-defined interface between them.
 
 Using the standard buses makes the connection between components fast because *Qsys* "knows" their signals and its meaning. In a single click a memory mapped slave can be connected to a processor, saving time and avoiding errors. *SOPC-Builder* and *Qsys* create a lot of logic automatically. For example, *Avalon MM* buses create the logic circuits needed to implement the desired address map. *SOPC-Builder* and *Qsys* also have a big library of IP (Intelectual Property) cores that are tested and documented. This permits the developer to focus his efforts on the components that are specific to the application.
 
@@ -38,13 +102,13 @@ The following steps show how to set up the FPGA project:
     - *DE2_115_SOPC.v:* Main HDL file for the *Nios II* system, that instantiates all the IP cores that were previously added in the *SOPC-Builder*.
     - The rest of HDL files for Nios II system are *.v* files copied into the project folder. They are the source files of all of the components added in *SOPC-Builder*. Altera library IP cores (like Flash Controller, SRAM Controller, LCD Controller, Timer, Sys_ID) are copied from the Altera installation folder. The rest of IP cores (Avalon Camera, APIO Sensor, Trackers and Ethernet Controller) are copied from  folders inside the project folder (*ip/Avalon_camera, ip/apio_sensor, ip/Avalon_locator* and *ip/eth_ocm*).
 
-- **Instantiate the Nios II System and other components in Quartus II**. The *Nios II* system, represented now by *DE2_115_SOPC.v* is a component and can be used in *Quartus II* designs using *DE2_115_SOPC* as component name. To use the *Nios II* system and connect it to other components, the file  *DE2_115_WEB_SERVER.v* is created. It defines the main entity for the FPGA hardware project. The name of this entity should be the same name as the project name because Quartus II starts the compilation looking for the entity with the same name as the project. Inside the script, the *Nios II* System (DE2_115_SOPC) is instantiated along with the other components in the *Quartus II* part of the system (orange part of the diagram), i.e. *Camera controller, Sensor controller,  SDRAM Controller, VGA Controller* and *Display Controller*. The source files for these components are in subfolders *camera, display* and *sensor* inside the project folder. In *DE2_115_WEB_SERVER.v* the components are connected to the FPGA pins using names (LEDR, CLOCK_50, etc.). The relation between these names and the actual pins on the chip is in the *DE2_115_WEB_SERVER.qsf*. This file can be generated for any DE2-115 board using the System Builder program in the DE2-115 CD-ROM documentation. 
+- **Instantiate the Nios II System and other components in Quartus II**. The *Nios II* system, represented now by *DE2_115_SOPC.v* is a component and can be used in *Quartus II* designs using *DE2_115_SOPC* as component name. To use the *Nios II* system and connect it to other components, the file  *DE2_115_WEB_SERVER.v* is created. It defines the main entity for the FPGA hardware project. The name of this entity should be the same name as the project name because Quartus II starts the compilation looking for the entity with the same name as the project. Inside the script, the *Nios II* System (DE2_115_SOPC) is instantiated along with the other components in the *Quartus II* part of the system (orange part of the diagram), i.e. *Camera controller, Sensor controller,  SDRAM Controller, VGA Controller* and *Display Controller*. The source files for these components are in subfolders *camera, display* and *sensor* inside the project folder. In *DE2_115_WEB_SERVER.v* the components are connected to the FPGA pins using names (LEDR, CLOCK_50, etc.). The relation between these names and the actual pins on the chip is in the *DE2_115_WEB_SERVER.qsf*. This file can be generated for any DE2-115 board using the System Builder program in the DE2-115 CD-ROM documentation.
 
-- **Add compilation files to Quartus II**. All HDL files used in the project should be added to the files tab in Quartus II (left upper part of the program), so the compiler can find them. The following files should be added: 
+- **Add compilation files to Quartus II**. All HDL files used in the project should be added to the files tab in Quartus II (left upper part of the program), so the compiler can find them. The following files should be added:
 
     - *DE2_115_WEB_SERVER.v:* It is the main file containing the highest level entity.
     - *DE2_115_SOPC.v:* This file contains the definition of the *Nios II* system.
-    - *DE2_115_SOPC.quip:* This file imports the rest of the files which describe the components used in *SOPC-Builder* that form the *Nios II* System. *.quip* files are used for importing a group of HDL files together. 
+    - *DE2_115_SOPC.quip:* This file imports the rest of the files which describe the components used in *SOPC-Builder* that form the *Nios II* System. *.quip* files are used for importing a group of HDL files together.
     - The rest of *.quip* files for the *Quartus II* part of the system (orange part in the diagram), namely *display/vga.quip, display/display.quip, camera/camera.quip, etc.*
 
 - **Add libraries**. the source files of *eth_ocm* component are added as a library. Hence, add it in *Quartus II->Assignments->Settings->Libraries*.
@@ -104,7 +168,7 @@ There are 2 different options:
     - Compile the SOPC Builder project and compile using Quartus II.
     - Convert the DE2_115_WEB_SERVER.sof file into DE2_115_WEB_SERVER.pof file using Quartus II->File->Convert Programming file. It is generated in the project folder. Choose EPCS64 as device and Active programming as settings, and DE2_11_WEB_SERVER.sof as input file.
     - Set the RUN-PROG switch in PROG position and switch on the board.
-    - Load the DE2_115_WEB_SERVER.pof file into the EPCS memory using Quartus II programmer in Active-Serial mode. 
+    - Load the DE2_115_WEB_SERVER.pof file into the EPCS memory using Quartus II programmer in Active-Serial mode.
     - Switch off the board, switch the RUN-PROG switch to RUN position and switch on the board again. Now the FPGA is configured from the EPCS.
     - The previous .elf used in debug mode can be used. However, if you need to recompile it genrate the BSP and recompile the BSP and software projects again.
     - In the Nios II EDS right click in SocketServer project->Nios II->Flash programmer. Click File->New->Get Flash programmer system from SOPC Information File->Select the .sopc_info file generated in the last compilation (the one where Nios II reset and exception vectors are pointing to the flash memory) ->click OK, add the SocketServer .elf file and press start. The .elf file should be downloaded into the flash.
@@ -117,8 +181,8 @@ An attempt to migrate this code to Qsys was done. Using Qsys instead of SOPC Bui
 
 Several attempts were done to migrate the design to Qsys without success.
 
-- First the less number of modifications to the design were done. The design was open with Qsys and migrated to Qsys. The SOPC Builder files are automatically sent to a Back Up. In this process Qsys erases all .quip files in Files Tab of Quartus II. Qsys saves all data in DE115_SOPC/systhesis folder. The DE115_SOPC/systhesis folder DE115_SOPC.qip is added to Quartus. The rest of .qip files for the components added in Quartus II (like sensor or camera) are added too. The design compiles. The processor works but Ethernet do not. Some file is probably missing in the compilation. The compilation process does not break but the design is not fully completed.  
+- First the less number of modifications to the design were done. The design was open with Qsys and migrated to Qsys. The SOPC Builder files are automatically sent to a Back Up. In this process Qsys erases all .quip files in Files Tab of Quartus II. Qsys saves all data in DE115_SOPC/systhesis folder. The DE115_SOPC/systhesis folder DE115_SOPC.qip is added to Quartus. The rest of .qip files for the components added in Quartus II (like sensor or camera) are added too. The design compiles. The processor works but Ethernet do not. Some file is probably missing in the compilation. The compilation process does not break but the design is not fully completed.
 
 - Starting from zero. The design was  open with Qsys, regenerated. All files in Files tab in Quartus II are removed. In this scenario when the compilation crashes because files are not found, they are supplied one by one. The project compiles but the end result seems worse than before because the program cannot be loaded into the Nios II processor.
 
-In this scenario few more attemps to directly from SOPC Builder to Qsys can be done. If there is no success the best option is to start from bottom a new project and go adding functionality to it. First the Nios II and its memories. If it works, Ethernet capabilities can be added, and so on. The error probably is in some files missing for the Ethernet controller or some files missing in one of the multiple IP cores added with Quartus and the IP Wizzard. This Wizzard IPs usually come with some files to configure some tables of data needed to do the functionality of the IP. If this is the case the compiler can compile leaving that memories empty and later the IP core functionality is wrong. 
+In this scenario few more attemps to directly from SOPC Builder to Qsys can be done. If there is no success the best option is to start from bottom a new project and go adding functionality to it. First the Nios II and its memories. If it works, Ethernet capabilities can be added, and so on. The error probably is in some files missing for the Ethernet controller or some files missing in one of the multiple IP cores added with Quartus and the IP Wizzard. This Wizzard IPs usually come with some files to configure some tables of data needed to do the functionality of the IP. If this is the case the compiler can compile leaving that memories empty and later the IP core functionality is wrong.
