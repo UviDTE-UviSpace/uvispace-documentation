@@ -17,31 +17,30 @@ environments. Virtual environments are used to provide isolation between project
 libraries in a directory available only to the virtual environment, and thus avoid polluting the global
 sites-packages directory.
 
-There is an utility called virtualenvwrapper that simplifies the management of virtual environments, and we
-will use this utility to obtain a clean vritual environment for our project.
+There is a utility called **virtualenvwrapper** that simplifies the management of virtual environments, and we
+will use this utility to obtain a clean virtual environment for our project.
 
-To install this utility, run the following command (sudo may be necessary):
+To install this utility, run the following command (root permissions may be necessary):
 
 .. code-block:: bash
 
     $ pip install virtualenvwrapper
 
-Once the installation has finished, open up the .bashrc file, and add the following lines:
+Once the installation has finished, open up the *.bashrc* file and add the following lines:
 
 .. code-block:: bash
 
     export WORKON_HOME=$HOME/.virtualenvs      # Virtual environments folder
     source /usr/local/bin/virtualenvwrapper.sh # Enable virtualenvwrapper commands
 
-To create a new virtualenvironment, run the following command:
+To create a new virtual environment, run the following command:
 
 .. code-block:: bash
 
     $ mkvirtualenv uvispace # Syntax: mkvirtualenv (name for the virtual environment)
     (uvispace) $            # Prompt gets updated to reflect the virtual environment is active
 
-In case the virtual environment is already created, it is only necessary to activate it. In order to use it,
-use the following command:
+In case the virtual environment is already created, it is only necessary to activate it with the following command:
 
 .. code-block:: bash
 
@@ -55,7 +54,7 @@ If we want to stop using a virtual environment, run the following command:
     (uvispace) $ deactivate
     $                        # Prompt gets updated to reflect the virtual environment is no longer active
 
-By default, mkvirtualenv uses the system default python interpreter. If a specific version of python is
+By default, *mkvirtualenv* uses the system default *Python* interpreter. If a specific version of python is
 required, it can be specified with the -p parameter:
 
 .. code-block:: bash
