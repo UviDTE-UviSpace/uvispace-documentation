@@ -62,6 +62,26 @@ required, it can be specified with the -p parameter:
     $ mkvirtualenv -p python2 (name)    # Python2 virtual environment
     $ mkvirtualenv -p python3.4 (name)  # Python3.4 virtual environment
 
+When entering a new virtual environment, there will be no access to the
+software libraries previously installed on the system, as the purpose of this
+tool is to have an isolated environment. To add a new library to the virtual
+environment, you only have to install it using *pip* (remember to previously
+activate the environment), and the same rule works for other pip commands like
+uninstall or freeze:
+
+.. code-block:: bash
+
+    (uvispace) $ pip install <library-name>
+
+Finally, certain projects, like *uvispace*, have predefined libraries and
+versions and they are specified under a *requirements.txt* file (The name does
+not have to be necessary the same). In this case, these libraries can be
+automatically installed on the virtual environment using the following command:
+
+.. code-block:: bash
+
+    (uvispace) $ pip install -r requirements.txt
+
 Other useful commands are the following:
 
 .. code-block:: bash
@@ -69,7 +89,7 @@ Other useful commands are the following:
     $ lsvirtualenv        # List all available virtual environments
     $ rmvirtualenv (name) # Deletes a virtual environment
 
-A more extensive reference on the virtualenvwrapper utility can be found on its
+A more extensive reference on the *virtualenvwrapper* utility can be found on its
 `documentation <https://virtualenvwrapper.readthedocs.io>`_.
 
 Altera Quartus and SOPC-Builder
