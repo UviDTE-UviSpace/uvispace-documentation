@@ -25,12 +25,12 @@ Hence, the whole system can be divided into three different elements:
   SoC (ZedBoard) that controls the whole system. The *uvispace* software project
   is executed there, whose main tasks are:
 
-    - communicate with the FPGA-based image processing nodes, using the TCP/IP
-      protocol
-    - Merge the data obtained from the image processing nodes
-    - Get the global coordinates of the UGVs
-    - Given the destination of the UGVs, calculate the optimal path
-    - Calculate the UGVs speed, using a navigation model
+    - Communicate with the FPGA-based image processing nodes, using the TCP/IP
+      protocol.
+    - Merge the data obtained from the image processing nodes.
+    - Get the global coordinates of the UGVs.
+    - Given the destination of the UGVs, calculate the optimal path.
+    - Calculate the UGVs speed, using a navigation model.
     - Communicate with the Arduino controllers, using the ZigBee protocol, and
       send them the speed set points.
 
@@ -80,10 +80,10 @@ The *uvirobot* package consist in 2 callable scripts:
 - **messenger.py** establishes the communication to the specified UGV, using the
   ZigBee protocol. Thus, prior running it an XBee module has to be connected to
   the PC, and another one to the Arduino board serial port, and both configured
-  accordingly. Once the communication is established, the module *listens* to
+  accordingly. Once the communication is established, the module *listens* for
   speed set points and send them to the UGV. When the execution is cancelled,
   a plot with the delay times is obtained and then the program ends.
-- **controller.py** *listens* to input UGV position values and destination
+- **controller.py** *listens* for input UGV position values and destination
   coordinates, calculates the UGV optimal path, and finally outputs the speed
   set points needed to achieve the planned path.
 
@@ -105,10 +105,13 @@ Moreover, there are 5 importable libraries inside the *uvirobot* package:
   operations related to the speed values, such as transform between different
   scales or ensuring that the values are between valid boundaries.
 
-Finally, the package contains an auxiliary module into the *resources* folder,
-called *teleoperation.py*. This is a callable module that allows to control the
-UGV with the keyboard, which is specially useful when the *uvispace* package has
-to be tested.
+Finally, the package contains a couple of auxiliary modules into the *resources*
+folder:
+- *teleoperation.py* is a callable module that allows to control the UGV with
+  the keyboard, which is specially useful when the *uvispace* package has to be
+  tested.
+- *set_goal.py"* is a callable module that allows setting new goal points when
+  the system is running.
 
 uvisensor
 ^^^^^^^^^
