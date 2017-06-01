@@ -10,10 +10,11 @@
 UviSpace
 ========
 
-UviSpace is an open-source hardware and software project developed at the *Electronic Technology 
-Department* in the `University of Vigo <http://uvigo.gal/uvigo_en/index.html>`_. It consists in a system for 
-remotely controlling Unmanned Ground Vehicles (UGVs) moving inside a delimited 
-space and observed by a network of FPGA-based camera devices.
+UviSpace is an open-source hardware and software project developed at the
+*Electronic Technology  Department* in the `University of Vigo
+<http://uvigo.gal/uvigo_en/index.html>`_. It consists in a system for remotely
+controlling Unmanned Ground Vehicles (UGVs) moving inside a delimited space and
+observed by a network of FPGA-based camera devices.
 
 Source Code
 ===========
@@ -24,11 +25,12 @@ Source Code
     :align: left
     :alt: link to the GitHub repository
 
-The project's source code is publicly held on `GitHub <https://github.com/jlrandulfe/UviSpace>`_. Anybody is welcome to clone it and work with it. If you wish to collaborate, just contact us.
+The project's source code is publicly held on `GitHub
+<https://github.com/jlrandulfe/UviSpace>`_. Anybody is welcome to clone it and
+work with it. If you wish to collaborate, just contact us.
 
 For more information about getting the source code, go to our
 :ref:`download-source` section.
-
 
 Documentation
 =============
@@ -36,7 +38,7 @@ Documentation
 ..  toctree::
     :maxdepth: 2
 
-    Introduction   
+    Introduction
     Getting Started         <Starting>
     Uvirobot package        <uvirobot>
     Uvisensor package       <uvisensor>
