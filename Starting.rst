@@ -19,13 +19,6 @@ The software project has been tested correctly in the following OS:
 Besides, the following libraries and tools needs to be installed for running
 correctly the project:
 
-
-- **ROS**: it is a set of libraries and tools used for developing robot oriented
-  software in *Python* and *C/C++*. Each ROS version is associated to a concrete
-  Ubuntu distribution, and it is highly recommended to respect this
-  correspondence. Thus, for *Ubuntu 14.05*, the corresponding ROS version is
-  ROS Indigo. Information and installation instructions can be obtained at
-  `<http://wiki.ros.org/indigo>`_.
 - **OpenCV**: open-source library compatible with *Python* and *C++*. It offers
   lots of image processing functions with plenty of documentation. In the
   current version, it was used the version *OpenCV2*, though there is a more
