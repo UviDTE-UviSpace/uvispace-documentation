@@ -107,10 +107,11 @@ Moreover, there are 5 importable libraries inside the *uvirobot* package:
 
 Finally, the package contains a couple of auxiliary modules into the *resources*
 folder:
+
 - *teleoperation.py* is a callable module that allows to control the UGV with
   the keyboard, which is specially useful when the *uvispace* package has to be
   tested.
-- *set_goal.py"* is a callable module that allows setting new goal points when
+- *set_goal.py* is a callable module that allows setting new goal points when
   the system is running.
 
 uvisensor
@@ -208,11 +209,11 @@ The software project that runs in the Nios II processor is basically composed
 by two subprojects:
 
 - **SocketServer**, which is an application project containing the
-application-specific code.
+  application-specific code.
 
 - **Socket_Server_bsp**, which contains all the code that defines the interface
-with the hardware, creating an abstraction layer which eases the understanding,
-development and migration of code by a user.
+  with the hardware, creating an abstraction layer which eases the understanding,
+  development and migration of code by a user.
 
 Arduino controllers project
 ---------------------------
