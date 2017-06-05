@@ -27,7 +27,7 @@ class Mock(MagicMock):
             return MagicMock()
 
 MOCK_MODULES = ['cv2', 'skimage', 'skimage.measure', 'skimage.morphology', 
-                'path_tracker', 'matplotlib', 'matplotlib.pyplot']
+                'path_tracker', 'matplotlib', 'matplotlib.pyplot', 'pylab']
 sys.modules.update((mod_name, Mock()) for mod_name in MOCK_MODULES)
 
 # -- General configuration ------------------------------------------------
