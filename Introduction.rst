@@ -21,35 +21,40 @@ run tests and try new algorithms and solutions.
 
 Hence, the whole system can be divided into three different elements:
 
-- The *data fusion controller*, which consists in a CPU e.g. a PC or a embedded
+- The *main controller*, which consists in a CPU e.g. a PC or an embedded
   SoC (ZedBoard) that controls the whole system. The *uvispace* software project
   is executed there, whose main tasks are:
 
-    - Communicate with the FPGA-based image processing nodes, using the TCP/IP
-      protocol.
-    - Merge the data obtained from the image processing nodes.
+    - Communicate with the FPGA-based localization nodes, using the Ethernet
+    LAN network.
+    - Merge the data obtained from the localization nodes.
     - Get the global coordinates of the UGVs.
     - Given the destination of the UGVs, calculate the optimal path.
     - Calculate the UGVs speed, using a navigation model.
-    - Communicate with the Arduino controllers, using the ZigBee protocol, and
+    - Communicate with the Arduino boards, using the XBee protocol, and
       send them the speed set points.
 
-- The 4 *image processing nodes*. Their main component is an FPGA, with a camera
+- The 4 *localization nodes*. Their main component is an FPGA, with a camera
   peripheral. Each camera frame is processed in the FPGA, and the obtained
-  results are sent to the *data fusion controller* through an Ethernet port.
+  results are sent to the *main controller* through the Ethernet LAN network.
 
-- The *Arduino controllers*, that control each UGV's sensors and actuators. They
-  receive orders from the *data fusion controller* through the data received
+- The *Arduino boards*, that control each UGV's sensors and actuators. They
+  receive orders from the *main controller* through the data received
   from the serial port, connected to a XBee transceiver.
+
+..  image:: /_static/uvispace_elements.png
+    :width: 750px
+    :align: center
 
 The main structure of the system can be observed in the diagram below, where the
 communications between the three different elements aforementioned are
-represented. The system communications master is the *data fusion controller*,
-which controls the *Arduino controllers* using an IEEE 802.15.4-based protocol,
+represented. The system communications master is the *main controller*,
+which controls the *Arduino boards* using an IEEE 802.15.4-based protocol,
 namely a variation of the ZigBee specification. It controls as well the *image
-processing nodes* using the internet protocol through the Ethernet network.
+localization nodes* using the internet protocol through the Ethernet network.
 
 ..  image:: /_static/general_diagram.png
+    :width: 750px
     :align: center
 
 Regarding the control workflow, the system can be considered a closed loop,
@@ -78,7 +83,7 @@ uvirobot
 The *uvirobot* package consist in 2 callable scripts:
 
 - **messenger.py** establishes the communication to the specified UGV, using the
-  ZigBee protocol. Thus, prior running it an XBee module has to be connected to
+  XBee protocol. Thus, prior running it an XBee module has to be connected to
   the PC, and another one to the Arduino board serial port, and both configured
   accordingly. Once the communication is established, the module *listens* for
   speed set points and send them to the UGV. When the execution is cancelled,
@@ -93,14 +98,14 @@ Moreover, there are 5 importable libraries inside the *uvirobot* package:
   points, once given a position and destination, and then stores them in an
   attribute.
 - **plotter.py** contains functions used to construct a graph with a predefined
-  format. It is designed to map the calculated vs. real path of an UGV, and the
+  format. It is designed to map the calculated vs. real path of a UGV, and the
   delay times.
 - **robot.py** contains the *RobotController()* class, where each instantiated
-  object represents an UGV, and establishes the upper interface for working
+  object represents a UGV, and establishes the upper interface for working
   with its speed values.
 - **serialcomm.py** contains the *SerMesProtocol()* class, which is a child of
   the built-in python *pyserial* class. It defines a serial protocol, which will
-  be used by the XBee modules for communicating the CPU with an UGV.
+  be used by the XBee modules for communicating the CPU with a UGV.
 - **speedtransform.py** contains the *Speed()* class, for dealing with
   operations related to the speed values, such as transform between different
   scales or ensuring that the values are between valid boundaries.
@@ -160,8 +165,8 @@ The package has, as well, 4 importable modules:
     :width: 750px
     :align: center
 
-Hardware design project
------------------------
+Hardware design project (DEPCRECATED)
+-------------------------------------
 
 As stated before, the hardware system was designed for being implemented on an
 FPGA-based board and its main purpose is to provide a hardware interface for
