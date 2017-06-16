@@ -127,9 +127,9 @@ development of SoCs:
   connection of different components with third state features, using small
   number of signals, saving pins and space in the board.
 - **Conduit:** It is a point to point connection between two conduit signals.
-  It is used when none of the previous interfaces can be used. It is tipically
+  It is used when none of the previous interfaces can be used. It is typically
   used to export signals outside of *Qsys* and represent the particular
-  interface of some chip. It is also used to connect two componnets with custom
+  interface of some chip. It is also used to connect two components with custom
   user-defined interface between them.
 
 Using the standard buses makes the connection between components fast because
@@ -138,7 +138,7 @@ slave can be connected to a processor, saving time and avoiding errors.
 *SOPC-Builder* and *Qsys* create a lot of logic automatically. For example,
 *Avalon MM* buses create the logic circuits needed to implement the desired
 address map. *SOPC-Builder* and *Qsys* also have a big library of IP
-(Intelectual Property) cores that are tested and documented. This permits the
+(Intellectual Property) cores that are tested and documented. This permits the
 developer to focus his efforts on the components that are specific to the
 application.
 
@@ -227,7 +227,7 @@ in this case the subprojects are already created so they have to be imported
 into the workspace. To do this go to *File->Import->General->Existing Projects*
 then go to *workspace->Select root directory [project folder]/software* and
 click *copy projects into workspace*. Another recommended way is to choose
-*[project folder]/software* as the project workspace, being not neccessary to
+*[project folder]/software* as the project workspace, being not necessary to
 copy the subprojects into the workspace if doing so.
 
 Changing sopc_info file location in the BSP
@@ -289,7 +289,7 @@ The DE2_115_sopcbuilder12 design accomplish this task:
 
 - **Stand-alone board:** (THIS STEPS DON'T WORK) In this case the program of the
   Nios II is loaded into the non-volatile flash memory and the configuration of
-  the FPGA is loaded into the non-volatile EPCS memory availables in the board.
+  the FPGA is loaded into the non-volatile EPCS memory available in the board.
   When the board is configured using this option, during the start-up the FPGA
   is loaded from the EPCS and the Nios II starts reading its program from the
   flash memory, that is now its program memory. The SRAM memory is one more
@@ -314,7 +314,7 @@ The DE2_115_sopcbuilder12 design accomplish this task:
     - Switch off the board, switch the RUN-PROG switch to RUN position and
       switch on the board again. Now the FPGA is configured from the EPCS.
     - The previous .elf used in debug mode can be used. However, if you need
-      to recompile it genrate the BSP and recompile the BSP and software
+      to recompile it generate the BSP and recompile the BSP and software
       projects again.
     - In the Nios II EDS right click in SocketServer project->Nios II->Flash
       programmer. Click File->New->Get Flash programmer system from SOPC
@@ -351,12 +351,12 @@ crashes because files are not found, they are supplied one by one. The project
 compiles but the end result seems worse than before because the program cannot
 be loaded into the Nios II processor.
 
-In this scenario few more attemps to directly from SOPC Builder to Qsys can be
+In this scenario few more attempts to directly from SOPC Builder to Qsys can be
 done. If there is no success the best option is to start from bottom a new
 project and go adding functionality to it. First the Nios II and its memories.
 If it works, Ethernet capabilities can be added, and so on. The error probably
 is in some files missing for the Ethernet controller or some files missing in
-one of the multiple IP cores added with Quartus and the IP Wizzard. This Wizard
+one of the multiple IP cores added with Quartus and the IP Wizard. This Wizard
 IPs usually come with some files to configure some tables of data needed to do
 the functionality of the IP. If this is the case the compiler can compile
 leaving that memories empty and later the IP core functionality is wrong.

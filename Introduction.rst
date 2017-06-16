@@ -51,7 +51,7 @@ communications between the three different elements aforementioned are
 represented. The system communications master is the *main controller*,
 which controls the *Arduino boards* using an IEEE 802.15.4-based protocol,
 namely a variation of the ZigBee specification. It controls as well the *image
-localization nodes* using the internet protocol through the Ethernet network.
+localization nodes* using the Internet protocol through the Ethernet network.
 
 ..  image:: /_static/general_diagram.png
     :width: 750px
@@ -86,7 +86,7 @@ The *uvirobot* package consist in 2 callable scripts:
   XBee protocol. Thus, prior running it an XBee module has to be connected to
   the PC, and another one to the Arduino board serial port, and both configured
   accordingly. Once the communication is established, the module *listens* for
-  speed set points and send them to the UGV. When the execution is cancelled,
+  speed set points and send them to the UGV. When the execution is canceled,
   a plot with the delay times is obtained and then the program ends.
 - **controller.py** *listens* for input UGV position values and destination
   coordinates, calculates the UGV optimal path, and finally outputs the speed
@@ -165,7 +165,7 @@ The package has, as well, 4 importable modules:
     :width: 750px
     :align: center
 
-Hardware design project (DEPCRECATED)
+Hardware design project (DEPRECATED)
 -------------------------------------
 
 As stated before, the hardware system was designed for being implemented on an
