@@ -86,3 +86,15 @@ videosensor.py
 
 .. autoclass:: uvisensor.videosensor.VideoSensor
    :members:
+
+|
+
+kalmanfilter.py
+---------------
+
+.. automodule:: uvisensor.kalmanfilter
+
+------------------------------------------------------
+
+.. autoclass:: uvisensor.kalmanfilter.Kalman
+   :members:
