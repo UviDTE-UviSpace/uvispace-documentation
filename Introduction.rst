@@ -26,7 +26,7 @@ Hence, the whole system can be divided into three different elements:
   is executed there, whose main tasks are:
 
     - Communicate with the FPGA-based localization nodes, using the Ethernet
-    LAN network.
+      LAN network.
     - Merge the data obtained from the localization nodes.
     - Get the global coordinates of the UGVs.
     - Given the destination of the UGVs, calculate the optimal path.
