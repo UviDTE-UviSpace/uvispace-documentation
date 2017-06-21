@@ -1,5 +1,3 @@
-
-
 The uvisensor package
 =====================
 
@@ -98,3 +96,4 @@ kalmanfilter.py
 
 .. autoclass:: uvisensor.kalmanfilter.Kalman
    :members:
+
