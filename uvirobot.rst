@@ -12,10 +12,10 @@ messenger.py
 .. automodule:: uvirobot.messenger
 
 
-controller.py
--------------
+navigator.py
+------------
 
-.. automodule:: uvirobot.controller
+.. automodule:: uvirobot.navigator
 
 plotter.py
 ----------
