@@ -26,7 +26,7 @@ Hence, the whole system can be divided into three different elements:
   is executed there, whose main tasks are:
 
     - Communicate with the FPGA-based localization nodes, using the Ethernet
-    LAN network.
+      LAN network.
     - Merge the data obtained from the localization nodes.
     - Get the global coordinates of the UGVs.
     - Given the destination of the UGVs, calculate the optimal path.
@@ -166,7 +166,7 @@ The package has, as well, 4 importable modules:
     :align: center
 
 Hardware design project (DEPRECATED)
--------------------------------------
+------------------------------------
 
 As stated before, the hardware system was designed for being implemented on an
 FPGA-based board and its main purpose is to provide a hardware interface for
