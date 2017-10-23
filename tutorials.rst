@@ -169,26 +169,26 @@ The following steps show how to set up the FPGA project:
       *ip/eth_ocm*).
 
 - **Instantiate the Nios II System and other components in Quartus II**. The
-*Nios II* system, represented now by *DE2_115_SOPC.v* is a component and can be
-used in *Quartus II* designs using *DE2_115_SOPC* as component name. To use the
-*Nios II* system and connect it to other components, the file
-*DE2_115_WEB_SERVER.v* is created. It defines the main entity for the FPGA
-hardware project. The name of this entity should be the same name as the
-project name because Quartus II starts the compilation looking for the entity
-with the same name as the project. Inside the script, the *Nios II* System
-(DE2_115_SOPC) is instantiated along with the other components in the *Quartus
-II* part of the system (orange part of the diagram), i.e. *Camera controller,
-Sensor controller,  SDRAM Controller, VGA Controller* and *Display Controller*.
-The source files for these components are in subfolders *camera, display* and
-*sensor* inside the project folder. In *DE2_115_WEB_SERVER.v* the components
-are connected to the FPGA pins using names (LEDR, CLOCK_50, etc.). The relation
-between these names and the actual pins on the chip is in the
-*DE2_115_WEB_SERVER.qsf*. This file can be generated for any DE2-115 board
-using the System Builder program in the DE2-115 CD-ROM documentation.
+  *Nios II* system, represented now by *DE2_115_SOPC.v* is a component and can be
+  used in *Quartus II* designs using *DE2_115_SOPC* as component name. To use the
+  *Nios II* system and connect it to other components, the file
+  *DE2_115_WEB_SERVER.v* is created. It defines the main entity for the FPGA
+  hardware project. The name of this entity should be the same name as the
+  project name because Quartus II starts the compilation looking for the entity
+  with the same name as the project. Inside the script, the *Nios II* System
+  (DE2_115_SOPC) is instantiated along with the other components in the *Quartus
+  II* part of the system (orange part of the diagram), i.e. *Camera controller,
+  Sensor controller,  SDRAM Controller, VGA Controller* and *Display Controller*.
+  The source files for these components are in subfolders *camera, display* and
+  *sensor* inside the project folder. In *DE2_115_WEB_SERVER.v* the components
+  are connected to the FPGA pins using names (LEDR, CLOCK_50, etc.). The relation
+  between these names and the actual pins on the chip is in the
+  *DE2_115_WEB_SERVER.qsf*. This file can be generated for any DE2-115 board
+  using the System Builder program in the DE2-115 CD-ROM documentation.
 
 - **Add compilation files to Quartus II**. All HDL files used in the project
-should be added to the files tab in Quartus II (left upper part of the program),
-so the compiler can find them. The following files should be added:
+  should be added to the files tab in Quartus II (left upper part of the program),
+  so the compiler can find them. The following files should be added:
 
     - *DE2_115_WEB_SERVER.v:* It is the main file containing the highest level
       entity.
@@ -263,9 +263,9 @@ How to load hardware and software in the FPGA board
 There are 2 different options:
 
 - **While debugging:** In this case the board is connected to the PC for
-debugging. The console in the *Nios II EDS* can be used. In this situation both
-the program and data of the *Nios II* processor are stored in the SRAM memory.
-The DE2_115_sopcbuilder12 design accomplish this task:
+  debugging. The console in the *Nios II EDS* can be used. In this situation both
+  the program and data of the *Nios II* processor are stored in the SRAM memory.
+  The DE2_115_sopcbuilder12 design accomplish this task:
 
     - In the *Nios II* processor component in *SOPC-Builder* reset and exception
       vectors have to point to the *SRAM Controller* component (so the SRAM
@@ -336,20 +336,20 @@ the migration from SOPC Builder to Qsys.
 Several attempts were done to migrate the design to Qsys without success.
 
 - First the less number of modifications to the design were done. The design was
-open with Qsys and migrated to Qsys. The SOPC Builder files are automatically
-sent to a Back Up. In this process Qsys erases all .quip files in Files Tab of
-Quartus II. Qsys saves all data in DE115_SOPC/systhesis folder. The
-DE115_SOPC/systhesis folder DE115_SOPC.qip is added to Quartus. The rest of
-.qip files for the components added in Quartus II (like sensor or camera) are
-added too. The design compiles. The processor works but Ethernet do not. Some
-file is probably missing in the compilation. The compilation process does not
-break but the design is not fully completed.
+  open with Qsys and migrated to Qsys. The SOPC Builder files are automatically
+  sent to a Back Up. In this process Qsys erases all .quip files in Files Tab of
+  Quartus II. Qsys saves all data in DE115_SOPC/systhesis folder. The
+  DE115_SOPC/systhesis folder DE115_SOPC.qip is added to Quartus. The rest of
+  .qip files for the components added in Quartus II (like sensor or camera) are
+  added too. The design compiles. The processor works but Ethernet do not. Some
+  file is probably missing in the compilation. The compilation process does not
+  break but the design is not fully completed.
 
 - Starting from zero. The design was  open with Qsys, regenerated. All files in
-Files tab in Quartus II are removed. In this scenario when the compilation
-crashes because files are not found, they are supplied one by one. The project
-compiles but the end result seems worse than before because the program cannot
-be loaded into the Nios II processor.
+  Files tab in Quartus II are removed. In this scenario when the compilation
+  crashes because files are not found, they are supplied one by one. The project
+  compiles but the end result seems worse than before because the program cannot
+  be loaded into the Nios II processor.
 
 In this scenario few more attempts to directly from SOPC Builder to Qsys can be
 done. If there is no success the best option is to start from bottom a new
