@@ -7,7 +7,7 @@ up a PC in order to be able to collaborate developing and testing the project.
 ..  toctree::
     :maxdepth: 2
 
-    Getting Started         <Starting>
+    Getting Started         <starting>
 
 System requirements
 -------------------

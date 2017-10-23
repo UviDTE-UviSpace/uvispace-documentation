@@ -38,11 +38,11 @@ Documentation
 ..  toctree::
     :maxdepth: 2
 
-    Introduction
-    Getting Started         <Starting>
+    Introduction            <introduction>
+    Getting Started         <starting>
     Uvirobot package        <uvirobot>
     Uvisensor package       <uvisensor>
-    Hardware design         <Hardware>
-    Arduino controller      <Arduino>
-    Tutorials               <Tutorials>
-    Release Notes           <Release_Notes>
+    Hardware design         <camera>
+    Arduino controller      <vehicle>
+    Tutorials               <tutorials>
+    Release Notes           <release-notes>
