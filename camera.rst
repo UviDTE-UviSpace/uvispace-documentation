@@ -4,7 +4,7 @@ Hardware System Design
 ..  toctree::
     :maxdepth: 2
 
-    Hardware system design        <Hardware>
+    Hardware design         <camera>
 
 FPGA System
 -----------

@@ -4,7 +4,7 @@ Tutorials and manuals
 ..  toctree::
     :maxdepth: 2
 
-    Tutorials
+    Tutorials               <tutorials>
 
 
 Python virtual environments
