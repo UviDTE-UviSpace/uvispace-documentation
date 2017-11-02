@@ -3,7 +3,7 @@
    You can adapt this file completely to your liking, but it should at least
    contain the root `toctree` directive.
 
-..  image:: /_static/portada2.jpg
+..  image:: /_static/cover1.jpg
     :width: 1100px
     :align: center
 
@@ -19,18 +19,17 @@ observed by a network of FPGA-based camera devices.
 Source Code
 ===========
 
-.. image:: /_static/GitHub_Logo.png
+.. image:: /_static/github-logo.png
     :target: https://github.com/UviDTE-UviSpace
     :width: 250px
     :align: left
     :alt: link to UviSpace GitHub organization
 
-The project's source code is available on `GitHub
-<https://github.com/UviDTE-UviSpace>`_. Anybody is welcome to clone it and
-work with it. If you wish to collaborate, just contact us.
+The project's source code is available on the repositories under our
+`GitHub organization <https://github.com/UviDTE-UviSpace>`_. Anybody is welcome
+to clone and work with them. If you wish to collaborate, just contact us.
 
-For more information about getting the source code, go to our
-:ref:`download-source` section.
+|
 
 Documentation
 =============
@@ -40,8 +39,7 @@ Documentation
 
     Introduction            <introduction>
     Getting Started         <starting>
-    Uvirobot package        <uvirobot>
-    Uvisensor package       <uvisensor>
+    Main Controller         <main-controller>
     Camera device           <camera>
     Vehicle controller      <vehicle>
     Tutorials               <tutorials>
