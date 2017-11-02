@@ -46,21 +46,21 @@ correctly the project:
 Download the source
 -------------------
 
-The project is stored and maintained at an online repository that can be
-accessed `here <https://github.com/jlrandulfe/UviSpace>`_.
-The project can be directly downloaded from the repository page. However, it is
+The project source code is stored in the repositories available under the
+`UviSpace organization <https://github.com/UviDTE-UviSpace>`_.
+These repositories allow to download the source code directly, but it is
 recommended to `install git <https://git-scm.com/downloads>`_ and then clone
 the project to a local repository. This way, you can use the *git version
-control system* in order to collaborate to the project and easily synchronize
-your work with the other developers.
+control system* in order to collaborate with the project and easily synchronize
+your work with the rest of developers.
 
-Once you have git installed and configured, type the following instructions
-for cloning the UviSpace project to your PC::
+For example, once you have git installed and configured, type the following instructions
+for cloning the UviSpace Main Controller source code to your PC::
 
-    $ cd /go/to/desired/directory                             # Set the terminal working directory
-    $ git clone https://github.com/jlrandulfe/UviSpace.git    # Clone the project to your local machine
+    $ cd /go/to/desired/directory                                             # Set the terminal working directory
+    $ git clone https://github.com/UviDTE-UviSpace/uvispace-main-controller   # Clone the project to your local machine
 
-After that, the project will be cloned to a folder named UviSpace into the directory you have specified.
+After that, the main controller will be cloned to a folder named uvispace-main-controller into the directory you have specified.
 
 Learning
 --------

@@ -20,13 +20,13 @@ Source Code
 ===========
 
 .. image:: /_static/GitHub_Logo.png
-    :target: https://github.com/jlrandulfe/UviSpace
+    :target: https://github.com/UviDTE-UviSpace
     :width: 250px
     :align: left
-    :alt: link to the GitHub repository
+    :alt: link to UviSpace GitHub organization
 
-The project's source code is publicly held on `GitHub
-<https://github.com/jlrandulfe/UviSpace>`_. Anybody is welcome to clone it and
+The project's source code is available on `GitHub
+<https://github.com/UviDTE-UviSpace>`_. Anybody is welcome to clone it and
 work with it. If you wish to collaborate, just contact us.
 
 For more information about getting the source code, go to our
@@ -36,13 +36,13 @@ Documentation
 =============
 
 ..  toctree::
-    :maxdepth: 2
+    :titlesonly:
 
     Introduction            <introduction>
     Getting Started         <starting>
     Uvirobot package        <uvirobot>
     Uvisensor package       <uvisensor>
-    Hardware design         <camera>
-    Arduino controller      <vehicle>
+    Camera device           <camera>
+    Vehicle controller      <vehicle>
     Tutorials               <tutorials>
     Release Notes           <release-notes>
