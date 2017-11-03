@@ -13,7 +13,7 @@ The system implemented in this Project is depicted in the figure below. The
 biggest part of the system is a *NiosII* processor system defined in
 *SOPC-Builder*. The rest of the system is defined directly in *Quartus II*.
 
-..  image:: /_static/fpga_diagram.png
+..  image:: /_static/fpga-diagram.png
     :width: 750px
     :align: center
 
