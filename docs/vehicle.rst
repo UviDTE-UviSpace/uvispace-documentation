@@ -1,7 +1,8 @@
 UGV
 ===
 
-Table of contents of this file:
+Table of contents:
+------------------
 
 | :ref:`1. Vehicle <vehicle>`
 |   :ref:`1.1 DFRobot <dfrobot>`
@@ -33,7 +34,10 @@ DFRobot
 
 This section will include the DFRobot specifications as well as some designs to
 specify the wirings and the set up of the robot.It also includes all the parts
-of the robot well referenced and may have some photos.
+of the robot well referenced and may have some photos. This vehicle has an
+`Arduino Romeo v1.1 board`__.
+
+__ arduino_
 
 .. _arduino:
 
