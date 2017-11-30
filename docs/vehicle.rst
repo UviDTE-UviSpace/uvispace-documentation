@@ -5,7 +5,7 @@ Table of contents:
 ------------------
 
 | :ref:`1. Vehicle <vehicle>`
-|   :ref:`1.1 DFRobot <dfrobot>`
+|   :ref:`1.1 Pirate-4WD Mobile Platform <pirate-4wd>`
 | :ref:`2. Arduino Romeo v1.1 <arduino>`
 |   :ref:`2.1 Hardware <arduino-hardware>`
 |   :ref:`2.2 Software <arduino-software>`
@@ -27,17 +27,29 @@ Table of contents:
 1 - Vehicle
 -----------
 
-.. _dfrobot:
+.. _pirate-4dw:
 
-DFRobot
-^^^^^^^
+Pirate-4WD Mobile Platform
+^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-This section will include the DFRobot specifications as well as some designs to
-specify the wirings and the set up of the robot.It also includes all the parts
-of the robot well referenced and may have some photos. This vehicle has an
-`Arduino Romeo v1.1 board`__.
+.. This section will include the DFRobot specifications as well as 2 photos of
+   the UGV without top neither bottom pannels and the names of all the boards.
+   Also an screenshot of the schematic that will be included in the pcb-designs
+   repository to specify the wirings and the set up of the robot.
+
+`Pirate-4WD Mobile Platform`__ is a robotics platform of the DFRobot_ brand. It is the first robot used in the UviSpace.
+
+__ pirate_
+
+.. _pirate: https://www.dfrobot.com/product-97.html
+.. _dfrobot: https://www.dfrobot.com/
+
+The power supply of the robot is a Lithium Polymer battery. This battery has a voltage of 7,4 V (2 cells of 3,7 V each) and 2200 mAh of capacity that supplies power to the 4 DC motors (one per wheel) and to the `UGV controller`__.
 
 __ arduino_
+
+It also has some PCB's. Fuel gauge PCB monitors few battery parameters as the **State Of Charge**, the *voltage* or the *temperature*. Theese values are transmitted via I2C protocol to the UGV controller. The battery charger PCB allow to charge the battery either using an external power supply or the Wireless Power Transfer System.
+The controller is an Arduino board that receive commands via wireless using a Zigbee module from the main controller. It has two main functions. One, transmit the battery parameters to the main controller so that it can know wheter the battery is in good conditions to continue working, and the other is deal with the navigation of the UGV.
 
 .. _arduino:
 
