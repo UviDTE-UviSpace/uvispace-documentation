@@ -275,7 +275,7 @@ leaving that memories empty and later the IP core functionality is wrong.
 
 
 Manufacture a PCB
-=================
+^^^^^^^^^^^^^^^^^
 
 This is a tutorial of how to manufacture a PCB using a photosensitive board.
 
@@ -425,7 +425,7 @@ in the DTE, specific barnish spray was used.
 
 
 Create documentation
-====================
+^^^^^^^^^^^^^^^^^^^^
 
 | :ref:`1. Installing Python in Windows <python-windows>`
 | :ref:`2. Installing the Virtual Environment <virtual-env>`
