@@ -1,13 +1,64 @@
-Hardware System Design
-======================
+Uvispace FPSoC Camera
+=====================
 
 ..  toctree::
     :maxdepth: 2
 
     Hardware design         <camera>
 
-FPGA System
------------
+Introduction
+------------
+
+
+Hardware for the FPGA
+---------------------
+
+
+Software for the HPS
+--------------------
+Common files
+^^^
+
+Kernel modules
+^^^^^^^^^^^^^^
+To learn more about kernel modules go to examples and install SD card
+Then explain one by one
+
+Applications
+^^^^^^^^^^^^
+
+Camera Set-up
+^^^^^^^^^^^^
+Parameters selected, frame rate and size of the images.
+
+Installation of the cameras
+---------------------------
+SD-card
+^^^^^^^
+Generate SD-card partitiopns and kernel get_current_corners_of_tracker
+Files to copy to the root folders
+Add file to configure ETHERNET and board connects internet alone
+Add file that automatically inserts driver and runs server
+
+
+Physical placement
+^^^^^^^^^^^^^^^^^^
+Modificaciones a la cámara
+Explicar las estrías del metraquilato para ajustar
+Hacer streaming y enrasar con marcas
+Ajustar con estrías
+
+Cable connection
+^^^^^^^^^^^^^^^^
+Power go to main switch in laboratory
+Ethernet to router, explain how router is mounted
+
+Focus
+^^^^^
+Focus the camera using the wheel in the lens
+
+
+
 
 The system implemented in this Project is depicted in the figure below. The
 biggest part of the system is a *NiosII* processor system defined in
