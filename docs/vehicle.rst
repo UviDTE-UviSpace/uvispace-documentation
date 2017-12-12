@@ -15,7 +15,7 @@ Table of contents:
 |   :ref:`3.3 WiFi Module <wifi>`
 | :ref:`4. Fuel gauge <fuel-gauge>`
 |   :ref:`4.1 Hardware <fuel-gauge-hardware>`
-|   :ref:`4.2 Software <fuel-gauge-software>`
+|   :ref:`4.2 Firmware configuration <fuel-gauge-fw-config>`
 | :ref:`5. Charger <charger>`
 | :ref:`6. Wireless power transfer <wpt>`
 |   :ref:`6.1 Primary Hardware <wpt-primary-hardware>`
@@ -37,19 +37,30 @@ Pirate-4WD Mobile Platform
    Also an screenshot of the schematic that will be included in the pcb-designs
    repository to specify the wirings and the set up of the robot.
 
-`Pirate-4WD Mobile Platform`__ is a robotics platform of the DFRobot_ brand. It is the first robot used in the UviSpace.
+`Pirate-4WD Mobile Platform`__ is a robotics platform of the DFRobot_ brand. It
+is the first robot used in the UviSpace.
 
 __ pirate_
 
 .. _pirate: https://www.dfrobot.com/product-97.html
 .. _dfrobot: https://www.dfrobot.com/
 
-The power supply of the robot is a Lithium Polymer battery. This battery has a voltage of 7,4 V (2 cells of 3,7 V each) and 2200 mAh of capacity that supplies power to the 4 DC motors (one per wheel) and to the `UGV controller`__.
+The power supply of the robot is a Lithium Polymer battery. This battery has a
+voltage of 7,4 V (2 cells of 3,7 V each) and 2200 mAh of capacity that supplies
+power to the 4 DC motors (one per wheel) and to the `UGV controller`__.
 
 __ arduino_
 
-It also has some PCB's. Fuel gauge PCB monitors few battery parameters as the **State Of Charge**, the *voltage* or the *temperature*. Theese values are transmitted via I2C protocol to the UGV controller. The battery charger PCB allow to charge the battery either using an external power supply or the Wireless Power Transfer System.
-The controller is an Arduino board that receive commands via wireless using a Zigbee module from the main controller. It has two main functions. One, transmit the battery parameters to the main controller so that it can know wheter the battery is in good conditions to continue working, and the other is deal with the navigation of the UGV.
+It also has some PCB's. Fuel gauge PCB monitors few battery parameters as the
+**State Of Charge**, the *voltage* or the *temperature*. Theese values are
+transmitted via I2C protocol to the UGV controller. The battery charger PCB
+allow to charge the battery either using an external power supply or the
+Wireless Power Transfer System.
+The controller is an Arduino board that receive commands via wireless using a
+Zigbee module from the main controller. It has two main functions. One, transmit
+the battery parameters to the main controller so that it can know wheter the
+battery is in good conditions to continue working, and the other is deal with
+the navigation of the UGV.
 
 .. _arduino:
 
@@ -148,10 +159,28 @@ In this PCB version the v1.1 was modified including:
 * I2C replacement by a SPDT switch
 * Number of PCB vias reduced dramatically
 
-.. _fuel-gauge-software:
+.. _fuel-gauge-fw-config:
 
-Software
-^^^^^^^^
+Firmware configuration
+^^^^^^^^^^^^^^^^^^^^^^
+
+In this section has to be specified how to program all the registers of the IC
+and how to do the calibration. Also explained the issues that we have found
+when doing that process the first times. In the past we used the bq34z100. That
+chip had an error with the alert and it didn't work. We purchase a new design:
+the bq34z100-G1. In the voltage calibration process we had allways the same
+error. Later on, we've discoverde the problem was the software used was
+corrupted. Once we update the software to the latest build, the calibration was
+perfect. 
+
+Battery Management Studio (bqStudio) Software v1.3.80 Build 1 	28-SEP-2017
+http://www.ti.com/tool/bqstudio?keyMatch=bqstudio&tisearch=Search-EN-Everything
+
+bq34z100EVM Wide Range Impedance Track™ Enabled Battery Fuel Gauge Solution
+http://www.ti.com/lit/ug/sluu904a/sluu904a.pdf
+A guide of how to calibrate the fuel Gauge
+
+Drivers for EV2300 can be foud in the repository
 
 .. _charger:
 
