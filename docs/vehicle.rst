@@ -27,7 +27,7 @@ Table of contents:
 1 - Vehicle
 -----------
 
-.. _pirate-4dw:
+.. _pirate-4wd:
 
 Pirate-4WD Mobile Platform
 ^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -51,16 +51,26 @@ power to the 4 DC motors (one per wheel) and to the `UGV controller`__.
 
 __ arduino_
 
-It also has some PCB's. Fuel gauge PCB monitors few battery parameters as the
+It also has some PCB's:
+
+- *Fuel gauge PCB* monitors few battery parameters as the
 **State Of Charge**, the *voltage* or the *temperature*. Theese values are
-transmitted via I2C protocol to the UGV controller. The battery charger PCB
-allow to charge the battery either using an external power supply or the
-Wireless Power Transfer System.
-The controller is an Arduino board that receive commands via wireless using a
-Zigbee module from the main controller. It has two main functions. One, transmit
-the battery parameters to the main controller so that it can know wheter the
-battery is in good conditions to continue working, and the other is deal with
-the navigation of the UGV.
+transmitted via I2C protocol to the UGV controller.
+
+- *Battery charger PCB* allow to charge the battery either using an external
+power supply or the Wireless Power Transfer System.
+
+- The *controller* PCB has an `Arduino all-in-one controller`__. This board
+communicates with the *main controller* in order to deal with two main tasks:
+
+One, transmit the battery parameters to the main controller using a
+*Zigbee module* so that it can now if the battery is in good conditions to
+continue working, and the other is to deal with the navigation of the UGV.
+
+__ arduino_
+
+- *Zigbee module*
+
 
 .. _arduino:
 
@@ -171,7 +181,7 @@ chip had an error with the alert and it didn't work. We purchase a new design:
 the bq34z100-G1. In the voltage calibration process we had allways the same
 error. Later on, we've discoverde the problem was the software used was
 corrupted. Once we update the software to the latest build, the calibration was
-perfect. 
+perfect.
 
 Battery Management Studio (bqStudio) Software v1.3.80 Build 1 	28-SEP-2017
 http://www.ti.com/tool/bqstudio?keyMatch=bqstudio&tisearch=Search-EN-Everything
