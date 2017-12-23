@@ -30,6 +30,7 @@ Create documentation
 | :ref:`4. Install Sphinx <sphinx>`
 | :ref:`5. Create documentation <documentation>`
 
+
 Before creating documentation of a project, few steps have to be done. We'll
 show in this tutorial how to install important tools to have an organized and
 methodical way of creating a project documentation. All the following is going
