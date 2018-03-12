@@ -36,7 +36,7 @@ Documentation
 =============
 
 ..  toctree::
-    :maxdepth: 2
+    :maxdepth: 1
 
     Introduction            <introduction>
     Getting Started         <starting>
@@ -44,5 +44,6 @@ Documentation
     Uvisensor package       <uvisensor>
     Hardware design         <camera>
     Arduino controller      <vehicle>
+    Wireless Power Transfer <wpt>
     Tutorials               <tutorials>
     Release Notes           <release-notes>
