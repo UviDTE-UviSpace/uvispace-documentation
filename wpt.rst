@@ -18,7 +18,9 @@ WPT Hardware
 
 Overview
 ^^^^^^^^^
-The Wireless Power Transfer (WPS) System is composed by ...
+The Wireless Power Transfer (WPT) System is composed by two or more devices. There is at least one emitter and one receiver (as a primary and a secondary in a conventional transformer), though the number of these can be increased depending on the topology. In this project the SISO (Single Input Single Output) topology will be used.
+
+The function of the primary is to transform the input signal in an AC with high frequency (from kHz to MHz), in the following section the blocks and topologies used will be explained. The secondary's function is to receive that high-frequency signal and to transform it into a signal capable of charging a battery efficiently.
 
 (Explain that there is a primary and a secondary, explain a little bit its working, put a general picture or diagram of the system. Point out to the repositories where the hardware can be found. Explain that a in the TFG a detailed description is given)
 
