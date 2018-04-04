@@ -18,14 +18,37 @@ WPT Hardware
 
 Overview
 ^^^^^^^^^
-The Wireless Power Transfer (WPT) System is composed by two or more devices. There is at least one emitter and one receiver (as a primary and a secondary in a conventional transformer), though the number of these can be increased depending on the topology. In this project the SISO (Single Input Single Output) topology will be used.
+The Wireless Power Transfer (WPT) System is composed by two or more devices. There
+is at least one emitter and one receiver (as a primary and a secondary in a
+conventional transformer), though the number of these can be increased depending
+on the topology. In this project the SISO (Single Input Single Output) topology
+will be used.
 
-The function of the primary is to transform the input signal in an AC with high frequency (from kHz to MHz), in the following section the blocks and topologies used will be explained. The secondary's function is to receive that high-frequency signal and to transform it into a signal capable of charging a battery efficiently.
+The function of the primary is to transform the input signal in an AC with high
+frequency (from kHz to MHz), in the following section the blocks and topologies
+used will be explained. The secondary's function is to receive that high-frequency
+signal and to transform it into a signal capable of charging a battery efficiently,
+i.e. a CC signal with a specific voltage level.
 
-(Explain that there is a primary and a secondary, explain a little bit its working, put a general picture or diagram of the system. Point out to the repositories where the hardware can be found. Explain that a in the TFG a detailed description is given)
+In the Figure an overview of the blocks is available.
+
+..  image:: /_static/WPT/system_block_diagram.png
+    :align: center
+
+(Explain that there is a primary and a secondary, explain a little bit its working,
+put a general picture or diagram of the system. Point out to the repositories
+where the hardware can be found. Explain that a in the TFG a detailed description
+is given)
 
 Primary
 ^^^^^^^
+To transfer efficiently energy over an air gap in a WPT system, the frequency of
+the emitter's signal has to be significantly high. With higher frequency, higher
+coupling coefficient and hence, higher efficiency. The primary is the responsible
+for rising the frequency of 50 Hz (EU) to tens or hundreds of kHz.
+
+
+
 Small explanation of the different parts of the primary. Send the user to the TFG for more details.
 Important to write here the differences if any with the TFG.
 Write here too the functionality that is available.
