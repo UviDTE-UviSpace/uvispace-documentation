@@ -8,10 +8,13 @@ Wireless Power Transfer
 
 Introduction
 ------------
-This documentation page explains a Wireless Power Transfer system that can be used to charge the UGVs in Uvispace. When UGV battery is getting low the Main Controller may decide to take the car to a Wireless Charging Station, therefore providing a way to continuously work without human intervention. This could be useful to simulate interesting scenarios in real life environments like a factory that uses UGVs for material transportation or a parking that charges the parked vehicles so the battery is full when the owner comes back.
-
-
-
+This documentation page explains a Wireless Power Transfer system that can be used
+to charge the UGVs in Uvispace. When UGV battery is getting low the Main Controller
+may decide to take the car to a Wireless Charging Station, therefore providing a
+way to continuously work without human intervention. This could be useful to simulate
+interesting scenarios in real life environments like a factory that uses UGVs for
+material transportation or a parking that charges the parked vehicles so the battery
+is full when the owner comes back.
 
 WPT Hardware
 ------------
@@ -47,7 +50,29 @@ the emitter's signal has to be significantly high. With higher frequency, higher
 coupling coefficient and hence, higher efficiency. The primary is the responsible
 for rising the frequency of 50 Hz (EU) to tens or hundreds of kHz.
 
+The first block is a rectifier followed by a CC/CC regulator, to convert the
+AC input signal into a controlled CC with an appropiate voltage level. In this
+project, this block is implemented with a commercial computer power adapter, assuring
+a 24 V signal at the input of the next block.
 
+After the regulator is places the inverter. This blocks transforms the CC signal
+into a high frequency AC signal. In this project a full bridge (H-bridge) inverter
+is used. Unfortunately, the output of this device is a square signal, i.e. a fundamental
+frequency with a lot of higher frequency harmonics. The harmonic analysis can be
+found on the repository (TFG-wpt-system). This harmonics would mean a substancial
+quantity of noise in the air-core transformer, so this signal has to be filtered.
+
+The filters used for the purpose are LC resonant tanks. The explanation of the
+behavior of resonant tanks can be found on the TFG, but as a brief summary, a
+series LC tank behaves as a band-pass filter and a parallel LC tank
+behaves as a band-stop filter at resonance. The filter used is a composing of both
+topologies, a series LC tank tuned at the input signal's frequency, blocking the
+high-frequency harmonics, followed by a parallel LC tank that stores the energy
+of the fundamental frequency, having a small current outside the tank, and a high
+current inside. The inductor of the parallel LC tank is the emitter coil.
+
+..  image:: /_static/WPT/resonant_tanks.png
+    :align: center
 
 Small explanation of the different parts of the primary. Send the user to the TFG for more details.
 Important to write here the differences if any with the TFG.
