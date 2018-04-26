@@ -74,6 +74,19 @@ current inside. The inductor of the parallel LC tank is the emitter coil.
 ..  image:: /_static/WPT/resonant_tanks.png
     :align: center
 
+The last part of the primary is the digital circuit capable of generating the signals
+needed by the inverter's MOSFET transistors. The following block diagram shows the
+composition of this circuit.
+
+..  image:: /_static/WPT/digital_system_block_diagram.png
+    :align: center
+
+The main block in this system is the microcontroller, a PIC18F45K20 is used in this
+project. His work is to generate the two square signals for the inverter, and to
+assure that no overlap exists. This signals are connected to a pair of drivers (IR2110)
+in order to adapt the voltage of the signals and to assure an isolation between the
+upper part of the bridge and the lower part.
+
 Small explanation of the different parts of the primary. Send the user to the TFG for more details.
 Important to write here the differences if any with the TFG.
 Write here too the functionality that is available.
