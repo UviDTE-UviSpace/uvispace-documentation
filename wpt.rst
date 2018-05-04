@@ -190,16 +190,14 @@ available at the repository as well.
 
 WPT Charger Installation
 ------------------------
-Explain in few steps how to build it:
+The steps to be followed when installing the charger are these:
 
-* Manufacture the boards: Send the user to the PCB tutorial.
+* **Manufacture the boards**: Send the user to the PCB tutorial.
 
-* Solder components. Sope clarification on how to adjust the capacitors to match resonance and things like that.
+* **Design the coils**: As said above, the inductance of the coils are needed for the capacitor selection in the primary and the secondary.
 
-* Manufacture secondary.
+* **Solder components**: Once the capacitors are selected, matching the resonance with the inductance of the coils at the system's ferequency, the component soldering can begin.
 
-* Solder secondary.
+* **Mount the secondary in the car**: Send to UGV wiring repo that explains the connection. Maybe add a pic here.
 
-* Mount the secondary in the car. Send to UGV wiring repo that explains the connection. Maybe add a pic here.
-
-* Installa a platform to make the car go over the primary coil. Add a picture of it when it is finished. (Roberto will do it when the wood box is finished.)
+* **Install a a platform to make the car go over the primary coil**: Add a picture of it when it is finished. (Roberto will do it when the wood box is finished.)
