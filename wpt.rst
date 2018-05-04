@@ -134,18 +134,58 @@ the TFG on the repository.
 
 The cable used has to be of multiple wires in most cases. The diameter of these
 wires cannot exceed twice the skin depth value, and must endure the current flowing
-through the primary in all cases.
+through the primary in all cases. The skin depth value can be known using a calculator
+available at http://chemandy.com/calculators/skin-effect-calculator.htm.
+
+Once the cable has been selected, it's possible to begin with the coil construction.
+First of all, the space that the coil will occupy has to be delimited. This has
+importance when choosing the topology. In this project, due to the limitations
+of vertical space, a spiral coil has been designed.
+
+The formulas regarding the primary coil inductance are available in the TFG at
+the repository, the rule followed in this project is to have as many turns as
+possible to increase the inductance, occupying the maximum space available. Once
+the coil is constructed, its inductance can be obatained using an inductance
+calculator or formula depending on the coil shape. There are several books on
+this subject and many online calculators as well.
+
+In summary, the steps for building a new coil are the following:
+
+* **Selecting a cable**: The cable has to be of multiple wires to deal with the skin effect.
+
+* **Delimiting the coil space**: Necessary to reduce the degrees of freedom.
+
+* **Selecting a coil shape**: Depending on the space available and other limitations.
+
+* **Building the coil**: More inductance with more turns.
+
+* **Obtaining the coil inductance**: Using formulas or online calculators.
 
 Secondary coil
 ^^^^^^^^^^^^^^^
-How to design a new coil.
+The secondary coil has to be designed after the primary coil. It's shape has to
+be the same, or similar, as the primary. Although It does not have to be the same
+topology. In this project the primary is a square-shaped spiral and the secondary
+is a square-shaped coil. The size of the secondary has to be a bit smaller than
+the primary, this way a good coupling coefficient can be achieved.
 
-
+The construction of the secondary is based on trial and error. The turns of the
+secondary coil have to be changed until a suitable range of voltage is obtained.
+This range of voltage is based on the range of operation of the regulator.
 
 WPT Software
 ------------
-Explain were to find the software.
-Explain what it does in few lines. Point out what features are included and which ones do not.
+The software used in this design is divided in two parts, the microcontroller's
+program and the PCB design.
+
+The microcontroller's program is available on the TFG at the repository, and the
+only function it covers by the time is the signal generation for the inverter.
+
+The PCB design covers the schematics and PCB layout designed in KiCAD, it's
+available at the repository as well.
+
+.. Explain were to find the software.
+  Explain what it does in few lines. Point out what features are included and which ones do not.
 
 
 WPT Charger Installation
