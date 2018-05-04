@@ -38,10 +38,10 @@ In the Figure an overview of the blocks is available.
 ..  image:: /_static/WPT/system_block_diagram.png
     :align: center
 
-(Explain that there is a primary and a secondary, explain a little bit its working,
-put a general picture or diagram of the system. Point out to the repositories
-where the hardware can be found. Explain that a in the TFG a detailed description
-is given)
+.. (Explain that there is a primary and a secondary, explain a little bit its working,
+  put a general picture or diagram of the system. Point out to the repositories
+  where the hardware can be found. Explain that a in the TFG a detailed description
+  is given)
 
 Primary
 ^^^^^^^
@@ -49,6 +49,9 @@ To transfer efficiently energy over an air gap in a WPT system, the frequency of
 the emitter's signal has to be significantly high. With higher frequency, higher
 coupling coefficient and hence, higher efficiency. The primary is the responsible
 for rising the frequency of 50 Hz (EU) to tens or hundreds of kHz.
+
+..  image:: /_static/WPT/primary_block_diagram.png
+    :align: center
 
 The first block is a rectifier followed by a CC/CC regulator, to convert the
 AC input signal into a controlled CC with an appropiate voltage level. In this
@@ -87,20 +90,54 @@ assure that no overlap exists. This signals are connected to a pair of drivers (
 in order to adapt the voltage of the signals and to assure an isolation between the
 upper part of the bridge and the lower part.
 
-Small explanation of the different parts of the primary. Send the user to the TFG for more details.
-Important to write here the differences if any with the TFG.
-Write here too the functionality that is available.
+The microcontroller has more tasks to be implemented. Among them, a XBee module
+to activate the charger remotely, two LEDs to show if the charger is powered and
+if it's activated manually or remotely and two switches to select which mode is used.
+
+The last block is the PICkit 3 interface, making possible to program the microcontroller
+when it's in the PCB using the PICkit 3 tool.
+
+More information about each block can be found on the TFG available at the
+repository.
+
+.. Small explanation of the different parts of the primary. Send the user to the TFG for more details.
+  Important to write here the differences if any with the TFG.
+  Write here too the functionality that is available.
 
 Secondary
 ^^^^^^^^^
-Small explanation of the different parts of the primary.
+The first part of the secondary circuit is the receiver coil, which takes energy
+from the primary coil. In this topology, the two coils has to be as close as possible
+and vertically aligned. As in the primary, the secondary receiver is part of a
+series resonant tank tuned at the system's frequency.
+
+After the resonant tank, there is a rectifier and a regulator that transform the
+AC signal into a CC signal capable of charging the battery. The voltage level of
+this signal is 12 V.
+
+..  image:: /_static/WPT/secondary_block_diagram.png
+    :align: center
 
 Primary coil
-^^^^^^^^^^^
-How to design a new coil.
+^^^^^^^^^^^^^
+The design process  of a WPT system has many degrees of freedom. The decision made
+in this project is that the first parameter to be fixed is the primary coil. The
+first step in this design is the cable selection.
+
+The selection of the cable diameter is based on the current through the coil.
+There are many tables that allows to select a cable with this parameter, but as
+this circuit works with high frequencies, the skin effect has to be considered.
+This principle stablishes that the current only flows in the exterior layers of
+a wire when working above a determined frequency, and the depth of this layer is
+decreases with the frequency's value. For more information about this, refer to
+the TFG on the repository.
+
+The cable used has to be of multiple wires in most cases. The diameter of these
+wires cannot exceed twice the skin depth value, and must endure the current flowing
+through the primary in all cases.
 
 Secondary coil
-^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^
 How to design a new coil.
 
 
