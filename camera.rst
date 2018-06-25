@@ -210,7 +210,7 @@ Lets now analyze every block in the 3 parts we just mentioned and do a little an
 * clk_24: 24MHz clock generated in a PLL in Qsys System. It sources the camera.
 * ccd_pixel_clk(cpc): 96MHz clock. Using clk_24 the camera generates the 96MHz clock. It is the clock used by the camera to transmit pixels from camera to FPGA. This clock is used in all the FPGA except for the VGA.
 * clk_25: 25.175 MHz clock generated in a PLL in Qsys System. It is the base clock for a VGA of 640x480. Currently Uvispace only supports this resolution so it is the clock sourcing the VGA controller.
-* clk_191: 191MHz clock generated in a PLL in Qsys System. It is the base clock for a VGA in HD. It is not currently used in the Uvispace. 
+* clk_191: 191MHz clock generated in a PLL in Qsys System. It is the base clock for a VGA in HD. It is not currently used in the Uvispace.
 
 **Resets**. The design has the following reset sources all of them negated reset (they reset when 0):
 
@@ -226,17 +226,17 @@ This explanation is valid for the DE1-SoC. The DE0-nano-SoC project is exactly t
 
 FPGA Video Stream Details
 ^^^^^^^^^^^^^^^^^^^^^^^^^
-The parameters that can be modified are:
 
 
 
-Project Structure
+Project Repository
 ^^^^^^^^^^^^^^^^^
 
 
 
-Qsys system
-^^^^^^^^^^^
+Platform Designer System
+^^^^^^^^^^^^^^^^^^^^^^^
+(Roberto)
 In the following picture we can observe the Qsys system just described as it looks in the program (some components were minimized cause they dont fit in a single Figure)
 
 Present Qsys. Explain the picture. HPS block and the rest of FPGA peripherals.
@@ -245,18 +245,17 @@ Export signals.
 ..  image:: /_static/fpga-camera-figs/qsys-system.png
     :align: center
 
-Qsys comment on _hw files and simulation projects.
+Qsys comment on _hw files. Each FPGA peripheral has a _hw file that creates
+a Qsys-compatible component from vhdl files.
 
 Comment address map and show address map table with relative plus absolute addresses.
 
 FPGA Resources Usage
 ^^^^^^^^^^^^^^^^^^^^
 
-Frame Rate
-^^^^^^^^^^
-
 Work for the Future
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+(Delete this section because everything is done now)
 
 * To reduce size of FPGA design using 10Kbit memory blocks to implement the morphological_fifo component. Now it is using ALM´s registers to store the lines needed to do a morphological operation.
 
@@ -270,25 +269,40 @@ Work for the Future
 
 Software for the HPS
 --------------------
-Common files
-^^^
+General explanation
+^^^^^^^^^^^^^^^^^^
+How the system works. It has LKM that does.... and application in Python....
+Copy the paper explanation?
 
-Kernel modules
-^^^^^^^^^^^^^^
+There are other applications, not used in normal operation, that permit
+useful tasks when debuging, like changing camera settings, image processing thresholds, etc.
+
+Project Repository
+^^^^^^^^^^^^^^^^^
+
+Common files
+
+Kernel modules:
 To learn more about kernel modules go to examples and install SD card
 Then explain one by one
 
-Applications
-^^^^^^^^^^^^
+Applications:
 
-Camera Set-up
-^^^^^^^^^^^^
-Parameters selected, frame rate and size of the images.
+
+
+Precision and frame rate tests
+-----------------------------
+
 
 Installation of the cameras
 ---------------------------
+Camera Set-up
+^^^^^^^^^^^^
+Parameters selected, frame rate and size of the images for Uvigo Uvispace lab.
+
 SD-card
 ^^^^^^^
+(Roberto)
 Generate SD-card partitiopns and kernel get_current_corners_of_tracker
 Files to copy to the root folders
 Add file to configure ETHERNET and board connects internet alone
@@ -303,36 +317,43 @@ This is done using systemd utility that comes in the Linux kernel 4.
 
 MSEL Switch configuration
 ^^^^^^^^^^^^^^^^^^^^^^^^^
+(Roberto)
 
 Physical placement
 ^^^^^^^^^^^^^^^^^^
+(Future)
 Modificaciones a la cámara
 Explicar las estrías del metraquilato para ajustar
 Hacer streaming y enrasar con marcas
 Ajustar con estrías
 
+
 Cable connection
 ^^^^^^^^^^^^^^^^
+(Roberto)
 Power go to main switch in laboratory
 Ethernet to router, explain how router is mounted
 
 Focus
 ^^^^^
-Focus the camera using the wheel in the lens
+Focus the camera using the wheel in the lens (put picture)
 
 
 Uvispace IP Cores Documentation
 -------------------------------
-In this section we perform a detailed description of some modules depeloped for the Uvispace project that are difficult to understand reading the code and are too complex to explain them in *Hardware for FPGA* section.
+In this section we perform a detailed description of some modules developed for the Uvispace project that are difficult to understand reading the code and are too complex to explain them in *Hardware for FPGA* section.
 
 Morphological FIFO
 ^^^^^^^^^^^^^^^^^^
+(doc. Roberto)
+
 
 Erosion and Dilation
 ^^^^^^^^^^^^^^^^^^^^
 
 Avalon Image Writer
 ^^^^^^^^^^^^^^^^^^
+(Roberto)
 
 Example of cite []
 |
