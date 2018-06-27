@@ -1,5 +1,6 @@
 always english
 comments over the blocks of lines
 understandable names
-	repos minuscula-with-minus
+repos minuscula-with-minus
 80 characters per line maximum
+indent with 2 spaces

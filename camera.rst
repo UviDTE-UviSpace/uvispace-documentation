@@ -158,7 +158,7 @@ Lets now analyze every block in the 3 parts we just mentioned and do a little an
 
 * **Avalon Camera**, available at `uvispace-camera-fpga/ip/camera_controller/ <https://github.com/UviDTE-UviSpace/uvispace-camera-fpga/tree/master/ip/camera_controller>`_. It contains registers to controls the Camera Config parameters and provoke a software reset of the video stream (currently not working properly). Accessed by the processor through a 32-bit Avalon Memory Mapped bus. The available camera parameters that can be currently controlled by this component are:
 
-    * *shutter_low*: this parameter affects to the exposure time of the sensor. The more exposure time the more light is captured by each pixel resulting in brighter images.
+    * *exposure*: this parameter corresponds to a parameter called *sutter width low* in the camera that affects the exposure time (time sensor is open integrating light). It is not the only parameter that affects exposure but once all other parameters in the camera are set this parameter can be used to adjust the exposure time and adjust the brightness of the image. The more exposure time the more light is captured by each pixel resulting in brighter images.
 
     * *start_row* and *start_column*: row and column of the first pixel of the image counting from the corner of the sensor. It permits to move the image window along the sensor area.
 
@@ -210,7 +210,7 @@ Lets now analyze every block in the 3 parts we just mentioned and do a little an
 * clk_24: 24MHz clock generated in a PLL in Qsys System. It sources the camera.
 * ccd_pixel_clk(cpc): 96MHz clock. Using clk_24 the camera generates the 96MHz clock. It is the clock used by the camera to transmit pixels from camera to FPGA. This clock is used in all the FPGA except for the VGA.
 * clk_25: 25.175 MHz clock generated in a PLL in Qsys System. It is the base clock for a VGA of 640x480. Currently Uvispace only supports this resolution so it is the clock sourcing the VGA controller.
-* clk_191: 191MHz clock generated in a PLL in Qsys System. It is the base clock for a VGA in HD. It is not currently used in the Uvispace. 
+* clk_191: 191MHz clock generated in a PLL in Qsys System. It is the base clock for a VGA in HD. It is not currently used in the Uvispace.
 
 **Resets**. The design has the following reset sources all of them negated reset (they reset when 0):
 

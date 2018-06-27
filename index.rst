@@ -36,7 +36,7 @@ Documentation
 =============
 
 ..  toctree::
-    :maxdepth: 2
+    :maxdepth: 1
 
     Introduction            <introduction>
     Getting Started         <starting>
