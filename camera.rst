@@ -226,7 +226,46 @@ This explanation is valid for the DE1-SoC. The DE0-nano-SoC project is exactly t
 
 FPGA Video Stream Details
 ^^^^^^^^^^^^^^^^^^^^^^^^^
-Explain the camera signals, the Beyern Pattern and the master thesis image of the camera configuration.
+The TRDB-D5M camera captures a pixel array of 2752 columns and 2004 rows, but the active region
+consists of 2592 rcolumns and 1944 rows, because in the image borders a correct acquisition can not
+be ensured. The position row:0 and column:0 of the camera's image is placed at the right upper
+corner. Image both areas can be observed in the following image.
+
+The image brought by the camera controller is a Bayern Pattern image, exactly as it is captured by
+the sensors array. The Bayern Pattern consists of three color pixels, disposed as in the following
+image. The sensor brings a pixel stream at one pixel per clock rise edge, traversing the image by
+rows. Each pixel is encoded in 12-bit.
+
+..  image:: /_static/fpga-camera-figs/camera_output.png
+    :align: center
+
+The camera controller returns 4 signals:
+
+* PIXCLK: clock signal of 96MHz.
+* FRAME_VALID: 1 when is sending an image. 0 since it finishes one image until it starts to send the following one.
+* LINE_VALID: 1 when is sending a row. 0 since it finishes one row until it starts to send the following one.
+* D: 12-bit bus with the pixel intensity value.
+
+The following image shows the pixel regions that the sensor returns, and the values of the sensor
+output signals in each case.
+
+..  image:: /_static/fpga-camera-figs/camera_signals.png
+    :align: center
+
+The camera configuration parameters are:
+
+* **Start pixel of the image.** Using start_row and start_col (Figure 11) you can move the start pixel of the captured image. This functionality, playing correctly with the other parameters of skipping and binning, allows the zoom hardware, without losing resolution.
+* **Size of the image captured by the sensor.** Number of pixels per row and rows from start_col and start_row captured by the sensor. Use the row_size and column_size registers. Of the captured pixels not all have to be sent. The resolution of the image sent will depend on the configuration of skipping.
+* **Exposure.** Increasing it results in brighter images with more vivid colors but decreases frame rate. Two values have been tested: the default one and the minimum for binarization to work correctly (for lower exposure values noise is so significant that it cannot be totally removed by erosion with 3x3 pixel windows, resulting in fake shapes being incorrectly detected or triangles being lost during some frames).
+* **Skipping.** Reduces resolution while keeping the viewing area. Skip 1 and skip 3 have been tested, producing 1280x960 and 640x480 images respectively. In the following image, in section (b) a 1 column skipping of the input showed in section (a) can be observed.
+* **Binning.** It can be used in conjunction with skipping to combine pixels from skipped rows and columns. This results in an image with reduced subsampling artifacts and softer borders, but also in a reduction of frame rate. Binning modes 0, 1 and 3 have been tested. In the following image, on section (c) a 1 column binning of the input showed on section (a) can be observed.
+
+..  image:: /_static/fpga-camera-figs/skip_binning.png
+    :align: center
+
+* **Color Gains.** It allows to modify the intensity of each color (applying a gain) in the image independently for each color component.
+* **Blanking.** Clock cycles of the camera controller, after each row (Horizontal Blanking) and after each image (Vertical Blanking). It allows controlling the frame rate (reducing it), adding more waiting time to the minimum waiting time, already established by the sensor itself once other parameters are configured that affect the capture speed: image size, binning, color gain, etc. .
+* **Image turning.** As a general rule, image sensors, when using a lens, invert the image in both axes of the plane. This sensor allows to choose the reading order of the array of pixels in both axes to undo the inversion of the lens.
 
 
 Project Repository
