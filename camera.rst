@@ -268,6 +268,7 @@ The camera configuration parameters are:
 * **Image turning.** As a general rule, image sensors, when using a lens, invert the image in both axes of the plane. This sensor allows to choose the reading order of the array of pixels in both axes to undo the inversion of the lens.
 
 
+
 Project Repository
 ^^^^^^^^^^^^^^^^^
 
