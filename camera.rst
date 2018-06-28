@@ -226,13 +226,13 @@ This explanation is valid for the DE1-SoC. The DE0-nano-SoC project is exactly t
 
 FPGA Video Stream Details
 ^^^^^^^^^^^^^^^^^^^^^^^^^
-
+Explain the camera signals, the Beyern Pattern and the master thesis image of the camera configuration.
 
 
 Project Repository
 ^^^^^^^^^^^^^^^^^
 
-
+Explain the folder's elements
 
 Platform Designer System
 ^^^^^^^^^^^^^^^^^^^^^^^
@@ -252,6 +252,9 @@ Comment address map and show address map table with relative plus absolute addre
 
 FPGA Resources Usage
 ^^^^^^^^^^^^^^^^^^^^
+
+Add the article resources usage tables and explain them
+
 
 Work for the Future
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -292,7 +295,7 @@ Applications:
 
 Precision and frame rate tests
 -----------------------------
-
+All the article data (both tables) adding subchapters
 
 Installation of the cameras
 ---------------------------
