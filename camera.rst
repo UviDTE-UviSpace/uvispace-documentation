@@ -61,13 +61,13 @@ Currently the **FPSoC chip** used is an Intel FPGA `Cyclone V SoC <https://www.a
 a Dual ARM Cortex-A9 processor in HPS and a Cyclone V FPGA.
 
 The **FPSoC boards** supported are `Terasic <http://www.terasic.com.tw/en/>`_ **DE1-SoC**
-and **DE0-nano-SoC**. They are very similar to each other. Both have a Cyclone V SoC
+and **DE0-Nano-SoC**. They are very similar to each other. Both have a Cyclone V SoC
 chip with exactly the same HPS containing a processor running at 925MHz and 1GB of external RAM. The FPGA
 structure in both boards is the same but they difer in size . DE1-SoC
-has a bigger FPGA (32070 ALMs and 496kB in memory blocks) than DE0-nano-SoC
+has a bigger FPGA (32070 ALMs and 496kB in memory blocks) than DE0-Nano-SoC
 (13460 ALMs and 164kB in memory blocks). Therefore more complex designs fit
 in DE1-SoC. Another difference is that the DE1-SoC has VGA connection while
-the DE0-nano-SoC has not.
+the DE0-Nano-SoC has not.
 
 The **camera** connected to the FPGA is a `Terasic <http://www.terasic.com.tw/en/>`_
 5 Mega Pixels D5M. It has a 40-pin connector.
@@ -80,11 +80,11 @@ displays show the frame rate in the FPGA in hexadecimal (around 33fps).
     :width: 800px
     :align: center
 
-The following picture shows a DE0-nano-SoC board connected through internet.
+The following picture shows a DE0-Nano-SoC board connected through internet.
 The gray image is received in a computer and streamed in a window using
 an utility in the uvispace-main-controller called get_video.py.
 
-..  image:: /_static/fpga-camera-figs/de0-nano-soc-pic.jpg
+..  image:: /_static/fpga-camera-figs/DE0-Nano-SoC-pic.jpg
     :width: 800px
     :align: center
 
@@ -215,13 +215,13 @@ Lets now analyze every block in the 3 parts we just mentioned and do a little an
 **Resets**. The design has the following reset sources all of them negated reset (they reset when 0):
 
 * HPS_RST Button: It resets the HPS in the same way as if power is disconnected and connected again. The HPS runs Preloader, U-boot, Loads the FPGA from SD-Card and finally runs OS.
-* reset_stream_key: its a key to just reset the FPGA Video Stream (the part of the FPGA outside Qsys). This reset works properly. It is connected to KEY0 in both DE1-SOC and DE0-nano-SoC.
+* reset_stream_key: its a key to just reset the FPGA Video Stream (the part of the FPGA outside Qsys). This reset works properly. It is connected to KEY0 in both DE1-SOC and DE0-Nano-SoC.
 * camera_soft_reset_n: it is a software source of reset coming from a register in the Avalon Camera component. It also just resets the video stream (the part of the FPGA outside Qsys). It is used by the `uvispace-camera-hps/test_programs/camera_vga_test <https://github.com/UviDTE-UviSpace/uvispace-camera-hps/tree/master/test_programs/camera_vga_test>`_. This program changes the configuration registers in Avalon Camera and the uses the softreset to apply the new configuration. However it does not work properly. We do not know why. It is probably due to using normal lines to do the reset instead of dedicated reset lines. Because it looks like the reset is works slow and applies reset in different clock cycles. The FPGA works but the image in VGA has colors blurred/mixed.
 * hps2fpga_reset_n: It comes from HPS and resets all, the FPGA Video Stream (the part of the FPGA outside Qsys) and the FPGA Peripherals (the part of the FPGA inside Qsys). This is applied by the HPS during start-up. It could be also used by software in the HPS but this was not tested yet. It works properly.
 
 Summarizing resets. We have 2 resets with many sources. One that resets only the FPGA Video Stream part and other that resets all. Resetting all FPGA is only useful in start-up. Resetting the video stream is useful to apply a new configuration to the camera during debugging stages. During start up hps2fpga_reset_n resets all FPGA after configuring it. When reset, Avalon Camera default values for the registers are the correct for Uvispace. Therefore the camera is configured in start-up with the correct values and no more reset (using softreset or key) must be applied. Only when the parameters configuration of the camera are to be changed a software reset must be applied.
 
-This explanation is valid for the DE1-SoC. The DE0-nano-SoC project is exactly the same without the VGA related functionality (Dual Port SDRAM Controller, VGA Controller and Multiplexers) and the 7-segment.
+This explanation is valid for the DE1-SoC. The DE0-Nano-SoC project is exactly the same without the VGA related functionality (Dual Port SDRAM Controller, VGA Controller and Multiplexers) and the 7-segment.
 
 
 FPGA Video Stream Details
@@ -272,6 +272,17 @@ The camera configuration parameters are:
 Project Repository
 ^^^^^^^^^^^^^^^^^
 
+All the HDL code involved in the Uvispace FPSoC camera is contained in three UviSpace
+repository main folders:
+
+* **de0-nano-soc**: contains all the Platform Designer System code in order to implant de HDL .
+* **de1-soc**: .
+* **ip**: contains all the low level hardware block implemented in the FPGA.
+
+The ip folder contains :
+
+
+
 Explain the folder's elements
 
 Platform Designer System
@@ -293,8 +304,13 @@ Comment address map and show address map table with relative plus absolute addre
 FPGA Resources Usage
 ^^^^^^^^^^^^^^^^^^^^
 
-Add the article resources usage tables and explain them
+The system has bee tested in both supported boards (DE1-SoC & DE0-Nano-SoC). The
+FPGA resources usage is summarized in the table bellow. It can be noticed that,
+although being using low cost boards, most FPGA are still available for future
+extensions or updates of the system.
 
+..  image:: /_static/fpga-camera-figs/resources_usage_table.png
+    :align: center
 
 Work for the Future
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -323,6 +339,7 @@ useful tasks when debuging, like changing camera settings, image processing thre
 Project Repository
 ^^^^^^^^^^^^^^^^^
 
+
 Common files
 
 Kernel modules:
@@ -335,7 +352,47 @@ Applications:
 
 Precision and frame rate tests
 -----------------------------
-All the article data (both tables) adding subchapters
+Camera Setup
+^^^^^^^^^^^^
+During the tests the following parameters have been analyzed:
+
+* Exposure
+* Skipping
+* Binning
+
+Precision in position estimation
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+The following table shows localization accuracy results. For each combination of
+camera settings and UGV location and orientation the standard deviation of 5000
+measurements is shown.
+
+..  image:: /_static/fpga-camera-figs/results_accuracy.jpg
+    :align: center
+
+Regarding position, the worst result of all tested config
+urations is 2.82mm, but most values are around 1mm. The worst result for orienta
+tion is 1.82°. From a more detailed analysis it can be concluded that:
+
+* Localization in the Y axis is less accurate than in the X axis.
+* Orientation error and position error in the X axis do not vary significantly for the different actual orientations tested, but position error in the Y axis is noticeably affected. The worst result in the Y axis is obtained for 0º, and then for 45º.
+* Localization accuracy slightly decreases when UGVs are located in brighter areas. This is mainly due to light blinking, which is more significant in bright areas than in dark ones.
+* Using higher resolution (decreasing the skipping value) provides a mean error of 0.29mm for X, 0.80mm for Y, and 0.76° for θ versus 0.68mm for X, 1.02mm for Y and 1.05° for θ when using lower resolution. In other words, the improvement in accuracy provided by increased resolution is less than linear.
+* Low exposure permits triangle binarization without negatively affecting accuracy.
+
+Frame rate
+^^^^^^^^^^
+Frame rate results are shown in the following table.
+
+..  image:: /_static/fpga-camera-figs/fps.jpg
+    :align: center
+
+Frame rate results are shown in Table III. The hardware reaches a maximum of 104fps for 640x480 resolution and 43fps for 1280x960 when binning is 0. Higher binning values provide worse frame rates and, as previously analyzed, not better accuracy. Therefore binning should not be used.
+
+When analyzing whole images the software frame rate is able to keep up with the hardware frame rate up to 33.3fps for 640x480 and up to 9.1fps for 1280x960. Regarding software trackers, they allow software frame rate to be increased up to almost hardware frame rate. 97.5fps (versus 104 in hardware) are achieved for 640x480 and 42.5fps (versus 43) for 1280x960. The performance of software trackers is very dependent on the number of UGVs in the image. Significant reductions can be noticed as additional UGVs are included.
+
+When gray-scale or RGB images are simultaneously written along with the binary image from FPGA to processor´s memory and then sent via Ethernet, frame rate is reduced around 20%.
+
+The best configuration can be selected by defining an adequate tradeoff between accuracy and frame rate. Increasing resolution allows accuracy to be improved up to 30%. Binning worsens both accuracy and frame rate. Low exposure offers similar results to those with high exposure for triangle localization. Therefore low resolution (640x480), low exposure (600) and low binning (0) is the configuration providing the best results: around 1mm accuracy at 104fps in hardware.
 
 Installation of the cameras
 ---------------------------
