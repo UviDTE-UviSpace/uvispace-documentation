@@ -309,7 +309,8 @@ FPGA resources usage is summarized in the table bellow. It can be noticed that,
 although being using low cost boards, most FPGA are still available for future
 extensions or updates of the system.
 
-..  image:: /_static/fpga-camera-figs/resources_usage_table.png
+..  image:: /_static/fpga-camera-figs/resources_usage_table.JPG
+    :width: 600px
     :align: center
 
 Work for the Future
@@ -366,7 +367,8 @@ The following table shows localization accuracy results. For each combination of
 camera settings and UGV location and orientation the standard deviation of 5000
 measurements is shown.
 
-..  image:: /_static/fpga-camera-figs/results_accuracy.jpg
+..  image:: /_static/fpga-camera-figs/results_accuracy.JPG
+    :width: 1000px
     :align: center
 
 Regarding position, the worst result of all tested config
@@ -383,7 +385,8 @@ Frame rate
 ^^^^^^^^^^
 Frame rate results are shown in the following table.
 
-..  image:: /_static/fpga-camera-figs/fps.jpg
+..  image:: /_static/fpga-camera-figs/fps.JPG
+    :width: 500px
     :align: center
 
 Frame rate results are shown in Table III. The hardware reaches a maximum of 104fps for 640x480 resolution and 43fps for 1280x960 when binning is 0. Higher binning values provide worse frame rates and, as previously analyzed, not better accuracy. Therefore binning should not be used.
