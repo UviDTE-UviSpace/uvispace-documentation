@@ -116,7 +116,7 @@ Lets now analyze every block in the 3 parts we just mentioned and do a little an
 
 * **Camera Capture**, available at `uvispace-camera-fpga/ip/camera_controller/ <https://github.com/UviDTE-UviSpace/uvispace-camera-fpga/tree/master/ip/camera_controller>`_, interfaces the camera and generates useful signals to control the image flow. The camera uses the following signals to sent the image: a 12-bit data bus (one pixel), frame_valid (1 when image is being transmitted and 0 during the vertical blanking), line_valid (1 during a line is being transmitted and 0 in horizontal blanking) and pixel_valid (1 when the pixel in the data bus is a valid pixel and must be used and 0 when the data bus does not contain a valid pixel so it must be discarded). Using this signals Camera Capture provides the 12-bit data-bus at its output and a pixel valid signal. To control where in the image the current pixel is it outputs X-Y coordinates of the current pixel and a frame/image counter. Switch 9 must be 0 in order this component to work, otherwise the video stream is stopped and you can see a frozen image when connecting a screen in the VGA.
 
-* **Raw to RGB**, available at `uvispace-camera-fpga/ip/camera_controller/raw2rgb <https://github.com/UviDTE-UviSpace/uvispace-camera-fpga/tree/master/ip/camera_controller/raw2rgb>`_, converts the raw pixels comming from the Camera Capture (each pixel in the camera contains only one color) to 3 component RGB pixels. The way to do so is to combine 4 raw pixels (2 green, one blue and one red) as explained later in the FPGA Video Stream Details section. At its output it provides a pixel_valid signal that is 1 when a valid RGB pixel is at its output.
+* **Raw to RGB**, available at `uvispace-camera-fpga/ip/camera_controller/raw2rgb <https://github.com/UviDTE-UviSpace/uvispace-camera-fpga/tree/master/ip/camera_controller/raw2rgb>`_, converts the raw pixels comming from the Camera Capture (each pixel in the camera contains only one color) to 3 component RGB pixels. The way to do so is using a DeBayerize 1 filter, based in a 3x3 window, as used in morphological operations (erosion/dilation) while using morphological_fifo.vhd. At its output it provides a pixel_valid signal that is 1 when a valid RGB pixel is at its output.
 
 * **Frame Sync**, available at `uvispace-camera-fpga/ip/camera_controller/frame_sync <https://github.com/UviDTE-UviSpace/uvispace-camera-fpga/tree/master/ip/camera_controller/frame_sync>`_, not depicted in the block diagram, is located between the Raw to RGB component and the Image Processing. It blocks the pixel_valid signal some frames. It is not clear in the camera documentation how the camera does the reset, if it does it instantaneously or if it first finishes the row that it is sending. Because of that the frame sync is reset every time that the camera is reset and counts few frame_valid negative flanks to before letting pixel_valid propagate. This ensures that after this component, the 1st pixel after reset is the pixel 0,0. This is needed for some image processing components and the Avalon Image Writers to work properly.
 
@@ -448,11 +448,63 @@ In this section we perform a detailed description of some modules developed for 
 
 Morphological FIFO
 ^^^^^^^^^^^^^^^^^^
-(doc. Roberto)
+
+Morphological FIFO is a subcomponent used in morphological operations (erosion/
+dilation) and in the raw to RGB transformation. From the FPGA video stream pixels
+it returns at each moment the 3x3 window in order to apply the desired operation
+and a data_valid_out signal. It has to manage pixels that take part in the output
+window and the pixels that did not take part at all the output window positions
+yet (pixels at waiting positions).
+
+For a 3x3 kernel, as used in Uvispace, it is based in a FIFO memory divided in
+five regions (shown in the image bellow):
+
+  1. **FIFO memory of 3 registers**, which correspond to the three pixels of the lower row of the kernel at each instant.
+
+  2. **Wait FIFO memory**, whose number of registers is the width of the image minus the width of the kernel, which correspond to pixels that have not yet intervened in the two upper rows of the kernel.
+
+  3. **FIFO memory of 3 registers**, which correspond to the three pixels of the central row of the kernel at each instant.
+
+  4. **Wait FIFO memory**, whose number of registers is the width of the image minus the width of the kernel, which correspond to pixels that have not yet intervened in the upper row of the kernel.
+
+  5. **FIFO memory of 3 registers**, which correspond to the three pixels of the upper row of the kernel at each instant.
+
+Implementing the FIFO using ALM registers implies a high FPGA resources occupation,
+so the waiting positions (orange in the figure) are implemented in the Cyclone V
+10kbit RAM memory resources.
+
+..  image:: /_static/fpga-camera-figs/MF_structure.JPG
+    :width: 1000px
+    :align: center
+
+The waiting FIFO memories are made from a double port RAM with memory mapping interface.
+Read and write ports are controlled to simulate the behavior of a shift register,
+saving the delays of the reading and writing cycles.
 
 
-Erosion and Dilation
-^^^^^^^^^^^^^^^^^^^^
+Raw to RGB:
+^^^^^^^^^^^
+
+Applies the DeBayerize1 filter t the raw image to obtain the RGB. Its internal
+structure is shown in the following image.
+
+..  image:: /_static/fpga-camera-figs/raw2rgb_internal.png
+    :width: 792px
+    :align: center
+
+
+Morphological Operations:
+^^^^^^^^^^^^^^^^^^^^^^^^
+
+Both Dilation and Erosion blocks integrate the morphological_fifo component that provides them of the correct kernel at each moment.
+
+**Erosion**
+
+Hardware block that performs the morphological erosion operation, eliminates possible noise points in the binary image. It is based on a cross kernel of 3x3 pixels. The kernel goes through the entire input image and in the positions where some of the kernel pixels are black, the pixel on which the kernel is centered assigns it the black value in the final image.
+
+**Dilation**
+
+Hardware block that performs the morphological operation of dilation to the eroded image with the aim of recovering the original size of the geometric shapes arranged in the vehicles without the noise eliminated in the erosion recovering. Use the same 3x3 pixel kernel cross erosion. It operates in the following way: if one of the pixels of the kernel is white, the central one assigns it the white color.
 
 Avalon Image Writer
 ^^^^^^^^^^^^^^^^^^
