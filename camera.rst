@@ -84,7 +84,7 @@ The following picture shows a DE0-Nano-SoC board connected through internet.
 The gray image is received in a computer and streamed in a window using
 an utility in the uvispace-main-controller called get_video.py.
 
-..  image:: /_static/fpga-camera-figs/DE0-Nano-SoC-pic.jpg
+..  image:: /_static/fpga-camera-figs/de0-nano-soc-pic.jpg
     :width: 800px
     :align: center
 
@@ -250,6 +250,7 @@ The following image shows the pixel regions that the sensor returns, and the val
 output signals in each case.
 
 ..  image:: /_static/fpga-camera-figs/camera_signals.png
+    :width: 600px
     :align: center
 
 The camera configuration parameters are:
@@ -275,18 +276,16 @@ Project Repository
 All the HDL code involved in the Uvispace FPSoC camera is contained in three UviSpace
 repository main folders:
 
-* **de0-nano-soc**: contains all the Platform Designer System code in order to implant de HDL .
-* **de1-soc**: .
+* **de0-nano-soc**: contains all the Platform Designer System code in order to implant de HDL in the board of the same name.
+* **de1-soc**:  contains all the Platform Designer System code in order to implant de HDL in the board of the same name.
 * **ip**: contains all the low level hardware block implemented in the FPGA.
 
-The ip folder contains :
-
-
-
-Explain the folder's elements
+All the project repository folders contain a readme (.rst) file that explains the organization and function
+of the different files within it.
 
 Platform Designer System
 ^^^^^^^^^^^^^^^^^^^^^^^
+
 (Roberto)
 In the following picture we can observe the Qsys system just described as it looks in the program (some components were minimized cause they dont fit in a single Figure)
 
