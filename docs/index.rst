@@ -35,7 +35,7 @@ Documentation
 =============
 
 ..  toctree::
-    :titlesonly:
+    :maxdepth: 1
 
     Introduction            <introduction>
     Getting Started         <starting>
