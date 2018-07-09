@@ -16,19 +16,6 @@
 # add these directories to sys.path here. If the directory is relative to the
 # documentation root, use os.path.abspath to make it absolute, like shown here.
 #
-import os
-import sys
-from mock import Mock as MagicMock
-sys.path.insert(0, os.path.abspath('../uvispace/.'))
-
-class Mock(MagicMock):
-    @classmethod
-    def __getattr__(cls, name):
-            return MagicMock()
-
-MOCK_MODULES = ['cv2', 'skimage', 'skimage.measure', 'skimage.morphology', 
-                'path_tracker', 'matplotlib', 'matplotlib.pyplot', 'pylab']
-sys.modules.update((mod_name, Mock()) for mod_name in MOCK_MODULES)
 
 # -- General configuration ------------------------------------------------
 
@@ -62,8 +49,8 @@ master_doc = 'index'
 
 # General information about the project.
 project = u'UviSpace'
-copyright = u'2016, Dept. of Electronic Technology -- University of Vigo'
-author = u'Javier López-Randulfe'
+copyright = u'2017, Electronic Technology Department - University of Vigo'
+author = u'Electronic Technology Department'
 
 # The version info for the project you're documenting, acts as replacement for
 # |version| and |release|, also used in various other places throughout the
@@ -274,7 +261,7 @@ latex_elements = {
 #  author, documentclass [howto, manual, or own class]).
 latex_documents = [
     (master_doc, 'UviSpace.tex', u'UviSpace Documentation',
-     u'Javier Lopez-Randulfe', 'manual'),
+     u'Electronic Technology Department ', 'manual'),
 ]
 
 # The name of an image file (relative to this directory) to place at the top of
