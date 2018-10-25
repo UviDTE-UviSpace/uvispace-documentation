@@ -42,5 +42,6 @@ Documentation
     Main Controller         <main-controller>
     Camera device           <camera>
     Vehicle controller      <vehicle>
+    Wireless Power Transfer <wpt>
     Tutorials               <tutorials>
     Release Notes           <release-notes>
