@@ -441,6 +441,49 @@ Focus
 Focus the camera using the wheel in the lens (put picture)
 
 
+-------------this was on introduction, integrate it here -------------------
+Physical layout
+^^^^^^^^^^^^^^^
+
+The main component of the vision system is a **Terasic DE2-115** board, which
+contains an *Altera Cyclone IV FPGA*. With 115k logic elements, this is a fairly
+big FPGA, suitable for complex digital projects. Connected to the main board,
+through the 40-pin GPIO , there is a *Terasic D5M* 5 Megapixel camera.
+
+In this project the 40-pin straight female header in the camera is changed by a
+90 degree 40-pin header so the camera points down. 4 of these cameras are
+located in the ceiling of the laboratory like the following figure shows. The
+cameras are located so the field of view of the cameras touch with each other
+without overlapping. This is done this way to maximize the area the cameras can
+see. Problems to locate the car in the borders of the cameras should be solved
+by software.
+
+..  image:: /_static/terasic-de2-115.png
+    :width: 500px
+    :align: center
+
+FPGA hardware
+^^^^^^^^^^^^^
+
+The biggest part of the system implemented in this project is a *NiosII*
+processor system defined in *SOPC-Builder*. The rest of the system is defined
+directly in Quartus II.
+
+FPGA software project
+^^^^^^^^^^^^^^^^^^^^^
+
+The software project that runs in the Nios II processor is basically composed
+by two subprojects:
+
+- **SocketServer**, which is an application project containing the
+  application-specific code.
+
+- **Socket_Server_bsp**, which contains all the code that defines the interface
+  with the hardware, creating an abstraction layer which eases the understanding,
+  development and migration of code by a user.
+
+-------------this was on introduction, integrate it here -------------------
+
 Uvispace IP Cores Documentation
 -------------------------------
 In this section we perform a detailed description of some modules developed for the Uvispace project that are difficult to understand reading the code and are too complex to explain them in *Hardware for FPGA* section.

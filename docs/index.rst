@@ -10,11 +10,23 @@
 UviSpace
 ========
 
-UviSpace is an open-source hardware and software project developed at the
-*Electronic Technology  Department* in the `University of Vigo
-<http://uvigo.gal/uvigo_en/index.html>`_. It consists in a system to remotely
-control Unmanned Ground Vehicles (UGVs) moving inside a delimited space,
-observed by a network of FPGA-based camera devices.
+UviSpace is a free software testbed developed in the *Electronic Technology
+Department* in the `University of Vigo <http://uvigo.gal/uvigo_en/index.html>`_.
+to remotely control electric Unmanned Ground
+Vehicles (UGVs) in indoor spaces. A group of camera-based localization nodes
+placed in the ceiling of the laboratory is in charge of detecting geometric
+shapes attached to the top of the vehicles. This information is transmitted
+to a main controller that extracts the pose (position and orientation) of the
+UGVs and sends the appropiate linear and angular speed setpoints to their motors
+depending on the trajectory to be followed.
+
+The main goal of UviSpace is to provide a friendly, affordable
+and easy to mantain environment, where works related to a variety of topics
+can be carried out, such as distributed control, neural network controllers,
+or battery management systems, to name just a few.  The multidisciplinarity of
+the working environment is also very suitable for students to carry out different
+types of projects.
+
 
 Source Code
 ===========
@@ -25,9 +37,10 @@ Source Code
     :align: left
     :alt: link to UviSpace GitHub organization
 
-The project's source code is available on the repositories under our
+The project's source code is available on the repositories of our
 `GitHub organization <https://github.com/UviDTE-UviSpace>`_. Anybody is welcome
-to clone and work with them. If you wish to collaborate, just contact us.
+to clone and work with them. If you wish to collaborate, just contact us
+(contact information in the Introduction page).
 
 |
 
@@ -40,8 +53,8 @@ Documentation
     Introduction            <introduction>
     Getting Started         <starting>
     Main Controller         <main-controller>
-    Camera device           <camera>
-    Vehicle controller      <vehicle>
+    Localization system     <camera>
+    UGVs                    <vehicle>
     Wireless Power Transfer <wpt>
-    Tutorials               <tutorials>
+    Learning and Tutorials  <tutorials>
     Release Notes           <release-notes>
