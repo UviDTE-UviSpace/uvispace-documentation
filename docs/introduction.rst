@@ -155,7 +155,40 @@ and communications) are more easily implemented by software in the processor.
 UGVs
 ----
 
-The UGVs currently used in UviSpace are differential
+The UGVs currently used in UviSpace are differential robots from DF robot.
+The models currently being used are the `Baron-4WD<https://www.dfrobot.com/product-261.html>`_
+and variants with the same motors.
+
+..  image:: /_static/introduction-figs/pirate-4D.png
+    :width: 750px
+    :align: center
+
+These chasis have four motors but they are controlled by 2 PWM signals. That is,
+the motors in the left are controlled by a single signal and the motors in the
+right are controlled by another signal. In that sense they are equivalent to a
+differential robot. The chasis from DF Robot are completed with the following
+elements:
+- Battery:
+- Battery charger:
+- Fuel Gauge (optional):
+- WPT Secondary (optional):
+- Front panel:
+- Arduino Romeo. This is an Arduino board with drivers for directly sourcing
+  the motors. This program makes three different actions:
+  - It reads the battery level (state of charge), battery voltage and battery
+  current from the fuel gauge board.
+  - It unplugs the battery in case the battery level goes beyond a safe levels.
+  - It reads commands being sent by the main controller and executes them. The
+  commands currently available are for changing the PWM of the left and right
+  motors and reading the battery level (state of charge), battery voltage and
+  battery current.
+- In the top plate locate shape and number.
+
+The following image shows a UGV with all the aforementioned elements:
+
+..  image:: /_static/introduction-figs/pirate-4D-uvispace.png
+    :width: 750px
+    :align: center
 
 The actuators and sensors of the UGVs are managed by an Arduino board on each
 of them. Due to the need to control 2 DC-motors, it is an essential requirement
