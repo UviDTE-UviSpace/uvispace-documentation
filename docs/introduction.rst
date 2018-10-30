@@ -156,10 +156,10 @@ UGVs
 ----
 
 The UGVs currently used in UviSpace are differential robots from DF robot.
-The models currently being used are the `Baron-4WD<https://www.dfrobot.com/product-261.html>`_
+The models currently being used are the `Baron-4WD <https://www.dfrobot.com/product-261.html>`_
 and variants with the same motors.
 
-..  image:: /_static/introduction-figs/pirate-4D.png
+..  image:: /_static/introduction-figs/pirate-4D.jpg
     :width: 750px
     :align: center
 
@@ -168,45 +168,61 @@ the motors in the left are controlled by a single signal and the motors in the
 right are controlled by another signal. In that sense they are equivalent to a
 differential robot. The chasis from DF Robot are completed with the following
 elements:
-- Battery:
-- Battery charger:
-- Fuel Gauge (optional):
-- WPT Secondary (optional):
-- Front panel:
+
+- Battery: A 2 Cell LiPo battery with 220mAh of capacity and 7.4V of nominal
+  voltage is used to power up the UGV. The battery should be charged through a
+  charger board or a  universal charger for this kinds of batteries like the
+  `HOBBYMATE Imax B6 Clone Lipo Battery Balance Charger
+  <https://www.amazon.com/HOBBYMATE-Battery-Balance-Charger-Adapter/dp/B01NB9A36R/ref=sr_1_4?ie=UTF8&qid=1540908748&sr=8-4&keywords=lipo+charger>`_.
+  NEVER CHARGE IT DIRECTLY CONNECTING IT TO A POWER SUPPLY (The charge makes
+  chargin slopes that give the battery more capacity and life span).
+  The battery is hanging in the front of the vehicle.
+- Battery charger board: A battery charger board is included in the vehicle to be
+  able to charge it from a laboratory power supply without the need of removing
+  the battery from the vehicle.
+- Fuel Gauge (optional): It measures the voltage and current of the battery.
+  Using a propietary algorithm from Texas Instruments it measures the state
+  of charge (percentage of remaining power) or the battery. It this board is
+  not installed the main controller will not be able to read the state of
+  battery of the device.
+- WPT Secondary coil (optional): Coil to receive energy from the Wireless
+  Power Transfer (WPT) system. Needed to charge the car wirelessly.
+- WPT Secondary board (optional): Circuit that converts the signal from the
+  WPT Secondary Coil and converts it into a DC voltage that can charge the
+  battery (throuh the Battery charger board). Needed to charge the car wirelessly.
+- Back panel: It is placed in the back of the vehicle. It contains the button
+  to switch on the vehicle, a connector to select wired (using a laboratory
+  power supply) or wireless (through the WPT system) charge, a fuse (that
+  protects the system from overcurrent) and a LED that is red when the
+  battery level is low.
 - Arduino Romeo. This is an Arduino board with drivers for directly sourcing
   the motors. This program makes three different actions:
-  - It reads the battery level (state of charge), battery voltage and battery
-  current from the fuel gauge board.
-  - It unplugs the battery in case the battery level goes beyond a safe levels.
-  - It reads commands being sent by the main controller and executes them. The
-  commands currently available are for changing the PWM of the left and right
-  motors and reading the battery level (state of charge), battery voltage and
-  battery current.
-- In the top plate locate shape and number.
 
-The following image shows a UGV with all the aforementioned elements:
+    - It reads the battery level (state of charge), battery voltage and battery
+      current from the fuel gauge board (if installed).
+    - It unplugs the battery in case the battery level goes beyond a safe levels.
+      For this feature the fuel gauge needs to be installed.
+    - It reads commands being sent by the main controller and executes them. The
+      commands currently available are for changing the PWM of the left and right
+      motors (and move the UGV) and reading the battery level (state of charge),
+      battery voltage and battery current.
+
+- In the top plate locate shape an identification. Currently red triangles are
+  used to get the pose of the robot and a number is used for its identification.
+
+The following image shows a UGV with some of the aforementioned elements:
 
 ..  image:: /_static/introduction-figs/pirate-4D-uvispace.png
-    :width: 750px
+    :width: 790px
     :align: center
 
-The actuators and sensors of the UGVs are managed by an Arduino board on each
-of them. Due to the need to control 2 DC-motors, it is an essential requirement
-of the boards to have a DC motor driver, or include instead an external one.
-The developed Arduino project was implemented on the laboratory using a board
-accomplishing the first option, namely the `Arduino Romeo
-<https://www.dfrobot.com/index.php?route=product/product&product_id=656#.V5iRYe2Y5hE>`_
-board.
-
-The work load on the boards is intended to be minimum, and thus obtain the data
-from the *Data Fusion Controller* as processed as possible. The software on them
-is built from an *Arduino* project, and is divided into 3 different parts:
-
+The fuel gauge board and the WPT board go inside the chasis of the car (see
+the UGV website for more details). The WPT coil goes under the car too.
 
 Future work
 -----------------
 
-Some of the ongoing enhancement for UviSpace are:
+Some of the ongoing enhancements for UviSpace are:
 
 - developing a graphical interface.
 - building network controller using reinforcement learning. The current
@@ -233,8 +249,8 @@ The project was developed by a team of researchers of the Microelectronics
 division of the *Electronic Technology Department* of the `University of Vigo
 <http://uvigo.gal/uvigo_en/index.html>`_. Contact information:
 
--Project directors: jjrdguez@uvigo.es and jfarina@uvigo.es
--Uvispace team e-mail: dte.uvispace@gmail.com
+- Project directors: jjrdguez@uvigo.es and jfarina@uvigo.es
+- Uvispace team e-mail: dte.uvispace@gmail.com
 
 |
 

@@ -269,4 +269,21 @@ is built from an *Arduino* project, and is divided into 3 different parts:
       and deals with the construction of a valid answer message, according to
       the serial protocol. Afterwards, it is *'printed'* to the serial port, in
       order to be sent back the answer message to the master.
+
+
 -------------------------UGV explanation Javi------------------------------
+
+
+To operate the vehicle (Roberto Explanation):
+
+- Connect a charged battery.
+- Press the ON switch and the vehicle should be ready for communication with the
+  main controller.
+- Press the SW2 (Switch 2) in the Arduino Romeo board to switch OFF the vehicle.
+- When the BATTERY STATUS led is red charge the vehicle:
+
+  - Remove the battery and use a LiPo Universal Charger.
+  - or set the WIRED/WIRELESS switch to WIRED in the back panel and connect the
+    POWER SUPPLY connector a 12V power supply with 2A or more.
+  - or, if the vehicle has WPT system installed, place it centered to the primary
+    coil and switch on the primary coil of the WPT primary board.
