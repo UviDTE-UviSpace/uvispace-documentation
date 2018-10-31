@@ -56,5 +56,5 @@ Documentation
     Localization system     <camera>
     UGVs                    <vehicle>
     Wireless Power Transfer <wpt>
-    Learning and Tutorials  <tutorials>
+    Tutorials               <tutorials>
     Release Notes           <release-notes>
