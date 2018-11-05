@@ -271,7 +271,7 @@ The camera configuration parameters are:
 
 
 Project Repository
-^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^
 
 All the HDL code involved in the Uvispace FPSoC camera is contained in three UviSpace
 repository main folders:
@@ -284,7 +284,7 @@ All the project repository folders contain a readme (.rst) file that explains th
 of the different files within it.
 
 Platform Designer System
-^^^^^^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^^^^^
 
 (Roberto)
 In the following picture we can observe the Qsys system just described as it looks in the program (some components were minimized cause they dont fit in a single Figure)
@@ -329,7 +329,7 @@ Work for the Future
 Software for the HPS
 --------------------
 General explanation
-^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^
 How the system works. It has LKM that does.... and application in Python....
 Copy the paper explanation?
 
@@ -337,7 +337,7 @@ There are other applications, not used in normal operation, that permit
 useful tasks when debuging, like changing camera settings, image processing thresholds, etc.
 
 Project Repository
-^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^
 
 
 Common files
@@ -351,7 +351,7 @@ Applications:
 
 
 Precision and frame rate tests
------------------------------
+-------------------------------
 Camera Setup
 ^^^^^^^^^^^^
 During the tests the following parameters have been analyzed:
@@ -399,7 +399,7 @@ The best configuration can be selected by defining an adequate tradeoff between 
 Installation of the cameras
 ---------------------------
 Camera Set-up
-^^^^^^^^^^^^
+^^^^^^^^^^^^^^
 Parameters selected, frame rate and size of the images for Uvigo Uvispace lab.
 
 SD-card
@@ -536,7 +536,7 @@ structure is shown in the following image.
 
 
 Morphological Operations:
-^^^^^^^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 Both Dilation and Erosion blocks integrate the morphological_fifo component that provides them of the correct kernel at each moment.
 
@@ -549,7 +549,7 @@ Hardware block that performs the morphological erosion operation, eliminates pos
 Hardware block that performs the morphological operation of dilation to the eroded image with the aim of recovering the original size of the geometric shapes arranged in the vehicles without the noise eliminated in the erosion recovering. Use the same 3x3 pixel kernel cross erosion. It operates in the following way: if one of the pixels of the kernel is white, the central one assigns it the white color.
 
 Avalon Image Writer
-^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^
 (Roberto)
 
 Example of cite []

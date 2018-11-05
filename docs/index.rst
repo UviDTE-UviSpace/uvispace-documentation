@@ -11,7 +11,7 @@ UviSpace
 ========
 
 UviSpace is a free software testbed developed in the *Electronic Technology
-Department* in the `University of Vigo <http://uvigo.gal/uvigo_en/index.html>`_.
+Department* in the `University of Vigo <http://uvigo.gal/uvigo_en/index.html>`_
 to remotely control electric Unmanned Ground
 Vehicles (UGVs) in indoor spaces. A group of camera-based localization nodes
 placed in the ceiling of the laboratory is in charge of detecting geometric

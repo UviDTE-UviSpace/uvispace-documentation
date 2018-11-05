@@ -9,6 +9,11 @@ up a PC in order to be able to collaborate developing and testing the project.
 
     Getting Started         <starting>
 
+
+Install Uvispace
+----------------
+
+
 Download the source
 -------------------
 
@@ -27,6 +32,15 @@ for cloning the UviSpace Main Controller source code to your PC::
     $ git clone https://github.com/UviDTE-UviSpace/uvispace-main-controller   # Clone the project to your local machine
 
 After that, the main controller will be cloned to a folder named uvispace-main-controller into the directory you have specified.
+
+
+
+
+
+
+How to run Uvispace
+-------------------
+(To be done when the UGV is running, maybe make a video)
 
 
 Uvispace Style Rules
@@ -68,6 +82,23 @@ quality:
   autodoc check the code of the main controller or visit [1]_.
 
 
+UviSpace Documentation
+----------------------
+
+All repos are documented here less the main controller that is documented here.
+This is done because this repo has different sphinx configuration that permits
+autodocumenting of the python code using comments in the text.
+
+As low as possible as README in the repos. Most of documentation unified here.
+The content in repos are content of the repo to help navigate and quick guide
+with the commands.
+
+The documentation in this website and main controller should be consistent
+with the content in the master branch of each repository.
+
+Features must be developed in different branches and merged to master when finished.
+All code added must update the corresponding documentation.
+
 Learning
 --------
 
@@ -89,39 +120,56 @@ rules for assigning a tag to a new version.
 
 Python
 ^^^^^^
-
+Python is used to program the main controller and some of the code in the
+localization nodes. Python is also used to generate the documentation
+with Sphinx. You can find Python learning resources in the
+Getting Started page of the `Main Controller Documentation
+<https://uvispace-main-controller.readthedocs.io/en/latest/>`_.
 
 C/C++
-^^^^
+^^^^^^
+C is used to program the drivers in the localization node. C++ is used to
+program some auxiliary applications in the localization node.
+
+The basic book for learning C is [5]_, written by its inventors Brian W.
+Kernighan and Dennis M. Ritchie. Some people do not like this book and prefer
+more modern resources like [6]_, an interative tutorial.
+
+For C++ a good website with deep explanations and a lot of examples is
+[7]_. An iterative tutorial for C++ can be found in [8]_.
 
 
 FPSoC
 ^^^^^^
+FPSoCs are devices that contain processors and reconfigurable logic in the
+form of Field Programmable Gate Array (FPGA) in the same chip. The FPSoC
+family Cyclone V SoC, from Intel FPGA, is used to implement to implement the
+UviSpace localization nodes. The Electronic Technology Department of University
+of Vigo hosts studies and programs related to FPSoC platforms in the GitHub
+organization `UviDTE-FPSoC <https://github.com/UviDTE-FPSoC>`_. A designer
+that wants to modify the code of the UviSpace localization nodes is
+encouraged to visit the following repositories of that organization:
+
+- `CycloneVSoC-examples <https://github.com/UviDTE-FPSoC/CycloneVSoC-examples>`_:
+  It contains a starting guide to Cyclone V SoC, tutorials for compilation of
+  different OSs, instructions to run baremetal (no OS) applications and a set of
+  small examples mostly related to transfer data between processor and FPGA.
+- `CycloneVSoC-time-measurements <https://github.com/UviDTE-FPSoC/CycloneVSoC-time-measurements>`_:
+  It contains code and complete numeric results for a characterization of the
+  processor-FPGA communications in Cyclone V SoC. Reading the main README in this
+  repository can help a designer to understand the inner workings of the device
+  and help him decide which communications resources are more appropiate for a
+  certain task.
 
 UviSpace Tutorials
 ^^^^^^^^^^^^^^^^^^
+The tutorials developed during the development of UviSpace project are stored
+in the `Tutorials page of the Uvispace documentation
+<https://uvispace.readthedocs.io/en/latest/tutorials.html>`_. To be coherent and
+place all Python-related learning resources, Python Tutorials are stored
+in the `Tutorials page of the Uvispace main controller documentation
+<https://uvispace-main-controller.readthedocs.io/en/latest/tutorials.html>`_.
 
-How to run Uvispace
--------------------
-(To be done when the UGV is running, maybe make a video)
-
-
-UviSpace Documentation
-----------------------
-
-All repos are documented here less the main controller that is documented here.
-This is done because this repo has different sphinx configuration that permits
-autodocumenting of the python code using comments in the text.
-
-As low as possible as README in the repos. Most of documentation unified here.
-The content in repos are content of the repo to help navigate and quick guide
-with the commands.
-
-The documentation in this website and main controller should be consistent
-with the content in the master branch of each repository.
-
-Features must be developed in different branches and merged to master when finished.
-All code added must update the corresponding documentation.
 
 
 
@@ -133,5 +181,10 @@ All code added must update the corresponding documentation.
 .. [2] Pro Git book, 2nd edition (2014). `<https://git-scm.com/book/en/v2>`_
 .. [3] Try Git `<https://try.github.io>`_
 .. [4] Semantic Versioning 2.0.0 `<http://semver.org/>`_
+.. [5] The C Programming Language Second Edition by Brian W. Kernighan and Dennis M. Ritchie.
+       `<http://www.dipmat.univpm.it/~demeio/public/the_c_programming_language_2.pdf>`_.
+.. [6] Learn C Interactive Tutorial `<https://www.learn-c.org/>`_
+.. [7] Cplusplus Tutorial `<http://www.cplusplus.com/doc/tutorial/>`_
+.. [8] Learn C++ Interactive Tutorial `<https://www.learn-cpp.org/>`_
 
 |

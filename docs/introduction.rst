@@ -20,59 +20,73 @@ setup in the University of Vigo where the different parts of the system can be
 identified.
 
 ..  image:: /_static/introduction-figs/uvispace-elements.png
-    :width: 750px
+    :width: 450px
     :align: center
 
-The parts of the vehicle control system already implemented are:
+The main parts of the system are:
 
 - *Localization system*: It is composed by four camera-based localization nodes,
   each of which is made of a CMOS camera and an FPSoC development board.
   FPSoC contain powerful processor and FPGA in the same chip. In the current
-  implementation the FPGA acquires images from the camera and preprocesses them
+  implementation the FPGA acquires images from the camera and preprocesses them,
   binarizing the UGV markers (geometrical shapes placed over the UGV top plate).
-  The binarized images are written to the processor which uses high level
-  Python functions to extract the vertices of the marker. These vertices
+  The binarized images are passed to the processor which uses high level
+  Python functions to extract the vertices of the markers. These vertices
   are sent to the main controller through the Ethernet LAN network. Apart
-  from the vertices the nodes send the RGB, gray and binary images from the
-  camera, useful for debugging purposes.
+  from the vertices the nodes can also send the RGB, gray and binary images from
+  the camera, useful for debugging purposes.
 
 - The *main controller* consists of a CPU-based processing node that runs
   Python 3 software. Currently a PC is being used but the project is designed
-  to be lightweight enough using common libraries, and is prepared to be run
-  in any embedded board like  Raspberry Pi or (ZedBoard) that controls the whole
-  system. The main controller is currently intended to be run in console.
-  Currently only one vehicle can be controlled. The main controller does:
+  to be lightweight enough to be run in any embedded board like  Raspberry
+  Pi or (ZedBoard) that controls the whole system. The main controller is
+  currently intended to be run in console. Currently the main controller can
+  only control one vehicle at a time. The trajectory of the vehicle is defined
+  by an array of points that the user types through the console. The UGV will
+  pass through all of them in order doing rectilinear trajectories between them.
 
-    - Communicate with the FPGA-based localization nodes, using the Ethernet
-      LAN network, and asks the vertices of the markers in the field of view
-      of the camera.
-    - It merges the data obtained from the localization nodes. In example,
-      when an UGV is in the frontier between two cameras there are marker
-      vertices from the same UGV in different cameras.
-    - Get the pose (position and orientation) of each UGV from the vertices location.
-    - Given the destination of the UGVs, calculate the optimal path. Now an array
-      of points that the UGV should visit are passed through the console.
-    - Calculate the UGVs motor speed, using a navigation model, to pass
-      through the set of points previously added via console.
-    - Communicate with the Arduino boards in the UGVs, using the Zigbee protocol
-      or WiFi, and send them the speed set points of the motors.
-    - The software also reads the battery level of the UGV and prints it in console.
-
-  Apart from the main behaviour the main controller has software to test
-  different software like the Kalman Filter developed or the controller. There
-  is also software to acquire images and video from the camera nodes.
-
-- The *UGVs*. The UGVs are controlled by an Arduino board that receives
-  the motor speed workpoints thorugh a Wifi-to-serial or Zigbee-to-serial
-  Arduino shield and sets the PWM of the motors to the corresponding values.
-  It also reads the battery level from a fuel gauge board if it is installed
-  in the vehicle.
+- The *UGVs*. The UGVs are small RC-like vehicles controlled by an Arduino
+  board. The UGV has not intelligence. The Arduino board only receives the motor
+  speed workpoints through a Wifi-to-serial or Zigbee-to-serial Arduino shield
+  from the main controller and sets the PWM of the motors to the corresponding
+  values. The Arduino board also communicates with a fuel gauge board in the
+  vehicle that calculates the state of charge of the battery.  The main
+  controller can ask the battery level to the Arduino board also through the
+  wireless protocols.
 
 The main structure of the system can be observed in the diagram below:
 
 ..  image:: /_static/introduction-figs/general-diagram.png
     :width: 750px
     :align: center
+
+Main controller
+---------------
+
+The main controller does:
+
+  - Communicate with the FPGA-based localization nodes, using the Ethernet
+    LAN network, and asks the vertices of the markers in the field of view
+    of the camera.
+  - It merges the data obtained from the localization nodes. In example,
+    when an UGV is in the frontier between two cameras there are marker
+    vertices from the same UGV in different cameras.
+  - Get the pose (position and orientation) of each UGV from the vertices
+    location.
+  - Given the destination of the UGVs, calculate the optimal path. Now an
+    array of points that the UGV should visit are passed through the console.
+  - Calculate the UGVs motor speed, using a navigation model, to pass
+    through the set of points previously added via console.
+  - Communicate with the Arduino boards in the UGVs, using the Zigbee protocol
+    or WiFi, and send them the speed set points of the motors.
+  - The main controller can also read the battery level of the UGV and prints
+    it in console.
+
+Apart from the main modules that implement the previously explained behaviour,
+the main controller has extra programs used to test and debug different
+parts of the system like the Kalman Filter developed or the navigation
+model. Some of these extra programs can be used to acquire images and video
+from the camera-based localization nodes.
 
 Regarding the control workflow, the system can be considered a closed loop,
 where the position of the UGV read by the cameras is fed back to the main
@@ -81,16 +95,6 @@ speed output sent to the UGV. The corresponding diagram can be seen below.
 
 ..  image:: /_static/introduction-figs/workflow-control-diagram.png
     :align: center
-
-Currently the development of the first UGV with differential
-configuration has been completed. A set of three Printed
-Circuit Boards (PCBs) has been developed to monitor the health and state of
-charge of the UGV battery and safely charge it using an external power supply.
-A Wireless Power Transfer (WPT) system has also been developed to charge the
-battery without human intervention. A basic version of the main controller
-already allows the UGVs to be moved along trajectories consisting of straight
-segments.
-
 
 Localization system
 ---------------------
@@ -219,6 +223,18 @@ The following image shows a UGV with some of the aforementioned elements:
 The fuel gauge board and the WPT board go inside the chasis of the car (see
 the UGV website for more details). The WPT coil goes under the car too.
 
+WPT
+---
+A Wireless Power Transfer (WPT) system has also been developed to charge the
+battery without human intervention. It is composed by:
+
+- primary board:
+- primary coil:
+- secondary coil:
+- secondary board:
+
+
+
 Future work
 -----------------
 
@@ -238,6 +254,13 @@ Some of the ongoing enhancements for UviSpace are:
   same time. This brings the problem of designing a controller so the vehicles do not
   hit each other, or having a main trajectory planner that avoids the vehicles to
   pass the same point at the same time.
+- Improve the WPT system. That means to fix the ripple that appears in the
+  battery when charging through it. A case for the primary board and coil
+  should be also built so the vehicle can be placed over the primary coil and
+  automatically charged without human intervention. In order for the primary
+  board to be controlled from the main controller wireless communications
+  via Wifi or Xbee can be programmed in it. The board is already prepared
+  to host a Wifi/Zigbee to serial module similar to those used in the vehicles.
 - to simulate different driving strategies for future real life environments
   involving self-driving cars like an automated parking lot or a factory with
   automated UGVs.
