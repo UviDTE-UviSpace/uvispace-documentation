@@ -1,5 +1,5 @@
 Wireless Power Transfer
-======================
+=======================
 
 ..  toctree::
     :maxdepth: 3
@@ -35,7 +35,7 @@ i.e. a CC signal with a specific voltage level.
 
 In the Figure an overview of the blocks is available.
 
-..  image:: /_static/WPT/system_block_diagram.png
+..  image:: /_static/wpt-figs/system_block_diagram.png
     :align: center
 
 .. (Explain that there is a primary and a secondary, explain a little bit its working,
@@ -50,7 +50,7 @@ the emitter's signal has to be significantly high. With higher frequency, higher
 coupling coefficient and hence, higher efficiency. The primary is the responsible
 for rising the frequency of 50 Hz (EU) to tens or hundreds of kHz.
 
-..  image:: /_static/WPT/primary_block_diagram.png
+..  image:: /_static/wpt-figs/primary_block_diagram.png
     :align: center
 
 The first block is a rectifier followed by a CC/CC regulator, to convert the
@@ -74,14 +74,14 @@ high-frequency harmonics, followed by a parallel LC tank that stores the energy
 of the fundamental frequency, having a small current outside the tank, and a high
 current inside. The inductor of the parallel LC tank is the emitter coil.
 
-..  image:: /_static/WPT/resonant_tanks.png
+..  image:: /_static/wpt-figs/resonant_tanks.png
     :align: center
 
 The last part of the primary is the digital circuit capable of generating the signals
 needed by the inverter's MOSFET transistors. The following block diagram shows the
 composition of this circuit.
 
-..  image:: /_static/WPT/digital_system_block_diagram.png
+..  image:: /_static/wpt-figs/digital_system_block_diagram.png
     :align: center
 
 The main block in this system is the microcontroller, a PIC18F45K20 is used in this
@@ -115,7 +115,7 @@ After the resonant tank, there is a rectifier and a regulator that transform the
 AC signal into a CC signal capable of charging the battery. The voltage level of
 this signal is 12 V.
 
-..  image:: /_static/WPT/secondary_block_diagram.png
+..  image:: /_static/wpt-figs/secondary_block_diagram.png
     :align: center
 
 Primary coil
@@ -162,7 +162,7 @@ In summary, the steps for building a new coil are the following:
 * **Obtaining the coil inductance**: Using formulas or online calculators.
 
 Secondary coil
-^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^
 The secondary coil has to be designed after the primary coil. It's shape has to
 be the same, or similar, as the primary. Although It does not have to be the same
 topology. In this project the primary is a square-shaped spiral and the secondary

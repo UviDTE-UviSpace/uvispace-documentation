@@ -1,8 +1,8 @@
 Getting Started
 ===============
 
-This section covers the first steps for downloading the project and setting
-up a PC in order to be able to collaborate developing and testing the project.
+This section covers the first steps for running UviSpace and collaborate
+with it.
 
 ..  toctree::
     :maxdepth: 3
@@ -10,12 +10,11 @@ up a PC in order to be able to collaborate developing and testing the project.
     Getting Started         <starting>
 
 
-Install Uvispace
-----------------
-
+How to Use Uvispace
+-------------------
 
 Download the source
--------------------
+^^^^^^^^^^^^^^^^^^^
 
 The project source code is stored in the repositories available under the
 `UviSpace organization <https://github.com/UviDTE-UviSpace>`_.
@@ -33,18 +32,35 @@ for cloning the UviSpace Main Controller source code to your PC::
 
 After that, the main controller will be cloned to a folder named uvispace-main-controller into the directory you have specified.
 
+(TALK ABOUT THE DIFFERENT REPOSITORIES)
 
 
+Install Uvispace
+^^^^^^^^^^^^^^^^
 
 
-
-How to run Uvispace
--------------------
+Run Uvispace
+^^^^^^^^^^^^
 (To be done when the UGV is running, maybe make a video)
 
 
+How to collaborate with Uvispace
+--------------------------------
+
+Workflow
+^^^^^^^^
+Talk about branches
+master branch
+remove branches as soon as possible.
+commit everyday
+small commit messages
+merge to master
+pull requests
+issues
+
+
 Uvispace Style Rules
---------------------
+^^^^^^^^^^^^^^^^^^^^
 
 When collaborating with the UviSpace project Follow these rules to ensure high
 quality:
@@ -83,7 +99,7 @@ quality:
 
 
 UviSpace Documentation
-----------------------
+^^^^^^^^^^^^^^^^^^^^^^
 
 All repos are documented here less the main controller that is documented here.
 This is done because this repo has different sphinx configuration that permits
