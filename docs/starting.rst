@@ -225,22 +225,25 @@ quality:
 
 - Use small variable names and the most concise as possible.
 
-- When programming, placing the comments over the statement is preferred to
-  adding them next to the statement. That is::
+- When programming, placing the comments over the statement (or block of
+  statements) is preferred to adding them next to the statement. That is::
 
       # This way of commenting is preferred
       a = b.copy()
 
       a = b.copy() # Use this kind of commenting as little as possible
 
-- For all programming languages use only 80 characters per line. This ensures
-  easy reading of the code in all kind of screens and GitHub. You can configure
-  the text editor to draw a line at 8 characters to help you with that.
+- For Python use the PEP8 Style Guide [1]_. This ensures a more human-friendly
+  Python and an homogeneous way to write code by all developers. Some
+  of the most important rules, that can be also applied to other programming
+  languages, are:
 
-- Use 4 space indentatation for Python and other languages. You can program
-  your text editor to put 4 spaces every time you press tab. This will make the
-  code more readable when switching from one text editor to another
-  one.
+  - 79 characters per line. You can configure the text editor to draw a line at
+    80 characters to help you with that.
+
+  - Use 4 space indentatation instead of tab. You can program your text editor
+    to put 4 spaces every time you press tab. This will make the code more
+    readable when switching from one text editor to another one.
 
 - The GitHub repositories are always named with lowercase leters using hyphens
   to separate the words. Example: example-repository-name. Try to name the
@@ -250,7 +253,7 @@ quality:
   autodoc extension of Sphinx to autogenerate its documentation. This is very
   useful because it permits to comment the code and generate the documentation
   website for the project at the same time. To know the synthax rules of
-  autodoc check the code of the main controller or visit [1]_.
+  autodoc check the code of the main controller or visit [2]_.
 
 
 UviSpace Documentation
@@ -323,14 +326,14 @@ Git
 ^^^
 
 The project uses *git* for doing the version control of the project. There
-is a practical guide book in their webpage [2]_. It is recommended to read
+is a practical guide book in their webpage [3]_. It is recommended to read
 at least the first 2 chapters for learning the basic working of *Git*.
 
-In order to practice with test repositories, GitHub provides a web tutorial [3]_
+In order to practice with test repositories, GitHub provides a web tutorial [4]_
 which helps to solidify knowledge of git terms and operation.
 
 Regarding the versions naming convention, it has been followed the *Semantic
-Versioning 2.0.0* [4]_. In its web there is a detailed explanation about the
+Versioning 2.0.0* [5]_. In its web there is a detailed explanation about the
 rules for assigning a tag to a new version.
 
 Python
@@ -346,12 +349,12 @@ C/C++
 C is used to program the drivers in the localization node. C++ is used to
 program some auxiliary applications in the localization node.
 
-The basic book for learning C is [5]_, written by its inventors Brian W.
+The basic book for learning C is [6]_, written by its inventors Brian W.
 Kernighan and Dennis M. Ritchie. Some people do not like this book and prefer
-more modern resources like [6]_, an interative tutorial.
+more modern resources like [7]_, an interative tutorial.
 
 For C++ a good website with deep explanations and a lot of examples is
-[7]_. An iterative tutorial for C++ can be found in [8]_.
+[8]_. An iterative tutorial for C++ can be found in [9]_.
 
 
 FPSoC
@@ -369,6 +372,7 @@ encouraged to visit the following repositories of that organization:
   It contains a starting guide to Cyclone V SoC, tutorials for compilation of
   different OSs, instructions to run baremetal (no OS) applications and a set of
   small examples mostly related to transfer data between processor and FPGA.
+  
 - `CycloneVSoC-time-measurements <https://github.com/UviDTE-FPSoC/CycloneVSoC-time-measurements>`_:
   It contains code and complete numeric results for a characterization of the
   processor-FPGA communications in Cyclone V SoC. Reading the main README in this
@@ -386,20 +390,19 @@ in the `Tutorials page of the Uvispace main controller documentation
 <https://uvispace-main-controller.readthedocs.io/en/latest/tutorials.html>`_.
 
 
-
-
 |
 
 .. rubric:: **Bibliography**
 
-.. [1] Sphinx Autodoc Website `<http://www.sphinx-doc.org/en/master/usage/extensions/autodoc.html>`_
-.. [2] Pro Git book, 2nd edition (2014). `<https://git-scm.com/book/en/v2>`_
-.. [3] Try Git `<https://try.github.io>`_
-.. [4] Semantic Versioning 2.0.0 `<http://semver.org/>`_
-.. [5] The C Programming Language Second Edition by Brian W. Kernighan and Dennis M. Ritchie.
+.. [1] PEP 8 - Style Guide for Python Code. `<https://pep8.org/>`_
+.. [2] Sphinx Autodoc Website `<http://www.sphinx-doc.org/en/master/usage/extensions/autodoc.html>`_
+.. [3] Pro Git book, 2nd edition (2014). `<https://git-scm.com/book/en/v2>`_
+.. [4] Try Git `<https://try.github.io>`_
+.. [5] Semantic Versioning 2.0.0 `<http://semver.org/>`_
+.. [6] The C Programming Language Second Edition by Brian W. Kernighan and Dennis M. Ritchie.
        `<http://www.dipmat.univpm.it/~demeio/public/the_c_programming_language_2.pdf>`_.
-.. [6] Learn C Interactive Tutorial `<https://www.learn-c.org/>`_
-.. [7] Cplusplus Tutorial `<http://www.cplusplus.com/doc/tutorial/>`_
-.. [8] Learn C++ Interactive Tutorial `<https://www.learn-cpp.org/>`_
+.. [7] Learn C Interactive Tutorial `<https://www.learn-c.org/>`_
+.. [8] Cplusplus Tutorial `<http://www.cplusplus.com/doc/tutorial/>`_
+.. [9] Learn C++ Interactive Tutorial `<https://www.learn-cpp.org/>`_
 
 |
