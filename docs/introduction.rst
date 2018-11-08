@@ -19,7 +19,7 @@ through a distributed vision system. The following figure shows the current
 setup in the University of Vigo where the different parts of the system can be
 identified.
 
-..  image:: /_static/introduction-figs/uvispace-elements.png
+..  image:: /_static/introduction-figs/uvispace-elements.jpg
     :width: 450px
     :align: center
 
@@ -46,13 +46,15 @@ The main parts of the system are:
   pass through all of them in order doing rectilinear trajectories between them.
 
 - The *UGVs*. The UGVs are small RC-like vehicles controlled by an Arduino
-  board. The UGV has not intelligence. The Arduino board only receives the motor
-  speed workpoints through a Wifi-to-serial or Zigbee-to-serial Arduino shield
+  board. The UGV has not intelligence, that is the controller is built in
+  the main controller. The Arduino board receives motor speed workpoints
+  through a Wifi-to-serial or Zigbee-to-serial Arduino shield
   from the main controller and sets the PWM of the motors to the corresponding
-  values. The Arduino board also communicates with a fuel gauge board in the
-  vehicle that calculates the state of charge of the battery.  The main
-  controller can ask the battery level to the Arduino board also through the
-  wireless protocols.
+  values. The UGV has a battery system with custom PCBs to be able to charge
+  the battery of the UGV (through or wirelessly) and measure the battery levels.
+  Arduino board communicates periodically with the board measuring the battery
+  level. The main controller can ask the battery level to the Arduino board also
+  through the wireless protocols.
 
 The main structure of the system can be observed in the diagram below:
 
@@ -123,7 +125,7 @@ camera and the boards are connected:
 
 The current figure shows a simplified block diagram of the system.
 
-..  image:: /_static/introduction-figs/loc-node-diagram.png
+..  image:: /_static/introduction-figs/loc-node-diagram-simplified.png
     :width: 650px
     :align: center
 
@@ -302,7 +304,16 @@ Future work
 
 Some of the ongoing enhancements for UviSpace are:
 
-- developing a graphical interface.
+- developing a graphical interface with the following capabilities:
+
+  - It should provide a representation of the UviSpace ground and be able
+    to locate a UGV and plot its location. It must be able to show images
+    from cameras.
+  - The user should be able to upload a trajectory from file or from
+    user clicking the and the car must be able to do it.
+  - It should provide a tool to calibrate the cameras.
+  - It should be a series of tools to calibrate the UGV controllers.
+
 - building network controller using reinforcement learning. The current
   controller can pass through the set of points indicated through
   straight lines. Building a neural network controller will make the
