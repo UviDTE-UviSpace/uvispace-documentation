@@ -53,7 +53,7 @@ Documentation
     Introduction            <introduction>
     Getting Started         <starting>
     Main Controller         <main-controller>
-    Localization system     <camera>
+    Localization System     <camera>
     UGVs                    <vehicle>
     Wireless Power Transfer <wpt>
     Tutorials               <tutorials>
