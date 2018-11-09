@@ -8,52 +8,52 @@ Localization System
 
 Introduction
 ------------
-This documentation page explains the localization system used in UviSpace
-to locate the UGVs.
+The UGV localization system used in UviSpace is composed by four localization
+nodes, each of which contains an FPSoC board and a CMOS camera. They are
+connected via Ethernet with the main controller.
 
-The system is composed by four localization nodes,
-each of which contains an FPSoC board and a CMOS camera. The FPSoC (Field
-Programmable System-on-Chip) is an electrionic chip containing
-a Hard Processing System (HPS) and FPGA (Field Programmable Gate Array)
-in the same chip. They are very powerful because they
-permit to implement applications in a hardware/software coprocessing schem,
-where software in the processor and hardware in the FPGA run in at the same
-time and interact when needed. These devices permit to combine the advantages
-of software (ease of development, modification and porting) with the hardware
-ones (paralellism, high performance, low power consumption) in  a very
-efficient way. In UviSpace most of the image processing is implemented
-in the FPGA to achive a high frame rate (higher than the one obtained in a
-CPU system) and the rest is implemented in the HOS
-
-In the case of Uvispace a camera is directly connected to the FPGA in the
-FPSoC. The FPGA captures the image and does a preprocessing on it: the image is
-binarized leaving only red objects of the scene as white and the rest black.
-The UGVs carry a red geometric figure on the roof of the
-car so this is how its position is detected. The FPGA also calculates generates
-a gray image from the RGB image, just used for visualization purposes.
-This preprocessing is very time consuming on the processor, that´s why it is
-implemented in the FPGA.  After that, the images are saved into the HPS RAM memory
-and the HPS takes care of higher level tasks. The processor in the HPS
-reads the binary images and detects the geometric properties of the
-red figure. For example, when using red triangles to detect the car, it
-detects the vertices of the triangles that will be later used by the
-`uvispace-main-controller <https://uvispace-main-controller.readthedocs.io/en/latest/>`_.
-to find out the UGV´s location and orientation.  The following figure summarizes the
-data processing just explained.
+FPSoCs (Field Programmable System-on-Chip) are heterogeneous reconfigurable
+platforms consisting of a Hard Processing System (HPS) and an FPGA (Field
+Programmable Gate Array)in the same chip. The HPS is the non configurable
+part of the chip that contains a processor, cache memory, RAM memory controller,
+USB controller, Ethernet controller, timers, etc. This part of the chip is
+able to run an OS and programs like any of the common CPU-based boards:
+Raspberry Pi, BeagleBone, etc. In addition the FPGA brings the possibility
+to customize the hardware of the chip and create custom digital blocks that
+speed up the execution of parts of the programs that run slow in the
+processor. In UviSpace most of the image processing is implemented in the
+the FPGA while a small part of the image processing and communications
+are implemented in the processor of the HPS. This scheme permits a higher
+frame rate than a processor doing all the work. The following figure shows
+a scheme of the UviSpace localization node.
 
 ..  image:: /_static/fpga-camera-figs/processing-main.png
     :align: center
 
-Finally the HPS also implements a internet server and provides through ZMQ
-sockets the gray scale image of the scene, the binary image and the triangle
-vertices  coordinates. The uvispace-main-controller connects to the server and
-asks for any of this information. The information it doesn´t need it is not
-sent so the internet network does not get saturated.
+The localization node works as follows. A camera attached to the FPSoC board
+through and directly connected to the FPGA in the FPSoC.
+The FPGA captures images from the camera and does a preprocessing on them: each
+image is binarized leaving only red objects of the scene as white and the rest
+black. The UGVs carry a red geometric figure on the roof of the
+car so this is how its position is detected. The FPGA also generates
+a gray image from the RGB image, just used for visualization purposes.
+This part of the image processing is very time consuming on the processor, that
+is why it is implemented in the FPGA. After that, the images are saved into the
+processor memory and the HPS takes care of higher level tasks. The processor in
+the HPS reads the binary images andextracts the vertices of the red triangles
+drawn on the top plate of the UGVs. The HPS also implements a internet server
+and provides through ZMQ sockets the gray scale image of the scene, the binary
+image and the triangle vertices coordinates. The uvispace-main-controller
+connects to the server and asks only for the  information needed. That means
+that the the information not needed by the main controller is not sent, saving
+internet bandwidth.
 
-The localization
-    nodes are placed in the laboratory ceiling in a 2x2 arrangement like the
-    one shown in the following picture.
-The images from different cameras touch with each other without
+..note:: The RGB image can be also obtained modifying the code of the server
+but it is not served by default as extracting this image from memory and sending
+it through internet reduces the frame rate when compared to the grayscale one.
+
+The localization nodes are placed in the laboratory ceiling in a 2x2
+arrangement. The images from different cameras touch with each other without
 overlapping to maximize the field of view. The purpose of having more than one
 localization node is just to create a field of view bigger than what could be
 obtained with a single camera. In total the cameras define an observable area
@@ -70,13 +70,7 @@ for the images of the cameras (in green).
     :width: 600px
     :align: center
 
-
-
-Why to use FPSoC boards to build the localization nodes?? In this case
-most of the image processing is implemented in the FPGA leaving the
-processor free for high level tasks. This permits to achieve a high
-frame rate and therefore have a better control of the vehicles. Moreover,
-implementing a lot of the processi
+Explain about the coordinate systems.
 
 Hardware for the FPGA
 ---------------------
