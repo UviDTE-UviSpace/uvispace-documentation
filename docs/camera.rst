@@ -8,30 +8,49 @@ Localization System
 
 Introduction
 ------------
-The UGV localization system used in UviSpace is composed by four localization
-nodes, each of which contains an FPSoC board and a CMOS camera. They are
-connected via Ethernet with the main controller.
+The UGV localization system used in UviSpace is composed by four camera-based
+localization nodes arranged in the ceiling in a 2x2 arrangement. The images
+from different cameras touch with each other without overlapping to maximize
+the field of view (and therefore the driving range of the UGVs). The purpose
+of having more than one localization node is just to create a field of view
+bigger than what could be obtained with a single camera. In total the
+cameras define an observable area of 3000x4000mm. The following
+figures represent the observable area (yellow), the camera numbering convention,
+the center of coordinates of UviSpace (in red) and the center of coordinates
+for the images of the cameras (in green).
 
+..  image:: /_static/fpga-camera-figs/uvispace-area.png
+    :width: 600px
+    :align: center
+
+..  image:: /_static/fpga-camera-figs/uvispace-area-real.png
+    :width: 600px
+    :align: center
+
+
+FPSoC Localization Node
+-----------------------
+Each Localization node contains an FPSoC board and a CMOS camera.
 FPSoCs (Field Programmable System-on-Chip) are heterogeneous reconfigurable
 platforms consisting of a Hard Processing System (HPS) and an FPGA (Field
 Programmable Gate Array)in the same chip. The HPS is the non configurable
 part of the chip that contains a processor, cache memory, RAM memory controller,
 USB controller, Ethernet controller, timers, etc. This part of the chip is
 able to run an OS and programs like any of the common CPU-based boards:
-Raspberry Pi, BeagleBone, etc. In addition the FPGA brings the possibility
-to customize the hardware of the chip and create custom digital blocks that
-speed up the execution of parts of the programs that run slow in the
-processor. In UviSpace most of the image processing is implemented in the
-the FPGA while a small part of the image processing and communications
-are implemented in the processor of the HPS. This scheme permits a higher
-frame rate than a processor doing all the work. The following figure shows
-a scheme of the UviSpace localization node.
+Raspberry Pi, BeagleBone, etc. In addition the FPGA brings the possibility to
+create custom digital blocks that help the processor in the execution,
+improving the overall performance. In UviSpace most  of the image processing
+is implemented in the the FPGA while a small part of the image processing and
+the Ethernet communications are handled by the processor in the HPS. This scheme
+permits a higher frame rate (up to 100fps) than a processor doing all the work
+(around 15fps). The following figure shows a block diagram of the UviSpace
+localization node.
 
 ..  image:: /_static/fpga-camera-figs/processing-main.png
     :align: center
 
-The localization node works as follows. A camera attached to the FPSoC board
-through and directly connected to the FPGA in the FPSoC.
+The localization node works as follows. The camera attached to the FPSoC board
+connects directly to the FPGA part of the chip.
 The FPGA captures images from the camera and does a preprocessing on them: each
 image is binarized leaving only red objects of the scene as white and the rest
 black. The UGVs carry a red geometric figure on the roof of the
@@ -48,40 +67,21 @@ connects to the server and asks only for the  information needed. That means
 that the the information not needed by the main controller is not sent, saving
 internet bandwidth.
 
-..note:: The RGB image can be also obtained modifying the code of the server
-but it is not served by default as extracting this image from memory and sending
-it through internet reduces the frame rate when compared to the grayscale one.
+.. note::  The RGB image can be also obtained modifying the code of the server
+           running in the HPS because extracting the RGB image and serving it
+           reduced the frame rate considerably even when the main controller
+           does not ask for it.
 
-The localization nodes are placed in the laboratory ceiling in a 2x2
-arrangement. The images from different cameras touch with each other without
-overlapping to maximize the field of view. The purpose of having more than one
-localization node is just to create a field of view bigger than what could be
-obtained with a single camera. In total the cameras define an observable area
-of 3000x4000mm. An UGV must not go beyond the observable limits. The following
-figures represent the observable area (yellow), the camera numbering convention,
-the center of coordinates of UviSpace (in red) and the center of coordinates
-for the images of the cameras (in green).
-
-..  image:: /_static/fpga-camera-figs/uvispace-area.png
-    :width: 600px
-    :align: center
-
-..  image:: /_static/fpga-camera-figs/uvispace-area-real.png
-    :width: 600px
-    :align: center
-
-Explain about the coordinate systems.
 
 Hardware for the FPGA
 ---------------------
-In this section the hardware project to configure FPGA is explained.
+In this section the hardware project to configure FPGA part of the
+Localization Node is explained. All code for the FPGA along with compilation
+and deployment instructions is available in the `uvispace-camera-fpga
+<https://github.com/UviDTE-UviSpace/uvispace-camera-fpga>`_ repository.
 
-All code along with compilation and deployment instructions is
-available in the `uvispace-camera-fpga <https://github.com/UviDTE-UviSpace/uvispace-camera-fpga>`_
-repository.
-
-Supported Hardware
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Supported Boards
+^^^^^^^^^^^^^^^^
 Currently the **FPSoC chip** used is an Intel FPGA `Cyclone V SoC <https://www.altera.com/products/soc/portfolio/cyclone-v-soc/overview.html>`_  containing
 a Dual ARM Cortex-A9 processor in HPS and a Cyclone V FPGA.
 
@@ -141,9 +141,9 @@ Lets now analyze every block in the 3 parts we just mentioned and do a little an
 
 * **Camera Capture**, available at `uvispace-camera-fpga/ip/camera_controller/ <https://github.com/UviDTE-UviSpace/uvispace-camera-fpga/tree/master/ip/camera_controller>`_, interfaces the camera and generates useful signals to control the image flow. The camera uses the following signals to sent the image: a 12-bit data bus (one pixel), frame_valid (1 when image is being transmitted and 0 during the vertical blanking), line_valid (1 during a line is being transmitted and 0 in horizontal blanking) and pixel_valid (1 when the pixel in the data bus is a valid pixel and must be used and 0 when the data bus does not contain a valid pixel so it must be discarded). Using this signals Camera Capture provides the 12-bit data-bus at its output and a pixel valid signal. To control where in the image the current pixel is it outputs X-Y coordinates of the current pixel and a frame/image counter. Switch 9 must be 0 in order this component to work, otherwise the video stream is stopped and you can see a frozen image when connecting a screen in the VGA.
 
-* **Raw to RGB**, available at `uvispace-camera-fpga/ip/camera_controller/raw2rgb <https://github.com/UviDTE-UviSpace/uvispace-camera-fpga/tree/master/ip/camera_controller/raw2rgb>`_, converts the raw pixels comming from the Camera Capture (each pixel in the camera contains only one color) to 3 component RGB pixels. The way to do so is using a DeBayerize 1 filter, based in a 3x3 window, as used in morphological operations (erosion/dilation) while using morphological_fifo.vhd. At its output it provides a pixel_valid signal that is 1 when a valid RGB pixel is at its output.
+* **Frame Sync**, available at `uvispace-camera-fpga/ip/camera_controller/frame_sync <https://github.com/UviDTE-UviSpace/uvispace-camera-fpga/tree/master/ip/camera_controller/frame_sync>`_,  is located between the Raw to RGB component and the Image Processing. It blocks the pixel_valid signal some frames. It is not clear in the camera documentation how the camera does the reset, if it does it instantaneously or if it first finishes the row that it is sending. This component solves this problem. Every time the camera is reset Frame sync counts few frame_valid negative flanks (end of the image) before letting pixel_valid propagate. This ensures that after this component, the 1st Raw to RGB sees after reset is the pixel 0,0. This is needed for some image processing components and the Avalon Image Writers to work properly.
 
-* **Frame Sync**, available at `uvispace-camera-fpga/ip/camera_controller/frame_sync <https://github.com/UviDTE-UviSpace/uvispace-camera-fpga/tree/master/ip/camera_controller/frame_sync>`_, not depicted in the block diagram, is located between the Raw to RGB component and the Image Processing. It blocks the pixel_valid signal some frames. It is not clear in the camera documentation how the camera does the reset, if it does it instantaneously or if it first finishes the row that it is sending. Because of that the frame sync is reset every time that the camera is reset and counts few frame_valid negative flanks to before letting pixel_valid propagate. This ensures that after this component, the 1st pixel after reset is the pixel 0,0. This is needed for some image processing components and the Avalon Image Writers to work properly.
+* **Raw to RGB**, available at `uvispace-camera-fpga/ip/camera_controller/raw2rgb <https://github.com/UviDTE-UviSpace/uvispace-camera-fpga/tree/master/ip/camera_controller/raw2rgb>`_, converts the raw pixels comming from the Camera Capture (each pixel in the camera contains only one color) to 3 component RGB pixels. The way to do so is using a DeBayerize 1 filter, based in a 3x3 window, as used in morphological operations (erosion/dilation) while using morphological_fifo.vhd. At its output it provides a pixel_valid signal that is 1 when a valid RGB pixel is at its output.
 
 * **Image Processing**, available at `uvispace-camera-fpga/ip/image_processing <https://github.com/UviDTE-UviSpace/uvispace-camera-fpga/tree/master/ip/image_processing>`_, does the image processing computation needed in Uvispace. Each block inside image processing applies some operation to the pixels of the image, that are processed "on the flight". That is, some delay can be applied to the pixels but the processing is different to software in which you store a full image and then process it. In hardware an incoming pixel is processed and put in the output as soon as possible. The blocks inside image processing use a pixel valid signal to tell to the next component that a new pixel has been generated. The image processing performs the following steps, depicted in the figure below:
 
@@ -341,13 +341,10 @@ Work for the Future
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 (Delete this section because everything is done now)
 
-* To reduce size of FPGA design using 10Kbit memory blocks to implement the morphological_fifo component. Now it is using ALM´s registers to store the lines needed to do a morphological operation.
-
-* Increase the frame rate. It can be done changing the way images are captured and the Raw to RGB component. Instead of Using
-
-* Fix the software reset that is not working. Maybe using the HPS-to-FPGA reset that seems to work.
-
-* Reset the counters in Avalon Image Writers so it keeps synchronized when reset stream is produced.
+- To reduce size of FPGA design using 10Kbit memory blocks to implement the morphological_fifo component. Now it is using ALM´s registers to store the lines needed to do a morphological operation.
+- Increase the frame rate. It can be done changing the way images are captured and the Raw to RGB component. Instead of Using
+- Fix the software reset that is not working. Maybe using the HPS-to-FPGA reset that seems to work.
+- Reset the counters in Avalon Image Writers so it keeps synchronized when reset stream is produced.
 
 
 
