@@ -343,8 +343,8 @@ The project was developed by a team of researchers of the Microelectronics
 division of the *Electronic Technology Department* of the `University of Vigo
 <http://uvigo.gal/uvigo_en/index.html>`_. Contact information:
 
-- Project directors: jjrdguez@uvigo.es and jfarina@uvigo.es
-- Uvispace team e-mail: dte.uvispace@gmail.com
+- Juan José Rodríguez Andina: jjrdguez@uvigo.es
+- José Fariña Rodríguez: jfarina@uvigo.es
 
 |
 
